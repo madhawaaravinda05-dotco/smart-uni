@@ -324,7 +324,7 @@ export default function Dashboard() {
             <MapIcon size={13} color={theme.accent} /> View on map
           </Link>
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 14 }} className="stagger">
+        <div className="responsive-grid stagger" style={{ gap: 14 }}>
           <CategoryCard to="/boardings" label="Boardings"    sub={`${totalBoardings.length} verified listings`} Icon={HouseIcon} accent="#7C3AED" bg="#F5F3FF" delay={0} />
           <CategoryCard to="/food"      label="Food & Dining" sub={`${totalFood.length} spots near campus`}    Icon={FoodIcon}  accent="#EA580C" bg="#FFF7ED" delay={.06} />
           <CategoryCard to="/transport" label="Transport"     sub={`${totalTransport.length} live routes`}     Icon={BusIcon}   accent="#16A34A" bg="#F0FDF4" delay={.12} />
@@ -332,7 +332,7 @@ export default function Dashboard() {
       </div>
 
       {/* ── Stat row ── */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 14, marginBottom: 28 }} className="stagger">
+      <div className="responsive-grid stagger" style={{ gap: 14, marginBottom: 28 }}>
         <StatCard label="Total Boardings" value={totalBoardings.length} sub="Available now" icon={HouseIcon} accent="#7C3AED" featured delay={0} />
         <StatCard label="Food Spots"      value={totalFood.length}      sub="Near campus"   icon={FoodIcon}  accent="#EA580C" delay={.06} />
         <StatCard label="Transport"       value={totalTransport.length} sub="Active routes" icon={BusIcon}   accent="#16A34A" delay={.12} />
@@ -343,7 +343,7 @@ export default function Dashboard() {
       {error   && <ErrorBox message={error} onRetry={load} />}
 
       {!loading && (
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 28 }}>
+        <div className="grid-2-cols">
 
           {/* Trending Boardings */}
           <div>
@@ -360,7 +360,7 @@ export default function Dashboard() {
                 See all <ChevronRightIcon size={13} color={theme.accent} />
               </Link>
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }} className="stagger">
+            <div className="responsive-grid stagger" style={{ gap: 12 }}>
               {displayBoardings.length > 0
                 ? displayBoardings.map((b, i) => <ListingCard key={b._id} item={b} gradient={bGrads[i % 4]} type="boarding" theme={theme} />)
                 : [0,1,2,3].map(i => <div key={i} style={{ height: 160, borderRadius: 18, background: bGrads[i], opacity: .4 }} className="skeleton" />)
@@ -381,7 +381,7 @@ export default function Dashboard() {
                 See all <ChevronRightIcon size={13} color={theme.accent} />
               </Link>
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }} className="stagger">
+            <div className="responsive-grid stagger" style={{ gap: 12 }}>
               {displayFood.length > 0
                 ? displayFood.map((f, i) => <ListingCard key={f._id} item={f} gradient={fGrads[i % 4]} type="food" theme={theme} />)
                 : [0,1,2,3].map(i => <div key={i} style={{ height: 160, borderRadius: 18, background: fGrads[i], opacity: .4 }} className="skeleton" />)

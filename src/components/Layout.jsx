@@ -370,14 +370,14 @@ export default function Layout({ children }) {
   }, []);
 
   return (
-    <div style={{ display: "flex", height: "100vh", overflow: "hidden", background: theme.pageBg }}>
+    <div className="app-layout">
 
-      {/* ══════════ SIDEBAR ══════════ */}
-      <aside style={{
+      {/* ══════════ SIDEBAR (Desktop) ══════════ */}
+      <aside className="hide-on-mobile" style={{
         width: collapsed ? 72 : 244,
         flexShrink: 0,
         background: theme.sidebar,
-        display: "flex", flexDirection: "column",
+        flexDirection: "column",
         height: "100vh",
         transition: "width 0.3s cubic-bezier(0.4,0,0.2,1)",
         overflow: "hidden",
@@ -534,8 +534,34 @@ export default function Layout({ children }) {
         </div>
       </aside>
 
+      {/* ══════════ MOBILE BOTTOM NAV ══════════ */}
+      <nav className="mobile-bottom-nav">
+        {nav.map((item) => {
+          const isActive = location.pathname === item.to;
+          return (
+            <Link
+              key={item.to}
+              to={item.to}
+              style={{
+                display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
+                flex: 1, height: "100%", color: isActive ? "#fff" : "rgba(255,255,255,0.6)",
+                textDecoration: "none", position: "relative"
+              }}
+            >
+              <item.Icon size={22} color={isActive ? "#fff" : "rgba(255,255,255,0.6)"} />
+              <span style={{ fontSize: 10, marginTop: 4, fontWeight: isActive ? 700 : 500 }}>
+                {item.label === "Add Listing" ? "Post" : item.label.split(" ")[0]}
+              </span>
+              {isActive && (
+                <div style={{ position: "absolute", top: 0, left: "50%", transform: "translateX(-50%)", width: 32, height: 3, background: "#fff", borderRadius: "0 0 4px 4px" }} />
+              )}
+            </Link>
+          );
+        })}
+      </nav>
+
       {/* ══════════ MAIN ══════════ */}
-      <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden" }}>
+      <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden", paddingBottom: "env(safe-area-inset-bottom)" }}>
 
         {/* ── Top bar ── */}
         <header style={{
@@ -653,8 +679,7 @@ export default function Layout({ children }) {
 
         {/* ── Page content ── */}
         <main
-          style={{ flex: 1, overflowY: "auto", padding: "28px 30px", background: theme.pageBg }}
-          className="no-scroll"
+          className="main-content no-scroll"
           key={location.pathname}
         >
           <div className="anim-fadeInUp">

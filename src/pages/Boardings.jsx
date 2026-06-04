@@ -122,10 +122,9 @@ export default function Boardings() {
 
       {/* ── Filter Panel ── */}
       {showFilters && (
-        <div style={{
+        <div className="responsive-grid" style={{
           background: theme.cardBg, borderRadius: 16, padding: "18px 20px", marginBottom: 20,
-          border: `1px solid ${theme.cardBorder}`, display: "grid",
-          gridTemplateColumns: "repeat(4,1fr)", gap: 14,
+          border: `1px solid ${theme.cardBorder}`, gap: 14,
           boxShadow: theme.cardShadow,
           animation: "slideDown .2s ease both",
         }}>
@@ -152,7 +151,7 @@ export default function Boardings() {
 
       {/* ── Cards Grid ── */}
       {!loading && (
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 16 }}>
+        <div className="responsive-grid" style={{ gap: 16 }}>
           {filtered.map((b, i) => {
             const grad = gradients[i % gradients.length];
             const rating = getRating(b);

@@ -151,7 +151,7 @@ export default function Food() {
 
       {/* ── Cards Grid ── */}
       {!loading && (
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 16 }}>
+        <div className="responsive-grid" style={{ gap: 16 }}>
           {filtered.map((f, i) => {
             const grad   = foodGradients[i % foodGradients.length];
             const rating = getRating(f);
@@ -260,7 +260,7 @@ export default function Food() {
                 <span style={{ fontSize: 12, color: theme.textFaint, marginLeft: 8 }}>({getCount(selected)} reviews)</span>
               </div>
               <p style={{ fontSize: 13, color: theme.textMuted, lineHeight: 1.7, margin: "12px 0" }}>{selected.description}</p>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 20 }}>
+              <div className="grid-2-cols" style={{ gap: 10, marginBottom: 20 }}>
                 {[["Price Range", selected.priceRange], ["Open Hours", selected.openHours], ["Area", selected.area], ["Dietary", (selected.tags || []).join(", ")]].map(([k, v]) => (
                   <div key={k} style={{ background: theme.accentBg, borderRadius: 12, padding: "10px 12px" }}>
                     <div style={{ fontSize: 10.5, color: theme.textFaint, fontWeight: 600, marginBottom: 3 }}>{k}</div>

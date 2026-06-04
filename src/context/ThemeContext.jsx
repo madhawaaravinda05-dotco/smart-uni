@@ -112,6 +112,8 @@ export function ThemeProvider({ children }) {
     document.body.style.background = theme.pageBg;
     document.documentElement.style.setProperty("--accent",   theme.accent);
     document.documentElement.style.setProperty("--page-bg",  theme.pageBg);
+    document.documentElement.style.setProperty("--pageBg",   theme.pageBg);
+    document.documentElement.style.setProperty("--sidebar",  theme.sidebar);
     document.documentElement.style.setProperty("--card-bg",  theme.cardBg);
     document.documentElement.setAttribute("data-theme", themeId);
   }, [theme, themeId]);

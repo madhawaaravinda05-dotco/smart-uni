@@ -149,7 +149,7 @@ export default function MapView() {
       {error && <ErrorBox message={error} />}
 
       {!loading && view === "map" && (
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 300px", gap: 14, flex: 1, minHeight: 0 }}>
+        <div className="grid-map" style={{ gap: 14, flex: 1, minHeight: 0 }}>
 
           {/* ── Real Map ── */}
           <div style={{ minWidth: 0, borderRadius: 18, overflow: "hidden", boxShadow: "0 4px 24px rgba(0,0,0,0.1)", border: "1px solid #E2E8F0" }}>
@@ -208,9 +208,8 @@ export default function MapView() {
         </div>
       )}
 
-      {/* ── List View ── */}
       {!loading && view === "list" && (
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))", gap: 14 }}>
+        <div className="responsive-grid" style={{ gap: 14 }}>
           {filtered.length === 0 && (
             <div style={{ gridColumn: "1/-1", textAlign: "center", padding: "60px 20px", color: "#94A3B8", fontSize: 13.5 }}>
               No listings match your search or filters.
