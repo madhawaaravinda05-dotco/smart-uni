@@ -183,9 +183,9 @@ function Btn({ ch, loading, ghost, full, type="button", onClick }) {
 function Left({ mode }) {
   const isL = mode === "login";
   return (
-    <div style={{
+    <div className="hide-on-mobile" style={{
       flex:"0 0 44%", height:"100vh", position:"relative", overflow:"hidden",
-      display:"flex", flexDirection:"column",
+      flexDirection:"column",
     }}>
 
       {/* ── Background photo ── */}
@@ -351,13 +351,12 @@ export default function Auth() {
   const towns=(TOWNS[rF.university]||[]).map(t=>({v:t,l:t}));
 
   return (
-    <div style={{width:"100vw",height:"100vh",overflow:"hidden",display:"flex",background:"#F9FAFB"}}>
+    <div className="app-layout" style={{width:"100vw",height:"100vh",overflow:"hidden",background:"#F9FAFB"}}>
       <Left mode={mode}/>
 
       {/* right sliding area */}
-      <div style={{flex:1,height:"100vh",overflowY:"auto",display:"flex",alignItems:"center",
-        justifyContent:"center",padding:"32px 48px",background:"#F9FAFB",...panelStyle}}
-        className="xScroll">
+      <div className="main-content xScroll" style={{display:"flex",alignItems:"center",
+        justifyContent:"center", ...panelStyle}}>
 
         <div style={{width:"100%",maxWidth:440}}>
 

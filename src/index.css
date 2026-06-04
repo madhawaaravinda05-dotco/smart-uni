@@ -297,6 +297,7 @@ a { text-decoration: none; color: inherit; }
   .mobile-bottom-nav {
     display: none;
   }
+}
 
 /* Grid 2 Cols */
 .grid-2-cols {
@@ -322,7 +323,7 @@ a { text-decoration: none; color: inherit; }
     display: grid;
     grid-template-columns: 1fr 300px;
   }
-}}
+}
 
 
 
