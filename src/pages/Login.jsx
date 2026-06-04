@@ -65,7 +65,7 @@ function PBtn({ children, loading, outline, full, type="button", onClick }) {
 /* ─── decorative SVG panel ─────────────────────────────────────────────────── */
 function LeftPanel() {
   return (
-    <div style={{ flex:"0 0 44%", height:"100vh", background:"linear-gradient(160deg,#4C1D95 0%,#7C3AED 45%,#9333EA 100%)",
+    <div className="hide-on-mobile" style={{ flex:"0 0 44%", height:"100vh", background:"linear-gradient(160deg,#4C1D95 0%,#7C3AED 45%,#9333EA 100%)",
       display:"flex", flexDirection:"column", padding:"40px 44px", position:"relative", overflow:"hidden" }}>
 
       {/* decorative circles */}
