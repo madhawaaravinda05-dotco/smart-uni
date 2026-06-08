@@ -339,6 +339,7 @@ export default function Boardings() {
                   <FlagIcon size={13} /> Report
                 </Button>
               </div>
+              </div>
             </div>
           </div>
         </>

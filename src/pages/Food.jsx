@@ -328,6 +328,7 @@ export default function Food() {
                   <FlagIcon size={13} /> Report
                 </Button>
               </div>
+              </div>
             </div>
           </div>
         </>
