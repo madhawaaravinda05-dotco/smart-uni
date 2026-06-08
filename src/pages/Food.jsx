@@ -248,11 +248,18 @@ export default function Food() {
 
       {/* ── Detail Modal ── */}
       {selected && (
-        <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,.5)", backdropFilter: "blur(4px)", zIndex: 100, display: "flex", alignItems: "center", justifyContent: "center", padding: 24 }}
-          onClick={() => setSelected(null)}>
-          <div style={{ background: theme.cardBg, borderRadius: 24, maxWidth: 480, width: "100%", maxHeight: "calc(100vh - 48px)", overflowY: "auto", overflowX: "hidden", boxShadow: "0 24px 64px rgba(0,0,0,.25)", border: `1px solid ${theme.cardBorder}` }}
-            onClick={e => e.stopPropagation()}>
-            <div style={{ height: 160, background: foodGradients[0], position: "relative", overflow: "hidden", flexShrink: 0 }}>
+        <>
+          {/* Decoupled Background Overlay to prevent Chrome scrolling bugs */}
+          <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,.5)", backdropFilter: "blur(4px)", zIndex: 100 }} />
+          
+          {/* Scrollable Container */}
+          <div style={{ position: "fixed", inset: 0, zIndex: 101, overflowY: "auto", display: "flex", flexDirection: "column", padding: "40px 24px" }}
+            onClick={() => setSelected(null)}>
+            
+            {/* The Modal */}
+            <div style={{ margin: "auto", background: theme.cardBg, borderRadius: 24, maxWidth: 480, width: "100%", overflow: "hidden", boxShadow: "0 24px 64px rgba(0,0,0,.25)", border: `1px solid ${theme.cardBorder}`, position: "relative" }}
+              onClick={e => e.stopPropagation()}>
+              <div style={{ height: 160, background: foodGradients[0], position: "relative", overflow: "hidden", flexShrink: 0 }}>
               {selected.images && selected.images.length > 0 ? (
                 <img src={selected.images[0]} alt={selected.title} style={{ width: "100%", height: "100%", objectFit: "cover", position: "absolute", inset: 0 }} />
               ) : (
@@ -323,7 +330,7 @@ export default function Food() {
               </div>
             </div>
           </div>
-        </div>
+        </>
       )}
 
       {/* ── Rating Modal ── */}
