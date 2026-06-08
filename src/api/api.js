@@ -51,7 +51,7 @@ export const loginUser = async (data) => {
 
 export const logoutUser = async () => {
   try {
-    const res = await api.post("/api/auth/logout");
+    const res = await api.post("/api/session/logout");
     return { success: true, data: res.data };
   } catch (err) {
     return { success: false, message: humanizeError(err) };

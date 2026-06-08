@@ -66,7 +66,7 @@ function PBtn({ children, loading, outline, full, type="button", onClick }) {
 function LeftPanel() {
   return (
     <div className="hide-on-mobile" style={{ flex:"0 0 44%", height:"100vh", background:"linear-gradient(160deg,#4C1D95 0%,#7C3AED 45%,#9333EA 100%)",
-      display:"flex", flexDirection:"column", padding:"40px 44px", position:"relative", overflow:"hidden" }}>
+      flexDirection:"column", padding:"40px 44px", position:"relative", overflow:"hidden" }}>
 
       {/* decorative circles */}
       <div style={{ position:"absolute", top:"-80px", right:"-80px", width:320, height:320,
@@ -215,15 +215,13 @@ export default function Login() {
   };
 
   return (
-    <div style={{ width:"100vw", height:"100vh", overflow:"hidden", display:"flex",
-      background:"#F4F0FF" }}>
+    <div className="app-layout" style={{ width:"100vw", height:"100vh", overflow:"hidden", background:"#F4F0FF" }}>
 
       {/* left branding panel */}
       <LeftPanel />
 
       {/* right form area */}
-      <div style={{ flex:1, height:"100vh", display:"flex", alignItems:"center", justifyContent:"center",
-        padding:"32px 40px", background:"#F4F0FF",
+      <div className="main-content" style={{ display:"flex", alignItems:"center", justifyContent:"center",
         transition:"opacity .36s ease, transform .36s ease",
         opacity: ready && !leaving ? 1 : 0,
         transform: leaving ? "translateX(40px)" : ready ? "translateX(0)" : "translateX(40px)" }}>
