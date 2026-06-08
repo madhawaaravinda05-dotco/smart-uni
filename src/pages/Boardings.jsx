@@ -264,12 +264,12 @@ export default function Boardings() {
           {/* Decoupled Background Overlay to prevent Chrome scrolling bugs */}
           <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,.5)", backdropFilter: "blur(4px)", zIndex: 100 }} />
           
-          {/* Scrollable Container */}
-          <div style={{ position: "fixed", inset: 0, zIndex: 101, overflowY: "auto", display: "flex", flexDirection: "column", padding: "40px 24px" }}
+          {/* Scrollable Container (Block layout, no flexbox vertical centering bugs) */}
+          <div style={{ position: "fixed", inset: 0, zIndex: 101, overflowY: "auto", padding: "40px 24px" }}
             onClick={() => setSelected(null)}>
             
             {/* The Modal */}
-            <div style={{ margin: "auto", background: theme.cardBg, borderRadius: 24, maxWidth: 520, width: "100%", overflow: "hidden", boxShadow: "0 24px 64px rgba(0,0,0,.25)", border: `1px solid ${theme.cardBorder}`, position: "relative" }}
+            <div style={{ margin: "0 auto", background: theme.cardBg, borderRadius: 24, maxWidth: 520, width: "100%", overflow: "hidden", boxShadow: "0 24px 64px rgba(0,0,0,.25)", border: `1px solid ${theme.cardBorder}`, position: "relative" }}
               onClick={e => e.stopPropagation()}>
               <div style={{ height: 180, background: gradients[0], position: "relative", overflow: "hidden", flexShrink: 0 }}>
               {selected.images && selected.images.length > 0 ? (
