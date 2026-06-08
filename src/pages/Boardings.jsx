@@ -178,7 +178,9 @@ export default function Boardings() {
                     <img src={b.images[0]} alt={b.title} style={{ width: "100%", height: "100%", objectFit: "cover", position: "absolute", inset: 0 }} />
                   ) : (
                     <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                      <HouseIcon size={48} color="rgba(255,255,255,0.6)" />
+                      <div style={{ width: 64, height: 64, borderRadius: "50%", background: "rgba(0,0,0,0.15)", display: "flex", alignItems: "center", justifyContent: "center", backdropFilter: "blur(4px)" }}>
+                        <HouseIcon size={32} color="white" />
+                      </div>
                     </div>
                   )}
                   <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,0,0,0.1), transparent 40%, rgba(0,0,0,0.5))" }} />
@@ -267,7 +269,9 @@ export default function Boardings() {
                 <img src={selected.images[0]} alt={selected.title} style={{ width: "100%", height: "100%", objectFit: "cover", position: "absolute", inset: 0 }} />
               ) : (
                 <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                  <HouseIcon size={64} color="rgba(255,255,255,0.6)" />
+                  <div style={{ width: 80, height: 80, borderRadius: "50%", background: "rgba(0,0,0,0.15)", display: "flex", alignItems: "center", justifyContent: "center", backdropFilter: "blur(4px)" }}>
+                    <HouseIcon size={40} color="white" />
+                  </div>
                 </div>
               )}
               <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.6))" }} />
