@@ -28,7 +28,7 @@ const CATEGORIES = [
   { value: "TRANSPORT",label: "Transport / Bus route",    Icon: BusIcon,   color: "#16A34A", bg: "#F0FDF4" },
 ];
 
-const FOOD_TAGS = ["Vegetarian", "Veg-Only", "Halal", "Non-Veg"];
+const FOOD_TAGS = ["Vegetarian", "Veg-Only", "Non-Veg"];
 const GENDER_OPTIONS = [
   { value: "",       label: "Select..." },
   { value: "Boys",   label: "Boys only" },
