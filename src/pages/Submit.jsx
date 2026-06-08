@@ -1,7 +1,7 @@
 import { useState, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { createPost } from "../api/api";
+import { createPost, uploadPostImages } from "../api/api";
 import { Button, Input, Select, PageHeader, ErrorBox } from "../components/ui";
 import { useToast } from "../components/Toast";
 import { HouseIcon, FoodIcon, BusIcon, MapPinIcon, CheckIcon, XIcon, ImageIcon, UploadIcon, TrashIcon } from "../components/Icons";
@@ -117,6 +117,19 @@ export default function Submit() {
     setErrors({});
     setLoading(true);
 
+    let finalImageUrls = [];
+    if (images.length > 0) {
+      const formData = new FormData();
+      images.forEach((img) => formData.append("images", img.file));
+      const uploadRes = await uploadPostImages(formData);
+      if (!uploadRes.success) {
+        setLoading(false);
+        setServerError(uploadRes.message || "Failed to upload images. Please try again.");
+        return;
+      }
+      finalImageUrls = uploadRes.data;
+    }
+
     const payload = {
       category,
       title: form.title.trim(),
@@ -124,9 +137,7 @@ export default function Submit() {
       area: form.area.trim(),
       university: user?.university,
       ...(pickedLocation && { location: { latitude: pickedLocation[0], longitude: pickedLocation[1] } }),
-      // images: in production these would be uploaded to Cloudinary/S3 first
-      // and the returned URLs stored. For now we store the file names.
-      images: images.map((img) => img.name),
+      images: finalImageUrls,
       ...(category === "BOARDING" && { price: Number(form.price), genderType: form.genderType, hasKitchen: form.hasKitchen, contact: form.contact.trim() }),
       ...(category === "FOOD" && { priceRange: form.price, tags: form.tags }),
       ...(category === "TRANSPORT" && { routeNumber: form.routeNumber.trim(), from: form.from.trim(), to: form.to.trim() }),

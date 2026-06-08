@@ -171,7 +171,12 @@ export default function Food() {
                 onClick={() => setSelected(f)}
               >
                 {/* Header */}
-                <div style={{ height: 120, background: grad, position: "relative" }}>
+                <div style={{ height: 120, background: grad, position: "relative", overflow: "hidden" }}>
+                  {f.images && f.images.length > 0 && (
+                    <img src={f.images[0]} alt={f.title} style={{ width: "100%", height: "100%", objectFit: "cover", position: "absolute", inset: 0 }} />
+                  )}
+                  <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.5))" }} />
+                  
                   {rating > 0 && (
                     <div style={{
                       position: "absolute", bottom: 10, right: 10,
@@ -241,7 +246,12 @@ export default function Food() {
           onClick={() => setSelected(null)}>
           <div style={{ background: theme.cardBg, borderRadius: 24, maxWidth: 480, width: "100%", overflow: "hidden", boxShadow: "0 24px 64px rgba(0,0,0,.25)", border: `1px solid ${theme.cardBorder}` }}
             onClick={e => e.stopPropagation()}>
-            <div style={{ height: 160, background: foodGradients[0], position: "relative" }}>
+            <div style={{ height: 160, background: foodGradients[0], position: "relative", overflow: "hidden" }}>
+              {selected.images && selected.images.length > 0 && (
+                <img src={selected.images[0]} alt={selected.title} style={{ width: "100%", height: "100%", objectFit: "cover", position: "absolute", inset: 0 }} />
+              )}
+              <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.6))" }} />
+
               {getRating(selected) > 0 && (
                 <div style={{ position: "absolute", bottom: 12, right: 14, background: "rgba(0,0,0,.55)", backdropFilter: "blur(8px)", borderRadius: 99, padding: "4px 12px", display: "flex", alignItems: "center", gap: 5 }}>
                   <svg width={13} height={13} viewBox="0 0 24 24" fill="#F59E0B" stroke="#F59E0B" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>

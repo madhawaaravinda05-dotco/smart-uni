@@ -90,6 +90,17 @@ export const createPost = async (data) => {
   }
 };
 
+export const uploadPostImages = async (formData) => {
+  try {
+    const res = await api.post("/api/posts/upload-images", formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+    return { success: true, data: res.data };
+  } catch (err) {
+    return { success: false, message: humanizeError(err) };
+  }
+};
+
 export const updatePostStatus = async (id, status) => {
   try {
     const res = await api.put(`/api/posts/${id}/status`, { status });
