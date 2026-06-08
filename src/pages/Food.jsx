@@ -61,7 +61,7 @@ export default function Food() {
     load();
   }, []);
 
-  const allTags = ["Vegetarian", "Veg-Only", "Halal", "Non-Veg"];
+  const allTags = ["Vegetarian", "Veg-Only", "Non-Veg"];
 
   const filtered = posts
     .filter((p) => {
