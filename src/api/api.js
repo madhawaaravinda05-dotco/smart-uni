@@ -92,9 +92,7 @@ export const createPost = async (data) => {
 
 export const uploadPostImages = async (formData) => {
   try {
-    const res = await api.post("/api/posts/upload-images", formData, {
-      headers: { "Content-Type": "multipart/form-data" },
-    });
+    const res = await api.post("/api/posts/upload-images", formData);
     return { success: true, data: res.data };
   } catch (err) {
     return { success: false, message: humanizeError(err) };
@@ -169,9 +167,7 @@ export const approveAdminRequest = async (id) => {
 
 export const submitAdminRequest = async (formData) => {
   try {
-    const res = await api.post("/api/admin/requests", formData, {
-      headers: { "Content-Type": "multipart/form-data" },
-    });
+    const res = await api.post("/api/admin/requests", formData);
     return { success: true, data: res.data };
   } catch (err) {
     return { success: false, message: humanizeError(err) };
