@@ -174,8 +174,12 @@ export default function Boardings() {
               >
                 {/* Gradient/Image header */}
                 <div style={{ height: 130, background: grad, position: "relative", overflow: "hidden" }}>
-                  {b.images && b.images.length > 0 && (
+                  {b.images && b.images.length > 0 ? (
                     <img src={b.images[0]} alt={b.title} style={{ width: "100%", height: "100%", objectFit: "cover", position: "absolute", inset: 0 }} />
+                  ) : (
+                    <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                      <HouseIcon size={48} color="rgba(255,255,255,0.6)" />
+                    </div>
                   )}
                   <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,0,0,0.1), transparent 40%, rgba(0,0,0,0.5))" }} />
                   
@@ -259,8 +263,12 @@ export default function Boardings() {
           <div style={{ background: theme.cardBg, borderRadius: 24, maxWidth: 520, width: "100%", overflow: "hidden", boxShadow: "0 24px 64px rgba(0,0,0,.25)", border: `1px solid ${theme.cardBorder}` }}
             onClick={e => e.stopPropagation()}>
             <div style={{ height: 180, background: gradients[0], position: "relative", overflow: "hidden" }}>
-              {selected.images && selected.images.length > 0 && (
+              {selected.images && selected.images.length > 0 ? (
                 <img src={selected.images[0]} alt={selected.title} style={{ width: "100%", height: "100%", objectFit: "cover", position: "absolute", inset: 0 }} />
+              ) : (
+                <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <HouseIcon size={64} color="rgba(255,255,255,0.6)" />
+                </div>
               )}
               <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.6))" }} />
               

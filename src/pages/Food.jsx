@@ -172,8 +172,12 @@ export default function Food() {
               >
                 {/* Header */}
                 <div style={{ height: 120, background: grad, position: "relative", overflow: "hidden" }}>
-                  {f.images && f.images.length > 0 && (
+                  {f.images && f.images.length > 0 ? (
                     <img src={f.images[0]} alt={f.title} style={{ width: "100%", height: "100%", objectFit: "cover", position: "absolute", inset: 0 }} />
+                  ) : (
+                    <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                      <FoodIcon size={48} color="rgba(255,255,255,0.6)" />
+                    </div>
                   )}
                   <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.5))" }} />
                   
@@ -247,8 +251,12 @@ export default function Food() {
           <div style={{ background: theme.cardBg, borderRadius: 24, maxWidth: 480, width: "100%", overflow: "hidden", boxShadow: "0 24px 64px rgba(0,0,0,.25)", border: `1px solid ${theme.cardBorder}` }}
             onClick={e => e.stopPropagation()}>
             <div style={{ height: 160, background: foodGradients[0], position: "relative", overflow: "hidden" }}>
-              {selected.images && selected.images.length > 0 && (
+              {selected.images && selected.images.length > 0 ? (
                 <img src={selected.images[0]} alt={selected.title} style={{ width: "100%", height: "100%", objectFit: "cover", position: "absolute", inset: 0 }} />
+              ) : (
+                <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <FoodIcon size={64} color="rgba(255,255,255,0.6)" />
+                </div>
               )}
               <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.6))" }} />
 
