@@ -262,7 +262,7 @@ export default function Boardings() {
       {selected && (
         <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,.5)", backdropFilter: "blur(4px)", zIndex: 100, display: "flex", alignItems: "center", justifyContent: "center", padding: 24 }}
           onClick={() => setSelected(null)}>
-          <div style={{ background: theme.cardBg, borderRadius: 24, maxWidth: 520, width: "100%", overflow: "hidden", boxShadow: "0 24px 64px rgba(0,0,0,.25)", border: `1px solid ${theme.cardBorder}` }}
+          <div style={{ background: theme.cardBg, borderRadius: 24, maxWidth: 520, width: "100%", maxHeight: "90vh", overflowY: "auto", overflowX: "hidden", boxShadow: "0 24px 64px rgba(0,0,0,.25)", border: `1px solid ${theme.cardBorder}` }}
             onClick={e => e.stopPropagation()}>
             <div style={{ height: 180, background: gradients[0], position: "relative", overflow: "hidden" }}>
               {selected.images && selected.images.length > 0 ? (
