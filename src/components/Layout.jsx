@@ -24,6 +24,7 @@ const adminNav = [
 ];
 const masterNav = [
   { to: "/master",  label: "Master Panel",Icon: BuildingIcon,    color: "#FCA5A5" },
+  { to: "/admin-management", label: "Manage Admins", Icon: ShieldCheckIcon, color: "#6EE7B7" },
   { to: "/profile", label: "My Profile",  Icon: UserIcon,        color: "#F9A8D4" },
 ];
 
@@ -37,6 +38,7 @@ const PAGE_TITLES = {
   "/profile":   "My Profile",
   "/admin":     "Admin Desk",
   "/master":    "Master Panel",
+  "/admin-management": "Manage Admins",
 };
 
 const NOTIF_STYLE = {

@@ -15,6 +15,7 @@ import Submit from "./pages/Submit";
 import Profile from "./pages/Profile";
 import AdminDesk from "./pages/AdminDesk";
 import MasterPanel from "./pages/MasterPanel";
+import AdminManagement from "./pages/AdminManagement";
 
 // ─── Route Guards ─────────────────────────────────────────────────────────────
 
@@ -79,6 +80,7 @@ function AppRoutes() {
 
       {/* Master Admin */}
       <Route path="/master" element={<MasterRoute><MasterPanel /></MasterRoute>} />
+      <Route path="/admin-management" element={<MasterRoute><AdminManagement /></MasterRoute>} />
 
       {/* Fallback */}
       <Route path="*" element={<Navigate to="/" replace />} />
