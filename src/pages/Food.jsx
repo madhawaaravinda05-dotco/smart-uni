@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import { getActivePosts, reportPost, deletePost } from "../api/api";
-import { PageHeader, LoadingScreen, ErrorBox, EmptyState, StarRating } from "../components/ui";
+import { PageHeader, LoadingScreen, ErrorBox, EmptyState, StarRating, Dropdown } from "../components/ui";
 import { FoodIcon, MapPinIcon, SearchIcon, XIcon, FlagIcon } from "../components/Icons";
 import { useToast } from "../components/Toast";
 import RatingModal from "../components/RatingModal";
@@ -128,14 +128,14 @@ export default function Food() {
           ))}
         </div>
 
-        <select 
+        <Dropdown
           value={sortBy} 
-          onChange={(e) => setSortBy(e.target.value)}
-          className="px-4 py-3 rounded-xl border border-border bg-card text-slate-600 dark:text-slate-300 text-sm font-medium outline-none cursor-pointer focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 transition-all w-full md:w-auto"
-        >
-          <option value="rating">Highest Rated</option>
-          <option value="name">Name A–Z</option>
-        </select>
+          onChange={setSortBy}
+          options={[
+            { value: "rating", label: "Highest Rated" },
+            { value: "name", label: "Name A–Z" }
+          ]}
+        />
       </div>
 
       {loading && <LoadingScreen message="Finding food spots near you..." />}

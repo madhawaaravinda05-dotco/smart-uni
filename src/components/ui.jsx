@@ -91,11 +91,13 @@ export function Input({ label, error, icon, hint, suffix, className = "", ...pro
 }
 
 // ─── Select ───────────────────────────────────────────────────────────────────
-export function Select({ label, error, options = [], icon, className = "", ...props }) {
+export function Select({ label, error, options = [], icon, className = "", value, onChange, ...props }) {
   const hasError = !!error;
+  const [open, setOpen] = useState(false);
+  const selected = options.find(o => o.value === value) || options[0];
 
   return (
-    <div className="flex flex-col gap-1.5 w-full">
+    <div className={`flex flex-col gap-1.5 w-full ${className}`}>
       {label && (
         <label className={`text-sm font-semibold transition-colors duration-200 flex items-center gap-1.5 ${hasError ? 'text-red-600' : 'text-slate-600 dark:text-slate-300'}`}>
           {label}
@@ -103,29 +105,58 @@ export function Select({ label, error, options = [], icon, className = "", ...pr
       )}
       <div className="relative w-full group">
         {icon && (
-          <span className={`absolute left-3.5 top-1/2 -translate-y-1/2 z-10 transition-colors duration-200 ${hasError ? 'text-red-500' : 'text-slate-400 group-focus-within:text-primary-500'}`}>
+          <span className={`absolute left-3.5 top-1/2 -translate-y-1/2 z-10 transition-colors duration-200 ${hasError ? 'text-red-500' : (open ? 'text-primary-500' : 'text-slate-400 group-hover:text-primary-500')}`}>
             {icon}
           </span>
         )}
-        <select
-          className={`w-full rounded-xl text-sm transition-all duration-200 outline-none cursor-pointer appearance-none
-            ${icon ? 'pl-10' : 'pl-3.5'} pr-10 py-3
+        
+        {/* trigger */}
+        <div
+          onClick={() => setOpen(!open)}
+          className={`w-full rounded-xl text-sm transition-all duration-200 outline-none cursor-pointer flex items-center justify-between select-none
+            ${icon ? 'pl-10' : 'pl-4'} pr-4 py-3
             ${hasError 
               ? 'bg-red-50 border-2 border-red-300 text-slate-900 focus:border-red-500 focus:ring-4 focus:ring-red-100' 
-              : 'bg-slate-50 dark:bg-slate-900/50 border-2 border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 focus:bg-white dark:focus:bg-slate-800 focus:border-primary-500 focus:ring-4 focus:ring-primary-500/20'
-            } ${className}`}
-          {...props}
+              : 'bg-slate-50 dark:bg-slate-900/50 border-2 border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 hover:border-primary-400'
+            }
+            ${open && !hasError ? 'bg-white dark:bg-slate-800 border-primary-500 ring-4 ring-primary-500/20' : ''}`}
         >
-          {options.map(({ value, label: l }) => (
-            <option key={value} value={value}>{l}</option>
-          ))}
-        </select>
-        <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none group-focus-within:rotate-180 transition-transform duration-200">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <polyline points="6 9 12 15 18 9"/>
-          </svg>
-        </span>
+          <span className={selected?.value === "" ? "text-slate-400" : ""}>{selected?.label || "Select..."}</span>
+          <span className={`text-slate-400 transition-transform duration-200 ${open ? 'rotate-180 text-primary-500' : 'group-hover:text-slate-600 dark:group-hover:text-slate-300'}`}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </span>
+        </div>
+
+        {/* dropdown menu */}
+        {open && (
+          <>
+            <div className="fixed inset-0 z-[99]" onClick={() => setOpen(false)} />
+            <div className="absolute top-[calc(100%+8px)] left-0 w-full bg-white dark:bg-slate-800 border-2 border-slate-100 dark:border-slate-700 rounded-xl shadow-[0_12px_40px_rgba(0,0,0,0.12)] z-[100] py-2 animate-slideDown overflow-y-auto max-h-60 origin-top flex flex-col">
+              {options.map(opt => (
+                <div 
+                  key={opt.value}
+                  onClick={() => { if (onChange) onChange({ target: { value: opt.value } }); setOpen(false); }}
+                  className={`px-4 py-2.5 text-sm font-medium cursor-pointer transition-colors flex items-center justify-between ${
+                    value === opt.value 
+                      ? 'bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-400' 
+                      : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/50'
+                  }`}
+                >
+                  <span className={opt.value === "" ? "text-slate-400" : ""}>{opt.label}</span>
+                  {value === opt.value && (
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" className="text-primary-600 dark:text-primary-400">
+                      <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                  )}
+                </div>
+              ))}
+            </div>
+          </>
+        )}
       </div>
+      
       {error && (
         <p className="text-xs text-red-600 font-medium flex items-center gap-1 animate-slideDown">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
@@ -307,6 +338,57 @@ export function ConfirmModal({ isOpen, title, message, onConfirm, onCancel, conf
           <Button variant={variant} onClick={onConfirm} loading={loading}>{confirmText}</Button>
         </div>
       </div>
+    </div>
+  );
+}
+
+// ─── Dropdown ─────────────────────────────────────────────────────────────────
+export function Dropdown({ value, onChange, options = [], className = "" }) {
+  const [open, setOpen] = useState(false);
+  const selected = options.find(o => o.value === value) || options[0];
+
+  return (
+    <div className={`relative w-full md:w-48 ${className}`}>
+      {/* trigger button */}
+      <div 
+        onClick={() => setOpen(!open)}
+        className={`px-4 py-3 rounded-xl border bg-card text-sm font-medium cursor-pointer transition-all flex items-center justify-between group select-none ${open ? 'border-orange-500 ring-2 ring-orange-500/20 text-slate-800 dark:text-white' : 'border-border text-slate-600 dark:text-slate-300 hover:border-orange-300 hover:shadow-sm'}`}
+      >
+        <span className="truncate mr-2">{selected?.label}</span>
+        <svg 
+          width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
+          className={`text-slate-400 transition-transform duration-200 ${open ? 'rotate-180 text-orange-500' : 'group-hover:text-slate-600 dark:group-hover:text-slate-300'}`}
+        >
+          <polyline points="6 9 12 15 18 9"/>
+        </svg>
+      </div>
+
+      {/* dropdown menu */}
+      {open && (
+        <>
+          <div className="fixed inset-0 z-[99]" onClick={() => setOpen(false)} />
+          <div className="absolute top-[calc(100%+8px)] left-0 w-full bg-card border border-border rounded-xl shadow-[0_12px_40px_rgba(0,0,0,0.12)] z-[100] py-2 animate-slideDown overflow-hidden flex flex-col origin-top">
+            {options.map(opt => (
+              <div 
+                key={opt.value}
+                onClick={() => { onChange(opt.value); setOpen(false); }}
+                className={`px-4 py-2.5 text-sm font-medium cursor-pointer transition-colors flex items-center justify-between ${
+                  value === opt.value 
+                    ? 'bg-orange-50 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400' 
+                    : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/50'
+                }`}
+              >
+                <span>{opt.label}</span>
+                {value === opt.value && (
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
+                )}
+              </div>
+            ))}
+          </div>
+        </>
+      )}
     </div>
   );
 }
