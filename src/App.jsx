@@ -4,8 +4,7 @@ import { AuthProvider, useAuth } from "./context/AuthContext";
 import { ThemeProvider } from "./context/ThemeContext";
 import Layout from "./components/Layout";
 
-import Login from "./pages/Login";
-import Register from "./pages/Register";
+import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
 import Boardings from "./pages/Boardings";
 import Food from "./pages/Food";
@@ -60,8 +59,8 @@ function AppRoutes() {
   return (
     <Routes>
       {/* Public */}
-      <Route path="/login"    element={<Login />} />
-      <Route path="/register" element={<Register />} />
+      <Route path="/login"    element={<Auth />} />
+      <Route path="/register" element={<Auth />} />
 
       {/* Root redirect */}
       <Route path="/" element={<RootRedirect />} />

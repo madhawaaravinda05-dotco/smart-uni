@@ -170,7 +170,8 @@ function LeftPanel() {
 }
 
 // ─── Main Register component ──────────────────────────────────────────────────
-export default function Register() {
+/* ─── Main component ──────────────────────────────────────────────────────────── */
+export default function Register({ isChild }) {
   const navigate = useNavigate();
   const [form, setForm] = useState({name:"",email:"",password:"",confirmPassword:"",university:"",town:"",yearOfStudy:"",role:"ROLE_STUDENT"});
   const [errors, setErrors]         = useState({});
@@ -231,15 +232,10 @@ export default function Register() {
 
   const towns=(TOWNS[form.university]||[]).map(t=>({v:t,l:t}));
 
-  return (
-    <div className="flex w-screen h-screen overflow-hidden bg-slate-50 dark:bg-slate-900">
-      <LeftPanel/>
+  const content = (
+    <div className="w-full max-w-[420px]">
 
-      {/* right form area */}
-      <div className={`flex-1 h-screen flex items-center justify-center p-6 md:p-10 transition-all duration-300 ease-out ${ready && !leaving ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}>
-        <div className="w-full max-w-[420px]">
-
-          {/* step progress */}
+      {/* step progress */}
           {step < 3 && (
             <div className="flex items-center gap-2 mb-6">
               {[1,2].map((n,i)=>(
@@ -394,7 +390,16 @@ export default function Register() {
               </PBtn>
             </div>
           )}
-        </div>
+    </div>
+  );
+
+  if (isChild) return content;
+
+  return (
+    <div className="flex w-screen h-screen overflow-hidden bg-slate-50 dark:bg-slate-900">
+      <LeftPanel/>
+      <div className={`flex-1 h-screen flex items-center justify-center p-6 md:p-10 transition-all duration-300 ease-out ${ready && !leaving ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}>
+        {content}
       </div>
     </div>
   );

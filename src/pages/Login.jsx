@@ -116,7 +116,7 @@ function LeftPanel() {
 }
 
 /* ─── Login page ────────────────────────────────────────────────────────────── */
-export default function Login() {
+export default function Login({ isChild }) {
   const navigate  = useNavigate();
   const location  = useLocation();
   const { login } = useAuth();
@@ -159,28 +159,17 @@ export default function Login() {
   };
 
 
+  const content = (
+    <div className="w-full max-w-[400px]">
 
-  return (
-    <div className="flex w-screen h-screen overflow-hidden bg-slate-50 dark:bg-slate-900">
-      
-      {/* left branding panel */}
-      <LeftPanel />
-
-      {/* right form area */}
-      <div 
-        className={`flex-1 flex items-center justify-center p-6 md:p-12 transition-all duration-300 ease-out
-          ${ready && !leaving ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}
-      >
-        <div className="w-full max-w-[400px]">
-
-          {/* heading */}
-          <div className="mb-8">
-            <div className="inline-flex items-center gap-2 bg-primary-50 dark:bg-primary-900/30 border border-primary-200 dark:border-primary-800 rounded-full px-3.5 py-1.5 mb-5 shadow-sm">
-              <div className="w-1.5 h-1.5 rounded-full bg-green-500 shadow-[0_0_8px_#22c55e]" />
-              <span className="text-[11.5px] text-primary-700 dark:text-primary-400 font-bold">
-                Available at 39+ universities
-              </span>
-            </div>
+      {/* heading */}
+      <div className="mb-8">
+        <div className="inline-flex items-center gap-2 bg-primary-50 dark:bg-primary-900/30 border border-primary-200 dark:border-primary-800 rounded-full px-3.5 py-1.5 mb-5 shadow-sm">
+          <div className="w-1.5 h-1.5 rounded-full bg-green-500 shadow-[0_0_8px_#22c55e]" />
+          <span className="text-[11.5px] text-primary-700 dark:text-primary-400 font-bold">
+            Available at 39+ universities
+          </span>
+        </div>
             <h2 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight leading-tight mb-2">Welcome back</h2>
             <p className="text-[13.5px] text-slate-500 font-medium">
               Sign in to your UniCompanion account
@@ -227,13 +216,29 @@ export default function Login() {
 
 
 
-          <p className="text-center text-[13.5px] font-medium text-slate-500 mt-8">
-            Don't have an account?{" "}
-            <button onClick={goRegister} className="bg-transparent border-none text-primary-600 dark:text-primary-400 font-bold cursor-pointer p-0 hover:underline hover:text-primary-700">
-              Create one free &rarr;
-            </button>
-          </p>
-        </div>
+      <p className="text-center text-[13.5px] font-medium text-slate-500 mt-8">
+        Don't have an account?{" "}
+        <button type="button" onClick={goRegister} className="bg-transparent border-none text-primary-600 dark:text-primary-400 font-bold cursor-pointer p-0 hover:underline hover:text-primary-700">
+          Create one free &rarr;
+        </button>
+      </p>
+    </div>
+  );
+
+  if (isChild) return content;
+
+  return (
+    <div className="flex w-screen h-screen overflow-hidden bg-slate-50 dark:bg-slate-900">
+      
+      {/* left branding panel */}
+      <LeftPanel />
+
+      {/* right form area */}
+      <div 
+        className={`flex-1 flex items-center justify-center p-6 md:p-12 transition-all duration-300 ease-out
+          ${ready && !leaving ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}
+      >
+        {content}
       </div>
     </div>
   );
