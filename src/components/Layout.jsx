@@ -10,22 +10,22 @@ import {
 } from "./Icons";
 
 const studentNav = [
-  { to: "/dashboard", label: "Dashboard",   Icon: HomeIcon,        color: "#A78BFA" },
-  { to: "/boardings", label: "Boardings",   Icon: HouseIcon,       color: "#C4B5FD" },
-  { to: "/food",      label: "Food & Dining",Icon: FoodIcon,       color: "#FCA5A5" },
-  { to: "/transport", label: "Transport",   Icon: BusIcon,         color: "#6EE7B7" },
-  { to: "/map",       label: "Map View",    Icon: MapIcon,         color: "#93C5FD" },
-  { to: "/submit",    label: "Add Listing", Icon: PlusIcon,        color: "#FDE68A", hot: true },
-  { to: "/profile",   label: "My Profile",  Icon: UserIcon,        color: "#F9A8D4" },
+  { to: "/dashboard", label: "Dashboard",   Icon: HomeIcon,        color: "text-purple-500" },
+  { to: "/boardings", label: "Boardings",   Icon: HouseIcon,       color: "text-indigo-400" },
+  { to: "/food",      label: "Food & Dining",Icon: FoodIcon,       color: "text-red-400" },
+  { to: "/transport", label: "Transport",   Icon: BusIcon,         color: "text-emerald-400" },
+  { to: "/map",       label: "Map View",    Icon: MapIcon,         color: "text-blue-400" },
+  { to: "/submit",    label: "Add Listing", Icon: PlusIcon,        color: "text-amber-400", hot: true },
+  { to: "/profile",   label: "My Profile",  Icon: UserIcon,        color: "text-pink-400" },
 ];
 const adminNav = [
-  { to: "/admin",   label: "Admin Desk",  Icon: ShieldCheckIcon, color: "#6EE7B7" },
-  { to: "/profile", label: "My Profile",  Icon: UserIcon,        color: "#F9A8D4" },
+  { to: "/admin",   label: "Admin Desk",  Icon: ShieldCheckIcon, color: "text-emerald-400" },
+  { to: "/profile", label: "My Profile",  Icon: UserIcon,        color: "text-pink-400" },
 ];
 const masterNav = [
-  { to: "/master",  label: "Master Panel",Icon: BuildingIcon,    color: "#FCA5A5" },
-  { to: "/admin-management", label: "Manage Admins", Icon: ShieldCheckIcon, color: "#6EE7B7" },
-  { to: "/profile", label: "My Profile",  Icon: UserIcon,        color: "#F9A8D4" },
+  { to: "/master",  label: "Master Panel",Icon: BuildingIcon,    color: "text-red-400" },
+  { to: "/admin-management", label: "Manage Admins", Icon: ShieldCheckIcon, color: "text-emerald-400" },
+  { to: "/profile", label: "My Profile",  Icon: UserIcon,        color: "text-pink-400" },
 ];
 
 const PAGE_TITLES = {
@@ -41,74 +41,33 @@ const PAGE_TITLES = {
   "/admin-management": "Manage Admins",
 };
 
-const NOTIF_STYLE = {
-  success: { color: "#16A34A", bg: "#F0FDF4", border: "#86EFAC", Icon: CheckIcon },
-  info:    { color: "var(--p600)", bg: "var(--p50)", border: "var(--p200)", Icon: InfoIcon  },
-  warning: { color: "#D97706", bg: "#FFFBEB", border: "#FDE68A", Icon: AlertTriangleIcon },
-  danger:  { color: "#DC2626", bg: "#FEF2F2", border: "#FCA5A5", Icon: AlertTriangleIcon },
-};
-
 /* ─── Nav Item ───────────────────────────────────────────────────────────────── */
 function NavItem({ item, isActive, collapsed }) {
-  const [hov, setHov] = useState(false);
-  const active = isActive || hov;
-
   return (
     <Link
       to={item.to}
       title={collapsed ? item.label : undefined}
-      onMouseEnter={() => setHov(true)}
-      onMouseLeave={() => setHov(false)}
-      style={{
-        display: "flex", alignItems: "center",
-        gap: collapsed ? 0 : 11,
-        padding: collapsed ? "10px 0" : "10px 13px",
-        borderRadius: 14,
-        textDecoration: "none",
-        justifyContent: collapsed ? "center" : "flex-start",
-        transition: "all 0.2s cubic-bezier(0.34,1.56,0.64,1)",
-        position: "relative",
-        background: isActive
-          ? "rgba(255,255,255,.18)"
-          : hov ? "rgba(255,255,255,.1)" : "transparent",
-        color: active ? "#fff" : "rgba(255,255,255,.58)",
-        fontWeight: isActive ? 700 : 500,
-        fontSize: 13,
-        boxShadow: isActive ? "0 4px 18px rgba(0,0,0,.14), inset 0 1px 0 rgba(255,255,255,.15)" : "none",
-        border: isActive ? "1px solid rgba(255,255,255,.18)" : "1px solid transparent",
-      }}
+      className={`group relative flex items-center transition-all duration-300 ease-out rounded-xl ${collapsed ? "justify-center py-3" : "justify-start px-3 py-2.5 gap-3"}
+        ${isActive 
+          ? "bg-white/20 dark:bg-white/10 text-white font-bold shadow-[0_4px_18px_rgba(0,0,0,0.14)] border border-white/20" 
+          : "text-white/60 font-medium hover:bg-white/10 hover:text-white border border-transparent"}
+      `}
     >
-      {/* Active glow dot */}
       {isActive && !collapsed && (
-        <div style={{
-          position: "absolute", left: -1, top: "50%", transform: "translateY(-50%)",
-          width: 3, height: 22, borderRadius: "0 3px 3px 0",
-          background: "rgba(255,255,255,.9)",
-          boxShadow: "0 0 8px rgba(255,255,255,.7)",
-        }}/>
+        <div className="absolute -left-px top-1/2 -translate-y-1/2 w-1 h-6 bg-white rounded-r-md shadow-[0_0_8px_rgba(255,255,255,0.7)]" />
       )}
 
-      {/* Icon */}
-      <span style={{
-        display: "flex", alignItems: "center", justifyContent: "center",
-        width: 32, height: 32, flexShrink: 0, borderRadius: 10,
-        background: isActive ? "rgba(255,255,255,.22)" : hov ? "rgba(255,255,255,.1)" : "transparent",
-        transition: "all 0.2s ease",
-        boxShadow: isActive ? "0 2px 8px rgba(0,0,0,.12)" : "none",
-      }}>
-        <item.Icon size={16} color={active ? "#fff" : "rgba(255,255,255,.6)"} />
+      <span className={`flex items-center justify-center shrink-0 w-8 h-8 rounded-lg transition-all duration-200
+        ${isActive ? "bg-white/20 shadow-md" : "bg-transparent group-hover:bg-white/10"}
+      `}>
+        <item.Icon size={16} className={isActive ? "text-white" : "text-white/60 group-hover:text-white"} />
       </span>
 
       {!collapsed && (
         <>
-          <span style={{ flex: 1, letterSpacing: "-0.1px" }}>{item.label}</span>
+          <span className="flex-1 tracking-tight">{item.label}</span>
           {item.hot && (
-            <span style={{
-              fontSize: 8.5, fontWeight: 900, padding: "2px 7px", borderRadius: 99,
-              background: "linear-gradient(135deg,#F59E0B,#EF4444)",
-              color: "#fff", letterSpacing: "0.6px", textTransform: "uppercase",
-              animation: "glowPulse 2s ease infinite",
-            }}>
+            <span className="text-[8.5px] font-black px-2 py-0.5 rounded-full bg-gradient-to-br from-amber-500 to-red-500 text-white tracking-wider uppercase animate-pulse shadow-[0_0_10px_rgba(245,158,11,0.5)]">
               NEW
             </span>
           )}
@@ -119,26 +78,13 @@ function NavItem({ item, isActive, collapsed }) {
 }
 
 /* ─── Notification Panel ─────────────────────────────────────────────────────── */
-function NotifPanel({ notifications, unreadCount, markAllRead, markRead,
-                      dismissNotification, onClose, theme, anchorRect }) {
+function NotifPanel({ notifications, unreadCount, markAllRead, markRead, dismissNotification, onClose, anchorRect }) {
   const navigate = useNavigate();
-  const top   = (anchorRect?.bottom ?? 62) + 10;
+  const top = (anchorRect?.bottom ?? 62) + 10;
   const right = Math.max(window.innerWidth - (anchorRect?.right ?? 0), 8);
-
-  // Category → route mapping
-  const POST_ROUTES = { BOARDING: "/boardings", FOOD: "/food", TRANSPORT: "/transport" };
-
-  // Derive icon background colour per notification type
-  const NOTIF_COLORS = {
-    success: { bg: "#F0FDF4", border: "#86EFAC", dot: "#16A34A", icon: "#16A34A" },
-    info:    { bg: "var(--p50)", border: "var(--p200)", dot: "var(--p600)", icon: "var(--p600)" },
-    warning: { bg: "#FFFBEB", border: "#FDE68A", dot: "#D97706", icon: "#D97706" },
-    danger:  { bg: "#FEF2F2", border: "#FCA5A5", dot: "#DC2626", icon: "#DC2626" },
-  };
 
   const handleClick = (n) => {
     markRead(n.id);
-    // Navigate to the relevant page if we know the category
     if (n.title.includes("🏠")) { onClose(); navigate("/boardings"); }
     else if (n.title.includes("🍽️")) { onClose(); navigate("/food"); }
     else if (n.title.includes("🚌")) { onClose(); navigate("/transport"); }
@@ -146,207 +92,74 @@ function NotifPanel({ notifications, unreadCount, markAllRead, markRead,
 
   return (
     <>
-      <div onClick={onClose} style={{ position: "fixed", inset: 0, zIndex: 1000 }} />
-      <div style={{
-        position: "fixed", top, right,
-        width: 380, maxWidth: "calc(100vw - 16px)",
-        background: theme.cardBg,
-        border: `1px solid ${theme.cardBorder}`,
-        borderRadius: 22,
-        boxShadow: "0 24px 64px rgba(8,145,178,.22), 0 4px 16px rgba(0,0,0,.08)",
-        zIndex: 1001, overflow: "hidden",
-        animation: "slideDown 0.22s cubic-bezier(0.34,1.56,0.64,1) both",
-      }}>
-
-        {/* ── Header ── */}
-        <div style={{
-          padding: "15px 18px 12px",
-          borderBottom: `1px solid ${theme.divider}`,
-          display: "flex", alignItems: "center", justifyContent: "space-between",
-          background: `linear-gradient(135deg, ${theme.accentBg}, ${theme.cardBg})`,
-        }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-            <div>
-              <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
-                <h3 style={{ fontSize: 14, fontWeight: 800, color: theme.textPrimary }}>
-                  Notifications
-                </h3>
-                {/* Live pulse indicator */}
-                <div style={{ display: "flex", alignItems: "center", gap: 4,
-                  background: "#F0FDF4", border: "1px solid #86EFAC",
-                  borderRadius: 99, padding: "2px 8px" }}>
-                  <div style={{ width: 6, height: 6, borderRadius: "50%",
-                    background: "#16A34A", boxShadow: "0 0 0 0 #16A34A",
-                    animation: "livePulse 1.8s ease infinite" }} />
-                  <span style={{ fontSize: 9.5, fontWeight: 700, color: "#15803D" }}>LIVE</span>
-                </div>
+      <div onClick={onClose} className="fixed inset-0 z-[1000]" />
+      <div 
+        style={{ top, right }}
+        className="fixed w-[380px] max-w-[calc(100vw-16px)] glass-card rounded-[22px] z-[1001] overflow-hidden shadow-[0_24px_64px_rgba(8,145,178,0.22),0_4px_16px_rgba(0,0,0,0.08)] animate-slideDown"
+      >
+        <div className="px-5 py-4 border-b border-border bg-gradient-to-br from-primary-50 to-white dark:from-slate-800 dark:to-slate-900 flex items-center justify-between">
+          <div>
+            <div className="flex items-center gap-2">
+              <h3 className="text-sm font-extrabold text-foreground">Notifications</h3>
+              <div className="flex items-center gap-1.5 bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-800 rounded-full px-2 py-0.5">
+                <div className="w-1.5 h-1.5 rounded-full bg-green-600 animate-[livePulse_1.8s_ease_infinite]" />
+                <span className="text-[9.5px] font-bold text-green-700 dark:text-green-400">LIVE</span>
               </div>
-              {unreadCount > 0
-                ? <p style={{ fontSize: 11.5, color: theme.accent, marginTop: 2, fontWeight: 600 }}>
-                    {unreadCount} new {unreadCount === 1 ? "listing" : "listings"} near you
-                  </p>
-                : <p style={{ fontSize: 11, color: theme.textFaint, marginTop: 2 }}>
-                    Polling every 30s for new posts
-                  </p>
-              }
             </div>
+            {unreadCount > 0
+              ? <p className="text-[11.5px] text-primary-600 dark:text-primary-400 mt-0.5 font-semibold">{unreadCount} new listings</p>
+              : <p className="text-[11px] text-slate-500 mt-0.5">Polling every 30s</p>
+            }
           </div>
-          <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+          <div className="flex items-center gap-2">
             {unreadCount > 0 && (
-              <button onClick={markAllRead} style={{
-                fontSize: 11.5, fontWeight: 700, color: theme.accent,
-                background: theme.accentBg, border: `1px solid ${theme.accentBorder}`,
-                borderRadius: 9, padding: "5px 12px", cursor: "pointer", transition: "all .15s",
-              }}
-                onMouseEnter={e => e.currentTarget.style.background = theme.accentSoft}
-                onMouseLeave={e => e.currentTarget.style.background = theme.accentBg}
-              >
+              <button onClick={markAllRead} className="text-[11.5px] font-bold text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/30 border border-primary-200 dark:border-primary-800 rounded-lg px-3 py-1.5 hover:bg-primary-100 dark:hover:bg-primary-800/50 transition-colors">
                 Mark all read
               </button>
             )}
-            <button onClick={onClose} style={{
-              width: 30, height: 30, borderRadius: 9,
-              background: theme.accentBg, border: `1px solid ${theme.accentBorder}`,
-              cursor: "pointer", color: theme.accent,
-              display: "flex", alignItems: "center", justifyContent: "center",
-            }}>
+            <button onClick={onClose} className="w-8 h-8 rounded-lg bg-primary-50 dark:bg-primary-900/30 border border-primary-200 dark:border-primary-800 text-primary-600 dark:text-primary-400 flex items-center justify-center hover:bg-primary-100 dark:hover:bg-primary-800/50 transition-colors">
               <XIcon size={13} />
             </button>
           </div>
         </div>
 
-        {/* ── Body ── */}
-        <div style={{ maxHeight: 420, overflowY: "auto" }} className="no-scroll">
+        <div className="max-h-[420px] overflow-y-auto no-scrollbar bg-card">
           {notifications.length === 0 ? (
-            <div style={{ padding: "48px 16px", textAlign: "center" }}>
-              <div style={{
-                width: 64, height: 64, borderRadius: "50%", background: theme.accentBg,
-                margin: "0 auto 16px", display: "flex", alignItems: "center", justifyContent: "center",
-                animation: "float 3s ease-in-out infinite",
-                border: `2px solid ${theme.accentBorder}`,
-              }}>
-                <BellIcon size={28} color={theme.accent} />
+            <div className="py-12 px-4 text-center">
+              <div className="w-16 h-16 rounded-full bg-primary-50 dark:bg-primary-900/30 border-2 border-primary-100 dark:border-primary-800 mx-auto flex items-center justify-center animate-[float_3s_ease-in-out_infinite] mb-4">
+                <BellIcon size={28} className="text-primary-500" />
               </div>
-              <p style={{ fontSize: 14, color: theme.textMuted, fontWeight: 700 }}>All caught up!</p>
-              <p style={{ fontSize: 12, color: theme.textFaint, marginTop: 4, lineHeight: 1.6 }}>
-                We'll notify you when new listings<br />appear at your university.
-              </p>
+              <p className="text-sm font-bold text-slate-600 dark:text-slate-300">All caught up!</p>
+              <p className="text-xs text-slate-500 mt-1 leading-relaxed">We'll notify you when new listings<br/>appear at your university.</p>
             </div>
           ) : (
-            notifications.map((n, idx) => {
-              const c = NOTIF_COLORS[n.type] || NOTIF_COLORS.info;
-              // Pick emoji from title
-              const emoji = n.title.match(/[\u{1F300}-\u{1FFFF}]|[\u{2600}-\u{26FF}]/u)?.[0] || "📌";
-              const cleanTitle = n.title.replace(/^[\s\S]{2}\s/, ""); // remove leading emoji+space
-              return (
-                <div key={n.id}
-                  onClick={() => handleClick(n)}
-                  style={{
-                    display: "flex", gap: 12, padding: "13px 18px",
-                    borderBottom: `1px solid ${theme.divider}`,
-                    background: n.read ? "transparent" : `${c.bg}CC`,
-                    cursor: "pointer", transition: "all 0.15s", position: "relative",
-                    animation: idx < 3 ? `slideInNotif .3s ${idx * .05}s both` : "none",
-                  }}
-                  onMouseEnter={e => { e.currentTarget.style.background = theme.accentSoft; }}
-                  onMouseLeave={e => { e.currentTarget.style.background = n.read ? "transparent" : `${c.bg}CC`; }}
-                >
-                  {/* Unread dot */}
-                  {!n.read && (
-                    <div style={{
-                      position: "absolute", top: 18, left: 7,
-                      width: 6, height: 6, borderRadius: "50%",
-                      background: c.dot, boxShadow: `0 0 6px ${c.dot}`,
-                    }} />
-                  )}
-
-                  {/* Emoji icon */}
-                  <div style={{
-                    width: 40, height: 40, borderRadius: 13, flexShrink: 0, marginLeft: 6,
-                    background: c.bg, border: `1.5px solid ${c.border}`,
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                    fontSize: 18, boxShadow: `0 2px 8px ${c.dot}22`,
-                  }}>
-                    {emoji}
-                  </div>
-
-                  {/* Text */}
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{
-                      fontSize: 12.5,
-                      fontWeight: n.read ? 500 : 700,
-                      color: theme.textPrimary,
-                      marginBottom: 3, lineHeight: 1.35,
-                      overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
-                    }}>
-                      {cleanTitle}
-                    </div>
-                    <div style={{ fontSize: 11.5, color: theme.textMuted, lineHeight: 1.5, marginBottom: 4 }}>
-                      {n.body}
-                    </div>
-                    <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                      <span style={{ fontSize: 10.5, color: theme.textFaint }}>{n.time}</span>
-                      <span style={{
-                        fontSize: 10, fontWeight: 700, color: c.icon,
-                        background: c.bg, border: `1px solid ${c.border}`,
-                        borderRadius: 99, padding: "1px 7px",
-                      }}>
-                        {n.title.includes("🏠") ? "Boarding"
-                          : n.title.includes("🍽️") ? "Food"
-                          : n.title.includes("🚌") ? "Transport"
-                          : "Listing"}
-                      </span>
-                      <span style={{ fontSize: 10, color: theme.accent, fontWeight: 600, marginLeft: "auto" }}>
-                        View →
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Dismiss */}
-                  <button
-                    onClick={e => { e.stopPropagation(); dismissNotification(n.id); }}
-                    style={{
-                      background: "none", border: "none", cursor: "pointer",
-                      color: theme.textFaint, padding: 3, display: "flex", flexShrink: 0,
-                      alignSelf: "flex-start", marginTop: 2, borderRadius: 6,
-                      transition: "all .15s",
-                    }}
-                    onMouseEnter={e => { e.currentTarget.style.color = "#EF4444"; e.currentTarget.style.background = "#FEF2F2"; }}
-                    onMouseLeave={e => { e.currentTarget.style.color = theme.textFaint; e.currentTarget.style.background = "none"; }}
-                  >
-                    <XIcon size={11} />
-                  </button>
+            notifications.map((n, idx) => (
+              <div key={n.id} onClick={() => handleClick(n)} className={`flex gap-3 px-4 py-3.5 border-b border-border cursor-pointer transition-colors group relative ${n.read ? 'bg-transparent' : 'bg-primary-50/50 dark:bg-primary-900/10'} hover:bg-slate-50 dark:hover:bg-slate-800/50`}>
+                {!n.read && <div className="absolute top-5 left-1.5 w-1.5 h-1.5 rounded-full bg-primary-500 shadow-[0_0_6px_#06b6d4]" />}
+                <div className="w-10 h-10 rounded-xl shrink-0 ml-1.5 bg-white dark:bg-slate-800 border-2 border-slate-100 dark:border-slate-700 flex items-center justify-center text-lg shadow-sm">
+                  {n.title.match(/[\u{1F300}-\u{1FFFF}]|[\u{2600}-\u{26FF}]/u)?.[0] || "📌"}
                 </div>
-              );
-            })
+                <div className="flex-1 min-w-0">
+                  <div className={`text-[12.5px] ${n.read ? 'font-medium' : 'font-bold'} text-foreground mb-1 leading-tight truncate`}>
+                    {n.title.replace(/^[\s\S]{2}\s/, "")}
+                  </div>
+                  <div className="text-[11.5px] text-slate-500 leading-relaxed mb-1.5">{n.body}</div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-[10.5px] text-slate-400">{n.time}</span>
+                    <span className="text-[10px] font-bold text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/30 border border-primary-200 dark:border-primary-800 rounded-full px-2 py-0.5">Alert</span>
+                  </div>
+                </div>
+                <button onClick={(e) => { e.stopPropagation(); dismissNotification(n.id); }} className="p-1 text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-md self-start transition-colors">
+                  <XIcon size={11} />
+                </button>
+              </div>
+            ))
           )}
         </div>
-
-        {/* ── Footer ── */}
-        {notifications.length > 0 && (
-          <div style={{
-            padding: "10px 18px",
-            borderTop: `1px solid ${theme.divider}`,
-            display: "flex", alignItems: "center", justifyContent: "space-between",
-            background: `${theme.accentBg}50`,
-          }}>
-            <span style={{ fontSize: 11, color: theme.textFaint }}>
-              {notifications.length} notification{notifications.length !== 1 ? "s" : ""}
-            </span>
-            <button onClick={() => { notifications.forEach(n => dismissNotification(n.id)); onClose(); }}
-              style={{ fontSize: 11, color: theme.textFaint, background: "none", border: "none", cursor: "pointer", fontFamily: "inherit", transition: "color .15s" }}
-              onMouseEnter={e => e.currentTarget.style.color = "#EF4444"}
-              onMouseLeave={e => e.currentTarget.style.color = theme.textFaint}
-            >
-              Clear all
-            </button>
-          </div>
-        )}
       </div>
     </>
   );
 }
-
 
 /* ─── Main Layout ─────────────────────────────────────────────────────────────── */
 export default function Layout({ children }) {
@@ -372,347 +185,145 @@ export default function Layout({ children }) {
   }, []);
 
   return (
-    <div className="app-layout">
-
+    <div className="flex h-screen w-full bg-background overflow-hidden text-foreground selection:bg-primary-200 selection:text-primary-900 font-sans">
+      
       {/* ══════════ SIDEBAR (Desktop) ══════════ */}
-      <aside className="hide-on-mobile" style={{
-        width: collapsed ? 72 : 244,
-        flexShrink: 0,
-        background: theme.sidebar,
-        flexDirection: "column",
-        height: "100vh",
-        transition: "width 0.3s cubic-bezier(0.4,0,0.2,1)",
-        overflow: "hidden",
-        position: "relative", zIndex: 20,
-        borderRadius: "0 28px 28px 0",
-        boxShadow: "8px 0 40px rgba(8,145,178,.35)",
-      }}>
+      <aside className={`hidden md:flex flex-col shrink-0 bg-slate-900 relative z-20 rounded-r-[28px] shadow-[8px_0_40px_rgba(8,145,178,0.25)] transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] ${collapsed ? 'w-[72px]' : 'w-[244px]'}`}>
+        
+        {/* Decorative blobs */}
+        <div className="absolute -top-16 -right-16 w-48 h-48 rounded-full bg-white/5 pointer-events-none" />
+        <div className="absolute bottom-10 -left-10 w-40 h-40 rounded-full bg-white/5 pointer-events-none" />
 
-        {/* Decorative blobs inside sidebar */}
-        <div style={{
-          position: "absolute", top: -60, right: -60, width: 200, height: 200,
-          borderRadius: "50%", background: "rgba(255,255,255,.05)", pointerEvents: "none",
-        }}/>
-        <div style={{
-          position: "absolute", bottom: 40, left: -40, width: 160, height: 160,
-          borderRadius: "50%", background: "rgba(255,255,255,.04)", pointerEvents: "none",
-        }}/>
-
-        <div style={{
-          display: "flex", alignItems: "center",
-          gap: collapsed ? 0 : 10,
-          padding: collapsed ? "22px 0 18px" : "20px 16px 16px",
-          justifyContent: collapsed ? "center" : "flex-start",
-          borderBottom: "1px solid rgba(255,255,255,.1)",
-          flexShrink: 0, minHeight: 70, position: "relative", zIndex: 1,
-        }}>
-          <div style={{
-            display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
-          }}>
-            <SucLogoIcon size={44} />
+        <div className={`flex items-center shrink-0 min-h-[70px] border-b border-white/10 relative z-10 transition-all duration-300 ${collapsed ? 'justify-center py-4 px-0' : 'justify-start py-5 px-4 gap-2.5'}`}>
+          <div className="flex items-center justify-center shrink-0 text-primary-400">
+            <SucLogoIcon size={collapsed ? 36 : 40} />
           </div>
           {!collapsed && (
-            <div style={{ flex: 1, overflow: "hidden", marginLeft: 4 }}>
-              <div style={{ fontSize: 16, fontWeight: 900, color: "#fff", letterSpacing: "-0.4px" }}>UniCompanion</div>
-              <div style={{ fontSize: 9, color: "rgba(255,255,255,.55)", letterSpacing: "1.2px", textTransform: "uppercase", marginTop: 1 }}>Smart Campus</div>
+            <div className="flex-1 overflow-hidden ml-1">
+              <div className="text-base font-black text-white tracking-tight">UniCompanion</div>
+              <div className="text-[9px] text-white/50 tracking-[1.2px] uppercase mt-0.5">Smart Campus</div>
             </div>
           )}
-          <button
-            onClick={() => setCollapsed(c => !c)}
-            style={{
-              width: 28, height: 28, borderRadius: 9, flexShrink: 0,
-              background: "rgba(255,255,255,.12)", border: "1px solid rgba(255,255,255,.18)",
-              display: "flex", alignItems: "center", justifyContent: "center",
-              color: "rgba(255,255,255,.7)", cursor: "pointer", transition: "all .18s",
-              marginLeft: collapsed ? 0 : "auto",
-            }}
-            onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(255,255,255,.22)"; e.currentTarget.style.color = "#fff"; }}
-            onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(255,255,255,.12)"; e.currentTarget.style.color = "rgba(255,255,255,.7)"; }}
-          >
+          <button onClick={() => setCollapsed(c => !c)} className={`w-7 h-7 rounded-lg shrink-0 bg-white/10 border border-white/20 flex items-center justify-center text-white/70 hover:text-white hover:bg-white/20 transition-all ${collapsed ? 'mt-2' : 'ml-auto'}`}>
             <MenuIcon size={13} />
           </button>
         </div>
 
-        {/* ── User card ── */}
-        <div style={{ position: "relative", zIndex: 1 }}>
+        {/* User Card */}
+        <div className="relative z-10">
           {!collapsed ? (
-            <div style={{
-              margin: "14px 12px 6px",
-              background: "rgba(255,255,255,.12)",
-              border: "1px solid rgba(255,255,255,.18)",
-              borderRadius: 18, padding: "12px 14px",
-              display: "flex", alignItems: "center", gap: 10, flexShrink: 0,
-              backdropFilter: "blur(10px)",
-            }}>
-              <div style={{
-                width: 38, height: 38, borderRadius: "50%",
-                background: "linear-gradient(135deg,rgba(255,255,255,.35),rgba(255,255,255,.15))",
-                border: "2px solid rgba(255,255,255,.4)",
-                display: "flex", alignItems: "center", justifyContent: "center",
-                fontWeight: 900, color: "var(--p600)", fontSize: 16, flexShrink: 0,
-                boxShadow: "0 4px 12px rgba(0,0,0,.15)",
-              }}>
+            <div className="mx-3 my-3 bg-white/10 border border-white/20 rounded-2xl p-3 flex items-center gap-2.5 backdrop-blur-md">
+              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-white/30 to-white/10 border-2 border-white/40 flex items-center justify-center font-black text-primary-200 text-base shrink-0 shadow-lg">
                 {(user?.name || "U")[0].toUpperCase()}
               </div>
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ fontSize: 13, fontWeight: 700, color: "#fff", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                  {user?.name}
-                </div>
-                <div style={{ display: "flex", alignItems: "center", gap: 5, marginTop: 3 }}>
-                  <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#4ADE80", boxShadow: "0 0 6px #4ADE80" }} />
-                  <span style={{ fontSize: 10.5, color: "rgba(255,255,255,.55)", fontWeight: 500 }}>{roleLabel}</span>
+              <div className="flex-1 min-w-0">
+                <div className="text-sm font-bold text-white truncate">{user?.name}</div>
+                <div className="flex items-center gap-1.5 mt-0.5">
+                  <div className="w-1.5 h-1.5 rounded-full bg-green-400 shadow-[0_0_6px_#4ade80]" />
+                  <span className="text-[10px] text-white/60 font-medium">{roleLabel}</span>
                 </div>
               </div>
             </div>
           ) : (
-            <div style={{ display: "flex", justifyContent: "center", padding: "12px 0 4px" }}>
-              <div style={{
-                width: 38, height: 38, borderRadius: "50%",
-                background: "rgba(255,255,255,.22)", border: "2px solid rgba(255,255,255,.35)",
-                display: "flex", alignItems: "center", justifyContent: "center",
-                fontWeight: 900, color: "var(--p600)", fontSize: 15,
-              }}>
+            <div className="flex justify-center py-3">
+              <div className="w-10 h-10 rounded-full bg-white/20 border-2 border-white/30 flex items-center justify-center font-black text-primary-200 text-sm">
                 {(user?.name || "U")[0].toUpperCase()}
               </div>
             </div>
           )}
         </div>
 
-        {/* ── Section label ── */}
         {!collapsed && (
-          <div style={{ padding: "14px 18px 4px", flexShrink: 0, position: "relative", zIndex: 1 }}>
-            <span style={{ fontSize: 9, fontWeight: 800, color: "rgba(255,255,255,.3)", textTransform: "uppercase", letterSpacing: "1.8px" }}>
-              Navigation
-            </span>
+          <div className="px-4.5 pt-3 pb-1 shrink-0 relative z-10">
+            <span className="text-[9px] font-extrabold text-white/30 uppercase tracking-[1.8px]">Navigation</span>
           </div>
         )}
 
-        {/* ── Nav items ── */}
-        <nav style={{
-          flex: 1,
-          padding: collapsed ? "6px 8px" : "4px 10px",
-          display: "flex", flexDirection: "column", gap: 2,
-          overflowY: "auto", overflowX: "hidden",
-          position: "relative", zIndex: 1,
-        }} className="no-scroll">
-          {nav.map((item) => (
-            <NavItem
-              key={item.to}
-              item={item}
-              isActive={location.pathname === item.to}
-              collapsed={collapsed}
-            />
-          ))}
+        <nav className={`flex-1 flex flex-col gap-1 overflow-y-auto no-scrollbar relative z-10 ${collapsed ? 'px-2' : 'px-3'}`}>
+          {nav.map(item => <NavItem key={item.to} item={item} isActive={location.pathname === item.to} collapsed={collapsed} />)}
         </nav>
 
-        {/* ── Sign out ── */}
-        <div style={{
-          padding: collapsed ? "8px 8px 20px" : "6px 10px 20px",
-          borderTop: "1px solid rgba(255,255,255,.08)",
-          flexShrink: 0, position: "relative", zIndex: 1,
-        }}>
-          <button
-            onClick={() => { logout(); navigate("/login"); }}
-            title={collapsed ? "Sign out" : undefined}
-            style={{
-              display: "flex", alignItems: "center",
-              gap: collapsed ? 0 : 10,
-              width: "100%",
-              padding: collapsed ? "11px 0" : "10px 13px",
-              borderRadius: 12, border: "none",
-              background: "rgba(255,255,255,.07)",
-              color: "rgba(255,255,255,.45)",
-              fontFamily: "inherit", fontSize: 13, fontWeight: 500,
-              cursor: "pointer",
-              justifyContent: collapsed ? "center" : "flex-start",
-              transition: "all .18s",
-            }}
-            onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(239,68,68,.2)"; e.currentTarget.style.color = "#FCA5A5"; }}
-            onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(255,255,255,.07)"; e.currentTarget.style.color = "rgba(255,255,255,.45)"; }}
-          >
+        <div className={`shrink-0 border-t border-white/10 relative z-10 ${collapsed ? 'p-2 pb-5' : 'p-3 pb-5'}`}>
+          <button onClick={() => { logout(); navigate("/login"); }} title={collapsed ? "Sign out" : undefined} className={`flex items-center w-full rounded-xl border-none bg-white/5 text-white/50 font-medium cursor-pointer transition-all hover:bg-red-500/20 hover:text-red-300 ${collapsed ? 'justify-center py-3' : 'justify-start px-3.5 py-2.5 gap-2.5'}`}>
             <LogOutIcon size={16} />
-            {!collapsed && <span>Sign out</span>}
+            {!collapsed && <span className="text-sm">Sign out</span>}
           </button>
         </div>
       </aside>
 
       {/* ══════════ MOBILE BOTTOM NAV ══════════ */}
-      <nav className="mobile-bottom-nav">
-        {nav.map((item) => {
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-slate-900 z-50 flex items-center justify-around border-t border-slate-800 shadow-[0_-4px_24px_rgba(0,0,0,0.5)] pb-[env(safe-area-inset-bottom)]">
+        {nav.map(item => {
           const isActive = location.pathname === item.to;
           return (
-            <Link
-              key={item.to}
-              to={item.to}
-              style={{
-                display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
-                flex: 1, height: "100%", color: isActive ? "#fff" : "rgba(255,255,255,0.6)",
-                textDecoration: "none", position: "relative"
-              }}
-            >
-              <item.Icon size={22} color={isActive ? "#fff" : "rgba(255,255,255,0.6)"} />
-              <span style={{ fontSize: 10, marginTop: 4, fontWeight: isActive ? 700 : 500 }}>
+            <Link key={item.to} to={item.to} className="flex flex-col items-center justify-center flex-1 h-full relative text-white/60 hover:text-white transition-colors">
+              <item.Icon size={22} className={isActive ? "text-white" : ""} />
+              <span className={`text-[10px] mt-1 ${isActive ? "font-bold text-white" : "font-medium"}`}>
                 {item.label === "Add Listing" ? "Post" : item.label.split(" ")[0]}
               </span>
-              {isActive && (
-                <div style={{ position: "absolute", top: 0, left: "50%", transform: "translateX(-50%)", width: 32, height: 3, background: "#fff", borderRadius: "0 0 4px 4px" }} />
-              )}
+              {isActive && <div className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-1 bg-white rounded-b-md" />}
             </Link>
           );
         })}
       </nav>
 
       {/* ══════════ MAIN ══════════ */}
-      <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden", paddingBottom: "env(safe-area-inset-bottom)" }}>
-
-        {/* ── Top bar ── */}
-        <header style={{
-          height: 64, flexShrink: 0,
-          background: theme.topbarBg,
-          backdropFilter: "blur(20px)",
-          WebkitBackdropFilter: "blur(20px)",
-          borderBottom: `1px solid ${theme.topbarBorder}`,
-          display: "flex", alignItems: "center",
-          justifyContent: "space-between",
-          padding: "0 28px",
-          boxShadow: theme.topbarShadow,
-          position: "relative", zIndex: 10,
-        }}>
-          {/* Left — page title + location */}
-          <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+      <div className="flex-1 flex flex-col min-w-0 pb-[env(safe-area-inset-bottom)] md:pb-0 h-screen overflow-hidden">
+        
+        {/* TOPBAR */}
+        <header className="h-16 shrink-0 glass border-b shadow-sm flex items-center justify-between px-4 md:px-7 relative z-10">
+          <div className="flex items-center gap-3">
             <div>
-              <div style={{ fontSize: 18, fontWeight: 800, color: theme.textPrimary, letterSpacing: "-0.4px", lineHeight: 1 }}>
-                {pageTitle}
-              </div>
-              <div style={{ display: "flex", alignItems: "center", gap: 5, marginTop: 3 }}>
-                <MapPinIcon size={11} color={theme.accent} />
-                <span style={{ fontSize: 11, color: theme.textMuted, fontWeight: 500 }}>{areaLabel} · {uniLabel}</span>
+              <div className="text-lg font-extrabold text-foreground tracking-tight leading-none">{pageTitle}</div>
+              <div className="flex items-center gap-1.5 mt-1">
+                <MapPinIcon size={11} className="text-primary-500" />
+                <span className="text-[11px] text-slate-500 font-medium">{areaLabel} · {uniLabel}</span>
               </div>
             </div>
           </div>
 
-          {/* Right controls */}
-          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-
-            {/* Theme toggle */}
-            <button
-              onClick={toggleTheme}
-              title={theme.dark ? "Light mode" : "Dark mode"}
-              style={{
-                width: 40, height: 40, borderRadius: 12,
-                background: theme.accentBg, border: `1.5px solid ${theme.accentBorder}`,
-                display: "flex", alignItems: "center", justifyContent: "center",
-                color: theme.accent, cursor: "pointer", transition: "all .2s var(--ease-spring)",
-              }}
-              onMouseEnter={(e) => { e.currentTarget.style.background = theme.accentSoft; e.currentTarget.style.transform = "scale(1.07) rotate(15deg)"; }}
-              onMouseLeave={(e) => { e.currentTarget.style.background = theme.accentBg; e.currentTarget.style.transform = "scale(1) rotate(0)"; }}
-            >
+          <div className="flex items-center gap-2">
+            <button onClick={toggleTheme} className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 hover:rotate-12 transition-all">
               {theme.dark ? <SunIcon size={16} /> : <MoonIcon size={16} />}
             </button>
 
-            {/* Bell */}
-            <button
-              ref={bellRef}
-              onClick={() => notifOpen ? setNotifOpen(false) : openNotif()}
-              style={{
-                width: 40, height: 40, borderRadius: 12,
-                background: notifOpen ? theme.accentSoft : theme.accentBg,
-                border: `1.5px solid ${notifOpen ? theme.accent : theme.accentBorder}`,
-                display: "flex", alignItems: "center", justifyContent: "center",
-                color: theme.accent, cursor: "pointer", transition: "all .2s var(--ease-spring)",
-                position: "relative",
-              }}
-              onMouseEnter={(e) => { e.currentTarget.style.background = theme.accentSoft; e.currentTarget.style.transform = "scale(1.07)"; }}
-              onMouseLeave={(e) => { e.currentTarget.style.background = notifOpen ? theme.accentSoft : theme.accentBg; e.currentTarget.style.transform = "scale(1)"; }}
-            >
+            <button ref={bellRef} onClick={() => notifOpen ? setNotifOpen(false) : openNotif()} className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all relative ${notifOpen ? 'bg-primary-100 dark:bg-primary-900/50 border-primary-300 dark:border-primary-700 text-primary-600 dark:text-primary-400' : 'bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 hover:scale-105'}`}>
               <BellIcon size={17} />
               {unreadCount > 0 && (
-                <span style={{
-                  position: "absolute", top: -5, right: -5,
-                  background: "linear-gradient(135deg,#EF4444,#F97316)",
-                  color: "white", fontSize: 9, fontWeight: 900,
-                  minWidth: 18, height: 18, borderRadius: 99,
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                  border: "2px solid white", padding: "0 3px",
-                  animation: "pulseRing 2s ease infinite",
-                }}>
+                <span className="absolute -top-1 -right-1 bg-gradient-to-br from-red-500 to-orange-500 text-white text-[9px] font-black min-w-[18px] h-[18px] rounded-full flex items-center justify-center border-2 border-white dark:border-slate-900 px-1 shadow-sm animate-pulse">
                   {unreadCount > 9 ? "9+" : unreadCount}
                 </span>
               )}
             </button>
 
-            {/* Profile chip */}
-            <Link
-              to="/profile"
-              style={{
-                display: "flex", alignItems: "center", gap: 9,
-                background: location.pathname === "/profile" ? theme.accentSoft : theme.accentBg,
-                border: `1.5px solid ${location.pathname === "/profile" ? theme.accent : theme.accentBorder}`,
-                borderRadius: 14, padding: "7px 14px 7px 8px",
-                textDecoration: "none", transition: "all .2s var(--ease-spring)",
-              }}
-              onMouseEnter={(e) => { e.currentTarget.style.background = theme.accentSoft; e.currentTarget.style.borderColor = theme.accent; e.currentTarget.style.transform = "scale(1.02)"; }}
-              onMouseLeave={(e) => {
-                if (location.pathname !== "/profile") {
-                  e.currentTarget.style.background = theme.accentBg;
-                  e.currentTarget.style.borderColor = theme.accentBorder;
-                }
-                e.currentTarget.style.transform = "scale(1)";
-              }}
-            >
-              <div style={{
-                width: 28, height: 28, borderRadius: "50%",
-                background: theme.brandGrad, flexShrink: 0,
-                display: "flex", alignItems: "center", justifyContent: "center",
-                color: "white", fontWeight: 800, fontSize: 12,
-                boxShadow: `0 3px 10px ${theme.accent}40`,
-              }}>
+            <Link to="/profile" className={`hidden md:flex items-center gap-2 rounded-xl p-1.5 pr-3.5 transition-all ${location.pathname === '/profile' ? 'bg-primary-100 dark:bg-primary-900/50 border border-primary-300 dark:border-primary-700' : 'bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:scale-105 hover:border-primary-300'}`}>
+              <div className="w-7 h-7 rounded-full bg-gradient-to-br from-primary-400 to-primary-600 shrink-0 flex items-center justify-center text-white font-black text-xs shadow-md">
                 {(user?.name || "U")[0].toUpperCase()}
               </div>
-              <div>
-                <div style={{ fontSize: 12.5, fontWeight: 700, color: theme.textPrimary, lineHeight: 1 }}>
-                  {user?.name?.split(" ")[0]}
-                </div>
-                <div style={{ fontSize: 10, color: theme.accent, marginTop: 2, fontWeight: 600 }}>{roleLabel}</div>
+              <div className="leading-none">
+                <div className="text-[12px] font-bold text-foreground">{user?.name?.split(" ")[0]}</div>
+                <div className="text-[9.5px] text-primary-600 dark:text-primary-400 font-bold mt-0.5">{roleLabel}</div>
               </div>
             </Link>
           </div>
         </header>
 
-        {/* ── Page content ── */}
-        <main
-          className="main-content no-scroll"
-          key={location.pathname}
-        >
-          <div className="anim-fadeInUp">
+        <main className="flex-1 overflow-y-auto no-scrollbar p-4 md:p-8 relative">
+          <div className="animate-fadeInUp mx-auto max-w-7xl">
             {children}
           </div>
         </main>
       </div>
 
-      {/* Notification panel */}
       {notifOpen && (
         <NotifPanel
           notifications={notifications} unreadCount={unreadCount}
           markAllRead={markAllRead} markRead={markRead}
           dismissNotification={dismissNotification}
           onClose={() => setNotifOpen(false)}
-          theme={theme} anchorRect={bellRect}
+          anchorRect={bellRect}
         />
       )}
-
-      <style>{`
-        @keyframes glowPulse { 0%,100%{box-shadow:0 0 0 0 rgba(245,158,11,.5)} 50%{box-shadow:0 0 0 6px rgba(245,158,11,0)} }
-        @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-7px)} }
-        @keyframes slideDown { from{opacity:0;transform:translateY(-12px) scale(.97)} to{opacity:1;transform:translateY(0) scale(1)} }
-        @keyframes pulseRing { 0%{transform:scale(.92);box-shadow:0 0 0 0 rgba(239,68,68,.5)} 70%{transform:scale(1);box-shadow:0 0 0 8px rgba(239,68,68,0)} 100%{transform:scale(.92)} }
-        @keyframes fadeInUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
-        @keyframes livePulse { 0%,100%{box-shadow:0 0 0 0 rgba(22,163,74,.4)} 50%{box-shadow:0 0 0 6px rgba(22,163,74,0)} }
-        @keyframes slideInNotif { from{opacity:0;transform:translateY(-8px)} to{opacity:1;transform:translateY(0)} }
-        .anim-fadeInUp { animation: fadeInUp 0.4s cubic-bezier(0.2,0,0,1) both; }
-        .no-scroll::-webkit-scrollbar{display:none}
-        .no-scroll{-ms-overflow-style:none;scrollbar-width:none}
-      `}</style>
     </div>
   );
 }

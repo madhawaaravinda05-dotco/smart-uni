@@ -10,91 +10,37 @@ import {
 } from "../components/Icons";
 
 /* ─── Stat card ──────────────────────────────────────────────────────────────── */
-function StatCard({ label, value, sub, icon: Icon, accent, featured = false, delay = 0 }) {
-  const [hov, setHov] = useState(false);
-  const bg = featured
-    ? `linear-gradient(135deg, ${accent}, ${accent}BB)`
-    : "#fff";
-
+function StatCard({ label, value, sub, icon: Icon, accentClass, iconBgClass, featured = false, delayClass = "" }) {
   return (
-    <div
-      onMouseEnter={() => setHov(true)}
-      onMouseLeave={() => setHov(false)}
-      style={{
-        background: bg, borderRadius: 20, padding: "22px 22px 18px",
-        border: featured ? "none" : `1.5px solid ${accent}20`,
-        boxShadow: hov
-          ? `0 16px 40px ${accent}30`
-          : featured ? `0 8px 28px ${accent}45` : `0 2px 14px ${accent}12`,
-        transition: "all 0.25s cubic-bezier(0.34,1.56,0.64,1)",
-        transform: hov ? "translateY(-5px) scale(1.02)" : "none",
-        cursor: "default",
-        animationDelay: `${delay}s`,
-      }}
-      className="anim-fadeInUp"
-    >
-      <div style={{
-        width: 50, height: 50, borderRadius: 16, marginBottom: 16,
-        background: featured ? "rgba(255,255,255,.22)" : `${accent}18`,
-        border: featured ? "1px solid rgba(255,255,255,.32)" : `1px solid ${accent}28`,
-        display: "flex", alignItems: "center", justifyContent: "center",
-        boxShadow: featured ? `0 4px 16px rgba(0,0,0,.12)` : `0 2px 8px ${accent}18`,
-      }}>
-        <Icon size={23} color={featured ? "#fff" : accent} />
+    <div className={`relative group p-5 rounded-[20px] transition-all duration-300 hover:-translate-y-1 ${featured ? 'bg-gradient-to-br from-primary-500 to-primary-600 text-white shadow-lg hover:shadow-primary-500/30' : 'bg-card border border-border hover:shadow-glass-hover'} ${delayClass} animate-fadeInUp`}>
+      <div className={`w-12 h-12 rounded-2xl flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-110 ${featured ? 'bg-white/20 text-white' : iconBgClass}`}>
+        <Icon size={24} className={featured ? 'text-white' : accentClass} />
       </div>
-      <div style={{
-        fontSize: 30, fontWeight: 900, color: featured ? "#fff" : accent,
-        letterSpacing: "-1.2px", lineHeight: 1,
-      }}>
+      <div className={`text-3xl font-black tracking-tight leading-none mb-1.5 ${featured ? 'text-white' : accentClass}`}>
         {value}
       </div>
-      <div style={{ fontSize: 13, fontWeight: 600, color: featured ? "rgba(255,255,255,.88)" : "#374151", marginTop: 6 }}>
+      <div className={`text-sm font-bold ${featured ? 'text-white/90' : 'text-slate-700 dark:text-slate-200'}`}>
         {label}
       </div>
-      {sub && <div style={{ fontSize: 11, color: featured ? "rgba(255,255,255,.6)" : "#9CA3AF", marginTop: 3 }}>{sub}</div>}
+      {sub && <div className={`text-xs mt-1 ${featured ? 'text-white/60' : 'text-slate-500'}`}>{sub}</div>}
     </div>
   );
 }
 
 /* ─── Category card ──────────────────────────────────────────────────────────── */
-function CategoryCard({ to, label, sub, Icon, accent, bg, delay = 0 }) {
-  const [hov, setHov] = useState(false);
+function CategoryCard({ to, label, sub, Icon, accentClass, bgClass, hoverBorderClass, delayClass = "" }) {
   return (
-    <Link to={to} style={{ textDecoration: "none", animationDelay: `${delay}s` }} className="anim-fadeInUp">
-      <div
-        onMouseEnter={() => setHov(true)}
-        onMouseLeave={() => setHov(false)}
-        style={{
-          background: hov ? bg : "#fff",
-          border: `1.5px solid ${hov ? accent : accent + "22"}`,
-          borderRadius: 20, padding: "20px",
-          display: "flex", alignItems: "center", gap: 14,
-          transition: "all 0.25s cubic-bezier(0.34,1.56,0.64,1)",
-          transform: hov ? "translateY(-4px)" : "none",
-          boxShadow: hov ? `0 12px 32px ${accent}25` : "0 2px 12px rgba(124,58,237,.06)",
-          cursor: "pointer",
-        }}
-      >
-        <div style={{
-          width: 50, height: 50, borderRadius: 16, flexShrink: 0,
-          background: hov ? `${accent}25` : bg,
-          border: `1.5px solid ${accent}28`,
-          display: "flex", alignItems: "center", justifyContent: "center",
-          transition: "all 0.22s", boxShadow: hov ? `0 4px 16px ${accent}30` : "none",
-        }}>
-          <Icon size={23} color={accent} />
+    <Link to={to} className={`block group animate-fadeInUp ${delayClass}`}>
+      <div className={`bg-card border border-border rounded-[20px] p-5 flex items-center gap-4 transition-all duration-300 hover:-translate-y-1 hover:shadow-glass-hover ${hoverBorderClass}`}>
+        <div className={`w-12 h-12 rounded-2xl shrink-0 flex items-center justify-center transition-all duration-300 group-hover:scale-110 ${bgClass}`}>
+          <Icon size={24} className={accentClass} />
         </div>
-        <div style={{ flex: 1 }}>
-          <div style={{ fontSize: 14.5, fontWeight: 700, color: "#1E1B4B" }}>{label}</div>
-          <div style={{ fontSize: 12, color: "#9CA3AF", marginTop: 2 }}>{sub}</div>
+        <div className="flex-1 min-w-0">
+          <div className="text-[15px] font-extrabold text-slate-900 dark:text-slate-100 truncate">{label}</div>
+          <div className="text-xs text-slate-500 mt-0.5 truncate">{sub}</div>
         </div>
-        <div style={{
-          width: 28, height: 28, borderRadius: 9, background: hov ? `${accent}18` : "#F9FAFB",
-          border: `1px solid ${hov ? accent + "30" : "#E5E7EB"}`,
-          display: "flex", alignItems: "center", justifyContent: "center",
-          transition: "all .2s", transform: hov ? "translateX(3px)" : "none",
-        }}>
-          <ChevronRightIcon size={14} color={hov ? accent : "#CBD5E1"} />
+        <div className="w-8 h-8 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center transition-transform duration-300 group-hover:translate-x-1">
+          <ChevronRightIcon size={14} className="text-slate-400 group-hover:text-slate-700 dark:group-hover:text-slate-300" />
         </div>
       </div>
     </Link>
@@ -102,70 +48,41 @@ function CategoryCard({ to, label, sub, Icon, accent, bg, delay = 0 }) {
 }
 
 /* ─── Listing mini card ──────────────────────────────────────────────────────── */
-function ListingCard({ item, gradient, type, theme }) {
-  const [hov, setHov] = useState(false);
+function ListingCard({ item, gradientClass, type }) {
   return (
-    <div
-      onMouseEnter={() => setHov(true)}
-      onMouseLeave={() => setHov(false)}
-      style={{
-        background: theme.cardBg,
-        border: `1.5px solid ${hov ? theme.accent + "35" : theme.cardBorder}`,
-        borderRadius: 18, overflow: "hidden",
-        transition: "all 0.25s cubic-bezier(0.34,1.56,0.64,1)",
-        transform: hov ? "translateY(-5px)" : "none",
-        boxShadow: hov ? theme.cardShadowHover : theme.cardShadow,
-        cursor: "pointer",
-      }}
-    >
-      <div style={{ height: 96, background: gradient, position: "relative" }}>
-        {/* Shimmer overlay on hover */}
-        {hov && <div style={{
-          position: "absolute", inset: 0,
-          background: "linear-gradient(135deg, rgba(255,255,255,.12), transparent)",
-        }}/>}
+    <div className="bg-card border border-border rounded-[20px] overflow-hidden transition-all duration-300 hover:-translate-y-1.5 hover:shadow-glass-hover hover:border-primary-300 dark:hover:border-primary-700 group cursor-pointer">
+      <div className={`h-24 relative overflow-hidden ${gradientClass}`}>
+        <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
         {item.genderType && (
-          <span style={{
-            position: "absolute", top: 8, left: 8,
-            background: "rgba(255,255,255,.92)", backdropFilter: "blur(6px)",
-            fontSize: 9.5, fontWeight: 700, color: "var(--p800)",
-            padding: "3px 9px", borderRadius: 99,
-          }}>
+          <span className="absolute top-2.5 left-2.5 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md text-[9.5px] font-black text-slate-800 dark:text-slate-200 px-2.5 py-1 rounded-full uppercase tracking-wider">
             {item.genderType}
           </span>
         )}
         {(item.verified || item.status === "APPROVED") && (
-          <span style={{
-            position: "absolute", top: 8, right: 8,
-            background: "linear-gradient(135deg,#16A34A,#22C55E)",
-            color: "#fff", fontSize: 9, fontWeight: 700,
-            padding: "3px 9px", borderRadius: 99,
-            display: "flex", alignItems: "center", gap: 3,
-            boxShadow: "0 2px 8px rgba(22,163,74,.4)",
-          }}>
-            <ShieldCheckIcon size={9} color="white" /> Verified
+          <span className="absolute top-2.5 right-2.5 bg-gradient-to-br from-green-500 to-green-600 text-white text-[9px] font-bold px-2 py-1 rounded-full flex items-center gap-1 shadow-[0_2px_8px_rgba(22,163,74,0.4)]">
+            <ShieldCheckIcon size={10} className="text-white" /> Verified
           </span>
         )}
       </div>
-      <div style={{ padding: "11px 13px 13px" }}>
-        <div style={{ fontSize: 12.5, fontWeight: 700, color: theme.textPrimary, marginBottom: 6, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+      <div className="p-3.5">
+        <div className="text-sm font-bold text-slate-900 dark:text-slate-100 mb-2 truncate">
           {item.title}
         </div>
         {type === "boarding" ? (
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <span style={{ fontSize: 13, fontWeight: 800, color: theme.accent }}>
+          <div className="flex justify-between items-center">
+            <span className="text-sm font-black text-primary-600 dark:text-primary-400">
               Rs. {(item.price || 8500).toLocaleString()}
-              <span style={{ fontSize: 10, fontWeight: 400, color: theme.textFaint }}>/mo</span>
+              <span className="text-[10px] font-medium text-slate-500">/mo</span>
             </span>
-            <span style={{ fontSize: 10.5, color: theme.textFaint, display: "flex", alignItems: "center", gap: 3 }}>
-              <MapPinIcon size={10} color={theme.textFaint} />{item.distance || "< 1 km"}
+            <span className="text-[10.5px] text-slate-500 flex items-center gap-1">
+              <MapPinIcon size={11} className="text-slate-400" />{item.distance || "< 1 km"}
             </span>
           </div>
         ) : (
           <>
-            <div style={{ display: "flex", gap: 4, flexWrap: "wrap", marginBottom: 6 }}>
-              {(item.tags || []).map((t) => (
-                <span key={t} style={{ fontSize: 9.5, fontWeight: 600, background: "#F0FDF4", color: "#16A34A", padding: "2px 8px", borderRadius: 99 }}>{t}</span>
+            <div className="flex gap-1.5 flex-wrap mb-2">
+              {(item.tags || []).slice(0,3).map((t) => (
+                <span key={t} className="text-[9.5px] font-bold bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-400 px-2 py-0.5 rounded-full">{t}</span>
               ))}
             </div>
             <StarRating rating={item.rating || 4.5} size={12} />
@@ -203,16 +120,16 @@ export default function Dashboard() {
   const displayFood      = totalFood.slice(0, 4);
 
   const bGrads = [
-    "linear-gradient(135deg,var(--p200),var(--p300))",
-    "linear-gradient(135deg,#67E8F9,#22D3EE)",
-    "linear-gradient(135deg,#A5F3FC,#67E8F9)",
-    "linear-gradient(135deg,#CCFBF1,#5EEAD4)",
+    "bg-gradient-to-br from-primary-200 to-primary-300",
+    "bg-gradient-to-br from-cyan-300 to-cyan-400",
+    "bg-gradient-to-br from-cyan-200 to-cyan-300",
+    "bg-gradient-to-br from-teal-200 to-teal-300",
   ];
   const fGrads = [
-    "linear-gradient(135deg,#BBF7D0,#6EE7B7)",
-    "linear-gradient(135deg,#FED7AA,#FDBA74)",
-    "linear-gradient(135deg,#FDE68A,#FCD34D)",
-    "linear-gradient(135deg,#FBCFE8,#F9A8D4)",
+    "bg-gradient-to-br from-green-200 to-green-300",
+    "bg-gradient-to-br from-orange-200 to-orange-300",
+    "bg-gradient-to-br from-amber-200 to-amber-300",
+    "bg-gradient-to-br from-pink-200 to-pink-300",
   ];
 
   const firstName = user?.name?.split(" ")[0] || "Student";
@@ -220,62 +137,32 @@ export default function Dashboard() {
   const greeting = hour < 12 ? "Good morning" : hour < 17 ? "Good afternoon" : "Good evening";
 
   return (
-    <div>
+    <div className="max-w-6xl mx-auto">
       {/* ── Hero Banner ── */}
-      <div style={{
-        background: theme.heroGrad,
-        borderRadius: 28, padding: "32px 36px",
-        marginBottom: 28,
-        display: "flex", alignItems: "center", justifyContent: "space-between",
-        overflow: "hidden", position: "relative",
-        boxShadow: "0 10px 40px rgba(8,145,178,.35)",
-        minHeight: 160,
-      }} className="anim-fadeInUp">
+      <div className="relative overflow-hidden rounded-[28px] bg-gradient-to-br from-slate-900 to-slate-800 dark:from-slate-950 dark:to-slate-900 shadow-2xl min-h-[200px] mb-8 animate-fadeInUp p-8 md:p-10 flex flex-col md:flex-row md:items-center justify-between gap-8">
         {/* Animated background blobs */}
-        <div style={{ position: "absolute", top: -50, right: 200, width: 200, height: 200, borderRadius: "50%", background: "rgba(255,255,255,.06)", pointerEvents: "none", animation: "float 4s ease-in-out infinite" }} />
-        <div style={{ position: "absolute", bottom: -60, right: 80, width: 240, height: 240, borderRadius: "50%", background: "rgba(255,255,255,.04)", pointerEvents: "none", animation: "float 5s ease-in-out infinite .5s" }} />
-        <div style={{ position: "absolute", top: 20, right: 420, width: 80, height: 80, borderRadius: "50%", background: "rgba(255,255,255,.08)", pointerEvents: "none" }} />
+        <div className="absolute -top-20 -right-20 w-64 h-64 rounded-full bg-primary-500/20 blur-3xl mix-blend-screen animate-[float_6s_ease-in-out_infinite]" />
+        <div className="absolute -bottom-32 left-10 w-80 h-80 rounded-full bg-cyan-500/20 blur-3xl mix-blend-screen animate-[float_8s_ease-in-out_infinite]" />
 
-        <div style={{ position: "relative", zIndex: 1 }}>
-          <div style={{
-            display: "inline-flex", alignItems: "center", gap: 6,
-            background: "rgba(255,255,255,.15)", border: "1px solid rgba(255,255,255,.25)",
-            borderRadius: 99, padding: "4px 13px", marginBottom: 14,
-            backdropFilter: "blur(8px)",
-          }}>
-            <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#4ADE80", boxShadow: "0 0 6px #4ADE80" }} />
-            <span style={{ fontSize: 11.5, color: "rgba(255,255,255,.9)", fontWeight: 600 }}>{greeting}, {firstName}</span>
+        <div className="relative z-10 max-w-lg">
+          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-3.5 py-1 mb-5">
+            <div className="w-1.5 h-1.5 rounded-full bg-green-400 shadow-[0_0_8px_#4ade80]" />
+            <span className="text-[11px] font-bold text-white/90 uppercase tracking-wide">{greeting}, {firstName}</span>
           </div>
-          <h1 style={{ fontSize: 30, fontWeight: 900, color: "#fff", letterSpacing: "-0.8px", marginBottom: 8, lineHeight: 1.15 }}>
+          <h1 className="text-3xl md:text-4xl font-black text-white tracking-tight leading-tight mb-3">
             Your campus, at your fingertips 🎓
           </h1>
-          <p style={{ fontSize: 13.5, color: "rgba(255,255,255,.72)", maxWidth: 380, lineHeight: 1.65, marginBottom: 22 }}>
-            Find boardings, food & transport near <strong style={{ color: "#fff" }}>{user?.area || "campus"}</strong>.
+          <p className="text-sm md:text-base text-white/70 leading-relaxed mb-6 max-w-[380px]">
+            Find boardings, food & transport near <strong className="text-white">{user?.area || "campus"}</strong>.
           </p>
-          <div style={{ display: "flex", gap: 10 }}>
-            <Link to="/boardings" style={{ textDecoration: "none" }}>
-              <button style={{
-                background: "#fff", color: "var(--p600)",
-                border: "none", borderRadius: 12, padding: "11px 22px",
-                fontSize: 13.5, fontWeight: 800, cursor: "pointer",
-                boxShadow: "0 4px 18px rgba(0,0,0,.18)", transition: "all .22s cubic-bezier(0.34,1.56,0.64,1)",
-              }}
-                onMouseEnter={(e) => { e.currentTarget.style.transform = "scale(1.04) translateY(-2px)"; e.currentTarget.style.boxShadow = "0 8px 24px rgba(0,0,0,.22)"; }}
-                onMouseLeave={(e) => { e.currentTarget.style.transform = "none"; e.currentTarget.style.boxShadow = "0 4px 18px rgba(0,0,0,.18)"; }}
-              >
+          <div className="flex flex-wrap gap-3">
+            <Link to="/boardings">
+              <button className="bg-white text-slate-900 hover:bg-slate-50 font-bold px-6 py-2.5 rounded-xl text-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(255,255,255,0.2)]">
                 Explore Boardings
               </button>
             </Link>
-            <Link to="/submit" style={{ textDecoration: "none" }}>
-              <button style={{
-                background: "rgba(255,255,255,.16)", color: "#fff",
-                border: "1.5px solid rgba(255,255,255,.32)", borderRadius: 12, padding: "11px 22px",
-                fontSize: 13.5, fontWeight: 600, cursor: "pointer", transition: "all .2s",
-                backdropFilter: "blur(8px)",
-              }}
-                onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(255,255,255,.26)"; }}
-                onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(255,255,255,.16)"; }}
-              >
+            <Link to="/submit">
+              <button className="bg-white/10 text-white border border-white/20 backdrop-blur-md hover:bg-white/20 font-semibold px-6 py-2.5 rounded-xl text-sm transition-all duration-300">
                 + Add Listing
               </button>
             </Link>
@@ -283,123 +170,94 @@ export default function Dashboard() {
         </div>
 
         {/* Hero stat chips */}
-        <div style={{ position: "relative", zIndex: 1, display: "flex", gap: 12 }}>
+        <div className="relative z-10 flex gap-3 overflow-x-auto pb-2 md:pb-0 no-scrollbar snap-x">
           {[
             { val: totalBoardings.length, lbl: "Boardings",  Icon: HouseIcon },
             { val: totalFood.length,      lbl: "Food Spots", Icon: FoodIcon  },
             { val: totalTransport.length, lbl: "Routes",     Icon: BusIcon   },
           ].map(({ val, lbl, Icon }, i) => (
-            <div key={lbl} style={{
-              background: "rgba(255,255,255,.14)", border: "1px solid rgba(255,255,255,.22)",
-              borderRadius: 20, padding: "16px 20px", textAlign: "center",
-              backdropFilter: "blur(12px)", minWidth: 90,
-              animation: `fadeInUp .4s ${.1 + i * .08}s both`,
-            }}>
-              <div style={{ display: "flex", justifyContent: "center", marginBottom: 8 }}>
-                <Icon size={20} color="rgba(255,255,255,.92)" />
+            <div key={lbl} className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-[24px] p-5 text-center min-w-[100px] snap-center shrink-0 animate-slideDown" style={{ animationDelay: `${0.1 + i * 0.1}s` }}>
+              <div className="flex justify-center mb-2.5">
+                <Icon size={22} className="text-white/90" />
               </div>
-              <div style={{ fontSize: 24, fontWeight: 900, color: "#fff", lineHeight: 1 }}>{val}</div>
-              <div style={{ fontSize: 10.5, color: "rgba(255,255,255,.65)", marginTop: 4 }}>{lbl}</div>
+              <div className="text-2xl font-black text-white leading-none">{val}</div>
+              <div className="text-[11px] text-white/60 font-semibold mt-1.5">{lbl}</div>
             </div>
           ))}
         </div>
       </div>
 
       {/* ── Quick categories ── */}
-      <div style={{ marginBottom: 28 }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
-          <h2 style={{ fontSize: 17, fontWeight: 800, color: theme.textPrimary, letterSpacing: "-0.4px" }}>
-            Explore
-          </h2>
-          <Link to="/map" style={{
-            fontSize: 12.5, fontWeight: 600, color: theme.accent,
-            display: "flex", alignItems: "center", gap: 5,
-            padding: "6px 13px", borderRadius: 99,
-            background: theme.accentBg, border: `1px solid ${theme.accentBorder}`,
-            transition: "all .18s",
-          }}
-            onMouseEnter={(e) => { e.currentTarget.style.background = theme.accentSoft; }}
-            onMouseLeave={(e) => { e.currentTarget.style.background = theme.accentBg; }}
-          >
-            <MapIcon size={13} color={theme.accent} /> View on map
+      <div className="mb-10">
+        <div className="flex justify-between items-center mb-5">
+          <h2 className="text-lg font-black text-slate-900 dark:text-white tracking-tight">Explore</h2>
+          <Link to="/map" className="text-xs font-bold text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/30 border border-primary-200 dark:border-primary-800 rounded-full px-3.5 py-1.5 flex items-center gap-1.5 hover:bg-primary-100 dark:hover:bg-primary-900/50 transition-colors">
+            <MapIcon size={14} className="text-primary-600 dark:text-primary-400" /> View on map
           </Link>
         </div>
-        <div className="responsive-grid stagger" style={{ gap: 14 }}>
-          <CategoryCard to="/boardings" label="Boardings"    sub={`${totalBoardings.length} verified listings`} Icon={HouseIcon} accent="var(--p600)" bg="var(--p50)" delay={0} />
-          <CategoryCard to="/food"      label="Food & Dining" sub={`${totalFood.length} spots near campus`}    Icon={FoodIcon}  accent="#EA580C" bg="#FFF7ED" delay={.06} />
-          <CategoryCard to="/transport" label="Transport"     sub={`${totalTransport.length} live routes`}     Icon={BusIcon}   accent="#16A34A" bg="#F0FDF4" delay={.12} />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <CategoryCard to="/boardings" label="Boardings"    sub={`${totalBoardings.length} verified listings`} Icon={HouseIcon} accentClass="text-primary-500" bgClass="bg-primary-50 dark:bg-primary-900/30 border-primary-200 dark:border-primary-800" hoverBorderClass="hover:border-primary-400" delayClass="delay-[0ms]" />
+          <CategoryCard to="/food"      label="Food & Dining" sub={`${totalFood.length} spots near campus`}    Icon={FoodIcon}  accentClass="text-orange-500" bgClass="bg-orange-50 dark:bg-orange-900/30 border-orange-200 dark:border-orange-800" hoverBorderClass="hover:border-orange-400" delayClass="delay-[75ms]" />
+          <CategoryCard to="/transport" label="Transport"     sub={`${totalTransport.length} live routes`}     Icon={BusIcon}   accentClass="text-green-500" bgClass="bg-green-50 dark:bg-green-900/30 border-green-200 dark:border-green-800" hoverBorderClass="hover:border-green-400" delayClass="delay-[150ms]" />
         </div>
       </div>
 
       {/* ── Stat row ── */}
-      <div className="responsive-grid stagger" style={{ gap: 14, marginBottom: 28 }}>
-        <StatCard label="Total Boardings" value={totalBoardings.length} sub="Available now" icon={HouseIcon} accent="var(--p600)" featured delay={0} />
-        <StatCard label="Food Spots"      value={totalFood.length}      sub="Near campus"   icon={FoodIcon}  accent="#EA580C" delay={.06} />
-        <StatCard label="Transport"       value={totalTransport.length} sub="Active routes" icon={BusIcon}   accent="#16A34A" delay={.12} />
-        <StatCard label="Total Listings"  value={posts.length}          sub="All categories"icon={MapPinIcon} accent="#2563EB" delay={.18} />
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
+        <StatCard label="Total Boardings" value={totalBoardings.length} sub="Available now" icon={HouseIcon} accentClass="text-primary-600" iconBgClass="bg-primary-50 dark:bg-primary-900/30 border-primary-200" featured delayClass="delay-[0ms]" />
+        <StatCard label="Food Spots"      value={totalFood.length}      sub="Near campus"   icon={FoodIcon}  accentClass="text-orange-500" iconBgClass="bg-orange-50 dark:bg-orange-900/30 border-orange-200" delayClass="delay-[75ms]" />
+        <StatCard label="Transport"       value={totalTransport.length} sub="Active routes" icon={BusIcon}   accentClass="text-green-600" iconBgClass="bg-green-50 dark:bg-green-900/30 border-green-200" delayClass="delay-[150ms]" />
+        <StatCard label="Total Listings"  value={posts.length}          sub="All categories"icon={MapPinIcon} accentClass="text-blue-500" iconBgClass="bg-blue-50 dark:bg-blue-900/30 border-blue-200" delayClass="delay-[225ms]" />
       </div>
 
       {loading && <LoadingScreen message="Loading listings near you..." />}
       {error   && <ErrorBox message={error} onRetry={load} />}
 
       {!loading && (
-        <div className="grid-2-cols">
-
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Trending Boardings */}
           <div>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
-              <h2 style={{ fontSize: 15.5, fontWeight: 800, color: theme.textPrimary, display: "flex", alignItems: "center", gap: 7 }}>
-                <span style={{ width: 28, height: 28, borderRadius: 9, background: "var(--p50)", border: "1.5px solid var(--p200)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                  <TrendingUpIcon size={14} color="var(--p600)" />
+            <div className="flex justify-between items-center mb-5">
+              <h2 className="text-base font-black text-slate-900 dark:text-white flex items-center gap-2">
+                <span className="w-8 h-8 rounded-lg bg-primary-50 dark:bg-primary-900/30 border border-primary-200 dark:border-primary-800 flex items-center justify-center">
+                  <TrendingUpIcon size={16} className="text-primary-600 dark:text-primary-400" />
                 </span>
                 Trending Boardings
               </h2>
-              <Link to="/boardings" style={{
-                fontSize: 12.5, fontWeight: 600, color: theme.accent, display: "flex", alignItems: "center", gap: 3,
-              }}>
-                See all <ChevronRightIcon size={13} color={theme.accent} />
+              <Link to="/boardings" className="text-xs font-bold text-primary-600 dark:text-primary-400 flex items-center gap-1 hover:underline">
+                See all <ChevronRightIcon size={14} />
               </Link>
             </div>
-            <div className="responsive-grid stagger" style={{ gap: 12 }}>
+            <div className="grid grid-cols-2 gap-3 md:gap-4">
               {displayBoardings.length > 0
-                ? displayBoardings.map((b, i) => <ListingCard key={b._id} item={b} gradient={bGrads[i % 4]} type="boarding" theme={theme} />)
-                : [0,1,2,3].map(i => <div key={i} style={{ height: 160, borderRadius: 18, background: bGrads[i], opacity: .4 }} className="skeleton" />)
+                ? displayBoardings.map((b, i) => <ListingCard key={b._id} item={b} gradientClass={bGrads[i % 4]} type="boarding" />)
+                : [0,1,2,3].map(i => <div key={i} className={`h-40 rounded-[20px] opacity-40 animate-pulse ${bGrads[i]}`} />)
               }
             </div>
           </div>
 
           {/* Trending Food */}
           <div>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
-              <h2 style={{ fontSize: 15.5, fontWeight: 800, color: theme.textPrimary, display: "flex", alignItems: "center", gap: 7 }}>
-                <span style={{ width: 28, height: 28, borderRadius: 9, background: "#FFF7ED", border: "1.5px solid #FED7AA", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                  <TrendingUpIcon size={14} color="#EA580C" />
+            <div className="flex justify-between items-center mb-5">
+              <h2 className="text-base font-black text-slate-900 dark:text-white flex items-center gap-2">
+                <span className="w-8 h-8 rounded-lg bg-orange-50 dark:bg-orange-900/30 border border-orange-200 dark:border-orange-800 flex items-center justify-center">
+                  <TrendingUpIcon size={16} className="text-orange-500 dark:text-orange-400" />
                 </span>
                 Trending Food
               </h2>
-              <Link to="/food" style={{ fontSize: 12.5, fontWeight: 600, color: theme.accent, display: "flex", alignItems: "center", gap: 3 }}>
-                See all <ChevronRightIcon size={13} color={theme.accent} />
+              <Link to="/food" className="text-xs font-bold text-primary-600 dark:text-primary-400 flex items-center gap-1 hover:underline">
+                See all <ChevronRightIcon size={14} />
               </Link>
             </div>
-            <div className="responsive-grid stagger" style={{ gap: 12 }}>
+            <div className="grid grid-cols-2 gap-3 md:gap-4">
               {displayFood.length > 0
-                ? displayFood.map((f, i) => <ListingCard key={f._id} item={f} gradient={fGrads[i % 4]} type="food" theme={theme} />)
-                : [0,1,2,3].map(i => <div key={i} style={{ height: 160, borderRadius: 18, background: fGrads[i], opacity: .4 }} className="skeleton" />)
+                ? displayFood.map((f, i) => <ListingCard key={f._id} item={f} gradientClass={fGrads[i % 4]} type="food" />)
+                : [0,1,2,3].map(i => <div key={i} className={`h-40 rounded-[20px] opacity-40 animate-pulse ${fGrads[i]}`} />)
               }
             </div>
           </div>
         </div>
       )}
-
-      <style>{`
-        @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
-        @keyframes fadeInUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
-        .anim-fadeInUp{animation:fadeInUp .4s cubic-bezier(.2,0,0,1) both}
-        .stagger>*:nth-child(1){animation-delay:.04s}
-        .stagger>*:nth-child(2){animation-delay:.09s}
-        .stagger>*:nth-child(3){animation-delay:.14s}
-        .stagger>*:nth-child(4){animation-delay:.19s}
-      `}</style>
     </div>
   );
 }

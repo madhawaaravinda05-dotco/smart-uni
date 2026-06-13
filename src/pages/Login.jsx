@@ -6,58 +6,54 @@ import { MailIcon, LockIcon, EyeIcon, EyeOffIcon, UserIcon, ShieldCheckIcon, Bui
 
 /* ─── shared tiny components ───────────────────────────────────────────────── */
 function PInput({ label, error, icon, suffix, ...p }) {
-  const [f, setF] = useState(false);
   return (
-    <label style={{ display:"flex", flexDirection:"column", gap:4 }}>
-      <span style={{ fontSize:11, fontWeight:700, letterSpacing:".6px", textTransform:"uppercase",
-        color: f ? "var(--p600)" : error ? "var(--red)" : "var(--n500)", transition:"color .15s" }}>{label}</span>
-      <div style={{ position:"relative" }}>
-        {icon && <span style={{ position:"absolute", left:12, top:"50%", transform:"translateY(-50%)",
-          color: f ? "var(--p600)" : "var(--p300)", display:"flex", pointerEvents:"none" }}>{icon}</span>}
-        <input onFocus={()=>setF(true)} onBlur={()=>setF(false)}
-          style={{ width:"100%",
-            padding: `11px ${suffix?"40px":"13px"} 11px ${icon?"38px":"13px"}`,
-            border: `1.5px solid ${f?"var(--p600)":error?"var(--red-border)":"var(--p200)"}`,
-            borderRadius:10, fontSize:13.5, fontFamily:"inherit",
-            background: error?"var(--red-bg)" : f?"#fff":"var(--p50)",
-            color:"var(--p900)", outline:"none", transition:"all .15s",
-            boxShadow: f ? "0 0 0 3px rgba(8,145,178,.12)" : "none" }} {...p}/>
-        {suffix && <span style={{ position:"absolute", right:12, top:"50%",
-          transform:"translateY(-50%)", display:"flex" }}>{suffix}</span>}
+    <label className="flex flex-col gap-1.5 w-full relative">
+      <span className={`text-[11px] font-bold tracking-[0.6px] uppercase transition-colors ${error ? 'text-red-500' : 'text-slate-500 focus-within:text-primary-600'}`}>
+        {label}
+      </span>
+      <div className="relative group">
+        {icon && (
+          <span className={`absolute left-3.5 top-1/2 -translate-y-1/2 flex pointer-events-none transition-colors ${error ? 'text-red-400' : 'text-slate-400 group-focus-within:text-primary-500'}`}>
+            {icon}
+          </span>
+        )}
+        <input 
+          className={`w-full rounded-xl text-[13.5px] font-medium outline-none transition-all duration-200 
+            ${icon ? 'pl-10' : 'pl-3.5'} 
+            ${suffix ? 'pr-11' : 'pr-3.5'} py-2.5
+            ${error 
+              ? 'bg-red-50/50 border-red-300 text-red-900 focus:border-red-500 focus:ring-4 focus:ring-red-500/20' 
+              : 'bg-slate-50/50 border-slate-200 text-slate-900 focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/20 hover:border-slate-300'
+            } border-2`}
+          {...p} 
+        />
+        {suffix && (
+          <span className="absolute right-2 top-1/2 -translate-y-1/2 flex">
+            {suffix}
+          </span>
+        )}
       </div>
-      {error && <span style={{ fontSize:11.5, color:"var(--red)", fontWeight:500 }}>{error}</span>}
+      {error && <span className="text-[11.5px] text-red-500 font-semibold">{error}</span>}
     </label>
   );
 }
 
 function PBtn({ children, loading, outline, full, type="button", onClick }) {
-  const [hov, setHov] = useState(false);
   if (outline) return (
-    <button type={type} onClick={onClick}
-      onMouseEnter={()=>setHov(true)} onMouseLeave={()=>setHov(false)}
-      style={{ display:"inline-flex", alignItems:"center", justifyContent:"center", gap:6,
-        padding:"10px 20px", borderRadius:10, border:"1.5px solid var(--p200)",
-        background: hov?"var(--p100)":"var(--p50)", color:"var(--p600)",
-        fontFamily:"inherit", fontSize:13.5, fontWeight:600, cursor:"pointer",
-        width:full?"100%":"auto", transition:"all .15s" }}>
+    <button type={type} onClick={onClick} className={`inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl border-2 border-slate-200 bg-slate-50 text-primary-600 font-bold text-[13.5px] transition-all hover:bg-primary-50 hover:border-primary-200 ${full ? 'w-full' : 'w-auto'}`}>
       {children}
     </button>
   );
   return (
-    <button type={type} onClick={onClick}
-      onMouseEnter={()=>setHov(true)} onMouseLeave={()=>setHov(false)}
-      style={{ display:"inline-flex", alignItems:"center", justifyContent:"center", gap:6,
-        padding:"12px 20px", borderRadius:10, border:"none",
-        background: `linear-gradient(135deg,${hov?"var(--p700)":"var(--p600)"},${hov?"var(--p600)":"var(--p400)"})`,
-        color:"#fff", fontFamily:"inherit", fontSize:13.5, fontWeight:700, cursor:"pointer",
-        width:full?"100%":"auto", transition:"all .2s",
-        boxShadow: hov?"var(--shadow-cyan-md)":"var(--shadow-cyan-sm)" }}>
-      {loading
-        ? <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5"
-            strokeLinecap="round" style={{animation:"spin .7s linear infinite"}}>
-            <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
-          </svg>
-        : children}
+    <button type={type} onClick={onClick} className={`relative inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl border-none bg-gradient-to-br from-primary-600 to-primary-500 hover:from-primary-700 hover:to-primary-600 text-white font-bold text-[13.5px] transition-all shadow-lg shadow-primary-500/30 hover:shadow-primary-500/40 hover:-translate-y-0.5 overflow-hidden group ${full ? 'w-full' : 'w-auto'}`}>
+      <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
+      {loading ? (
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" className="animate-spin relative z-10">
+          <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+        </svg>
+      ) : (
+        <span className="relative z-10">{children}</span>
+      )}
     </button>
   );
 }
@@ -65,94 +61,52 @@ function PBtn({ children, loading, outline, full, type="button", onClick }) {
 /* ─── decorative SVG panel ─────────────────────────────────────────────────── */
 function LeftPanel() {
   return (
-    <div className="hide-on-mobile" style={{ flex:"0 0 44%", height:"100vh", background:"linear-gradient(160deg,var(--p800) 0%,var(--p600) 45%,var(--p400) 100%)",
-      flexDirection:"column", padding:"40px 44px", position:"relative", overflow:"hidden" }}>
-
-      {/* decorative circles */}
-      <div style={{ position:"absolute", top:"-80px", right:"-80px", width:320, height:320,
-        borderRadius:"50%", background:"rgba(255,255,255,.06)", pointerEvents:"none" }}/>
-      <div style={{ position:"absolute", bottom:"-60px", left:"-60px", width:260, height:260,
-        borderRadius:"50%", background:"rgba(255,255,255,.04)", pointerEvents:"none" }}/>
-      <div style={{ position:"absolute", top:"38%", right:"10%", width:180, height:180,
-        borderRadius:"50%", background:"rgba(255,255,255,.05)", pointerEvents:"none" }}/>
+    <div className="hidden lg:flex flex-col relative overflow-hidden w-[45%] h-screen bg-slate-900 p-12">
+      {/* Background photo */}
+      <img
+        src="/auth-bg.jpg"
+        alt="Campus"
+        className="absolute inset-0 w-full h-full object-cover object-top"
+      />
+      
+      {/* Dark gradient overlay for text readability */}
+      <div 
+        className="absolute inset-0"
+        style={{
+          background: "linear-gradient(to bottom, rgba(30,0,60,.08) 0%, rgba(60,20,120,.12) 40%, rgba(60,20,100,.72) 70%, #2E0A5A 100%)"
+        }}
+      />
 
       {/* brand */}
-      <div style={{ display:"flex", alignItems:"center", gap:12, marginBottom:"auto", zIndex:1 }}>
-        <div style={{ width:42, height:42, borderRadius:13, background:"rgba(255,255,255,.2)",
-          border:"1px solid rgba(255,255,255,.35)", display:"flex", alignItems:"center", justifyContent:"center" }}>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.8"
-            strokeLinecap="round" strokeLinejoin="round">
+      <div className="flex items-center gap-3 mt-0 mb-auto relative z-10">
+        <div className="w-11 h-11 rounded-xl bg-white/20 border border-white/30 flex items-center justify-center backdrop-blur-md">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5z"/>
             <path d="M5 3l.75 2.25L8 6l-2.25.75L5 9l-.75-2.25L2 6l2.25-.75z"/>
             <path d="M19 13l.75 2.25L22 16l-2.25.75L19 19l-.75-2.25L16 16l2.25-.75z"/>
           </svg>
         </div>
         <div>
-          <div style={{ fontSize:16, fontWeight:900, color:"#fff", letterSpacing:"-.3px" }}>Smart UniCompanion</div>
-          <div style={{ fontSize:10, color:"rgba(255,255,255,.5)", letterSpacing:".8px", textTransform:"uppercase" }}>Campus Life Platform</div>
+          <div className="text-[17px] font-black text-white tracking-tight leading-none mb-1">Smart UniCompanion</div>
+          <div className="text-[10px] font-bold text-white/50 tracking-[0.8px] uppercase">Campus Life Platform</div>
         </div>
       </div>
 
-      {/* main illustration — SVG university scene */}
-      <svg viewBox="0 0 380 260" fill="none" xmlns="http://www.w3.org/2000/svg"
-        style={{ width:"100%", maxWidth:380, margin:"auto 0", filter:"drop-shadow(0 20px 40px rgba(0,0,0,.25))" }}>
-        {/* ground */}
-        <ellipse cx="190" cy="245" rx="160" ry="14" fill="rgba(255,255,255,.08)"/>
-        {/* main building */}
-        <rect x="80" y="100" width="220" height="140" rx="6" fill="rgba(255,255,255,.15)" stroke="rgba(255,255,255,.3)" strokeWidth="1.5"/>
-        {/* roof / top block */}
-        <rect x="120" y="56" width="140" height="52" rx="5" fill="rgba(255,255,255,.12)" stroke="rgba(255,255,255,.25)" strokeWidth="1.5"/>
-        {/* door */}
-        <rect x="168" y="170" width="44" height="70" rx="4" fill="rgba(255,255,255,.22)" stroke="rgba(255,255,255,.38)" strokeWidth="1.5"/>
-        <circle cx="207" cy="207" r="3" fill="rgba(255,255,255,.7)"/>
-        {/* windows row 1 */}
-        {[92,132,174,216,256].map((x,i)=>(
-          <rect key={i} x={x} y="116" width="24" height="20" rx="3" fill="rgba(255,255,255,.13)" stroke="rgba(255,255,255,.25)" strokeWidth="1"/>
-        ))}
-        {/* windows row 2 */}
-        {[92,132,256].map((x,i)=>(
-          <rect key={i} x={x} y="148" width="24" height="20" rx="3" fill="rgba(255,255,255,.11)" stroke="rgba(255,255,255,.22)" strokeWidth="1"/>
-        ))}
-        {/* flag */}
-        <line x1="190" y1="18" x2="190" y2="57" stroke="rgba(255,255,255,.5)" strokeWidth="2"/>
-        <path d="M190 18 L218 28 L190 38 Z" fill="rgba(255,255,255,.4)"/>
-        {/* books left */}
-        <rect x="32" y="196" width="16" height="28" rx="2" fill="var(--p300)" opacity=".85"/>
-        <rect x="50" y="192" width="16" height="32" rx="2" fill="var(--p400)"/>
-        <rect x="68" y="200" width="16" height="24" rx="2" fill="var(--p200)" opacity=".8"/>
-        {/* grad cap right */}
-        <ellipse cx="314" cy="208" rx="24" ry="7" fill="rgba(255,255,255,.28)"/>
-        <path d="M314 188 L338 208 H290 Z" fill="rgba(255,255,255,.22)"/>
-        <line x1="338" y1="208" x2="338" y2="222" stroke="rgba(255,255,255,.4)" strokeWidth="2"/>
-        <circle cx="338" cy="224" r="3" fill="rgba(255,255,255,.55)"/>
-        {/* sparkles */}
-        {[[30,46],[342,62],[352,155],[24,175],[300,42]].map(([cx,cy],i)=>(
-          <g key={i} transform={`translate(${cx},${cy})`} opacity=".65">
-            <circle r="2.5" fill="rgba(255,255,255,.7)"/>
-            <line x1="-8" y1="0" x2="8" y2="0" stroke="rgba(255,255,255,.35)" strokeWidth="1.2"/>
-            <line x1="0" y1="-8" x2="0" y2="8" stroke="rgba(255,255,255,.35)" strokeWidth="1.2"/>
-          </g>
-        ))}
-      </svg>
-
       {/* headline + stats */}
-      <div style={{ zIndex:1 }}>
-        <h1 style={{ fontSize:26, fontWeight:900, color:"#fff", letterSpacing:"-0.8px",
-          lineHeight:1.15, marginBottom:10 }}>
+      <div className="relative z-10 mt-auto mb-4">
+        <h1 className="text-3xl font-black text-white tracking-tight leading-[1.15] mb-3">
           Your campus life,<br/>
-          <span style={{ background:"linear-gradient(90deg,var(--p100),var(--p300))",
-            WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent" }}>simplified.</span>
+          <span className="bg-gradient-to-r from-cyan-100 to-cyan-300 bg-clip-text text-transparent">simplified.</span>
         </h1>
-        <p style={{ fontSize:13, color:"rgba(255,255,255,.6)", lineHeight:1.7, marginBottom:20, maxWidth:320 }}>
+        <p className="text-[13.5px] text-white/70 leading-relaxed mb-6 max-w-xs font-medium">
           Verified boardings, food spots and transport routes — for every Sri Lankan university student.
         </p>
         {/* mini stat chips */}
-        <div style={{ display:"flex", gap:10 }}>
+        <div className="flex gap-3">
           {[["39+","Universities"],["2.4k","Students"],["500+","Listings"]].map(([v,l])=>(
-            <div key={l} style={{ flex:1, background:"rgba(255,255,255,.12)", border:"1px solid rgba(255,255,255,.2)",
-              borderRadius:12, padding:"10px 6px", textAlign:"center" }}>
-              <div style={{ fontSize:18, fontWeight:900, color:"#fff", lineHeight:1 }}>{v}</div>
-              <div style={{ fontSize:10, color:"rgba(255,255,255,.55)", marginTop:3 }}>{l}</div>
+            <div key={l} className="flex-1 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl py-3 px-2 text-center">
+              <div className="text-xl font-black text-white leading-none mb-1.5">{v}</div>
+              <div className="text-[10px] font-bold text-white/60 tracking-wide">{l}</div>
             </div>
           ))}
         </div>
@@ -178,7 +132,7 @@ export default function Login() {
   useEffect(() => {
     requestAnimationFrame(() => setReady(true));
     if (location.state?.registered) setSuccessMsg("Account created! Sign in to continue.");
-  }, []);
+  }, [location.state]);
 
   const goRegister = () => {
     setLeaving(true);
@@ -215,125 +169,105 @@ export default function Login() {
   };
 
   return (
-    <div className="app-layout" style={{ width:"100vw", height:"100vh", overflow:"hidden", background:"var(--p50)" }}>
-
+    <div className="flex w-screen h-screen overflow-hidden bg-slate-50 dark:bg-slate-900">
+      
       {/* left branding panel */}
       <LeftPanel />
 
       {/* right form area */}
-      <div className="main-content" style={{ display:"flex", alignItems:"center", justifyContent:"center",
-        transition:"opacity .36s ease, transform .36s ease",
-        opacity: ready && !leaving ? 1 : 0,
-        transform: leaving ? "translateX(40px)" : ready ? "translateX(0)" : "translateX(40px)" }}>
-
-        <div style={{ width:"100%", maxWidth:400 }}>
+      <div 
+        className={`flex-1 flex items-center justify-center p-6 md:p-12 transition-all duration-300 ease-out
+          ${ready && !leaving ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}
+      >
+        <div className="w-full max-w-[400px]">
 
           {/* heading */}
-          <div style={{ marginBottom:28 }}>
-            <div style={{ display:"inline-flex", alignItems:"center", gap:7,
-              background:"var(--p100)", border:"1px solid var(--p200)", borderRadius:99,
-              padding:"4px 13px", marginBottom:14 }}>
-              <div style={{ width:6, height:6, borderRadius:"50%", background:"var(--green)",
-                boxShadow:"0 0 6px var(--green)" }}/>
-              <span style={{ fontSize:11.5, color:"var(--p700)", fontWeight:700 }}>
+          <div className="mb-8">
+            <div className="inline-flex items-center gap-2 bg-primary-50 dark:bg-primary-900/30 border border-primary-200 dark:border-primary-800 rounded-full px-3.5 py-1.5 mb-5 shadow-sm">
+              <div className="w-1.5 h-1.5 rounded-full bg-green-500 shadow-[0_0_8px_#22c55e]" />
+              <span className="text-[11.5px] text-primary-700 dark:text-primary-400 font-bold">
                 Available at 39+ universities
               </span>
             </div>
-            <h2 style={{ fontSize:28, fontWeight:900, color:"var(--p900)", letterSpacing:"-.6px",
-              lineHeight:1.15, marginBottom:6 }}>Welcome back</h2>
-            <p style={{ fontSize:13.5, color:"var(--n500)" }}>
+            <h2 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight leading-tight mb-2">Welcome back</h2>
+            <p className="text-[13.5px] text-slate-500 font-medium">
               Sign in to your UniCompanion account
             </p>
           </div>
 
           {/* success */}
           {successMsg && (
-            <div style={{ background:"#F0FDF4", border:"1.5px solid #86EFAC", borderRadius:12,
-              padding:"11px 14px", marginBottom:20, display:"flex", alignItems:"center", gap:9 }}>
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#16A34A"
-                strokeWidth="2.5" strokeLinecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-              <span style={{ fontSize:13, color:"#15803D", fontWeight:600 }}>{successMsg}</span>
+            <div className="bg-green-50/80 dark:bg-green-900/20 border-2 border-green-200 dark:border-green-800 rounded-xl p-3.5 mb-5 flex items-center gap-3">
+              <div className="w-6 h-6 rounded-full bg-green-100 dark:bg-green-800 flex items-center justify-center shrink-0">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16A34A" strokeWidth="2.5" strokeLinecap="round" className="dark:stroke-green-400"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <span className="text-[13px] text-green-700 dark:text-green-400 font-bold">{successMsg}</span>
             </div>
           )}
 
           {/* server error */}
           {serverError && (
-            <div style={{ background:"#FEF2F2", border:"1.5px solid #FCA5A5", borderRadius:12,
-              padding:"11px 14px", marginBottom:20, display:"flex", alignItems:"center", gap:9 }}>
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#DC2626"
-                strokeWidth="2.2" strokeLinecap="round">
-                <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/>
-                <line x1="12" y1="16" x2="12.01" y2="16"/>
-              </svg>
-              <span style={{ fontSize:13, color:"#DC2626", fontWeight:500 }}>{serverError}</span>
+            <div className="bg-red-50/80 dark:bg-red-900/20 border-2 border-red-200 dark:border-red-800 rounded-xl p-3.5 mb-5 flex items-center gap-3">
+              <div className="w-6 h-6 rounded-full bg-red-100 dark:bg-red-800 flex items-center justify-center shrink-0">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#DC2626" strokeWidth="2.5" strokeLinecap="round" className="dark:stroke-red-400"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              </div>
+              <span className="text-[13px] text-red-700 dark:text-red-400 font-bold">{serverError}</span>
             </div>
           )}
 
           {/* form */}
-          <form onSubmit={handleSubmit} style={{ display:"flex", flexDirection:"column", gap:16 }} noValidate>
+          <form onSubmit={handleSubmit} className="flex flex-col gap-4" noValidate>
             <PInput label="University Email" type="email" placeholder="yourname@uni.ac.lk"
-              icon={<MailIcon size={14}/>} value={form.email} error={errors.email}
+              icon={<MailIcon size={16}/>} value={form.email} error={errors.email}
               onChange={e=>setForm({...form,email:e.target.value})}/>
             <PInput label="Password" type={showPw?"text":"password"} placeholder="Enter your password"
-              icon={<LockIcon size={14}/>} value={form.password} error={errors.password}
+              icon={<LockIcon size={16}/>} value={form.password} error={errors.password}
               onChange={e=>setForm({...form,password:e.target.value})}
               suffix={
-                <button type="button" onClick={()=>setShowPw(p=>!p)}
-                  style={{ background:"none", border:"none", color:"var(--p400)", cursor:"pointer",
-                    display:"flex", padding:3, borderRadius:6 }}>
-                  {showPw ? <EyeOffIcon size={14}/> : <EyeIcon size={14}/>}
+                <button type="button" onClick={()=>setShowPw(p=>!p)} className="p-1.5 text-slate-400 hover:text-primary-500 hover:bg-primary-50 rounded-lg transition-colors">
+                  {showPw ? <EyeOffIcon size={15}/> : <EyeIcon size={15}/>}
                 </button>
               }/>
-            <PBtn type="submit" full loading={loading}>Sign in to your account</PBtn>
+            <div className="mt-2">
+              <PBtn type="submit" full loading={loading}>Sign in to your account</PBtn>
+            </div>
           </form>
 
           {/* divider */}
-          <div style={{ display:"flex", alignItems:"center", gap:12, margin:"20px 0" }}>
-            <div style={{ flex:1, height:1, background:"var(--p200)" }}/>
-            <span style={{ fontSize:11, color:"var(--n400)", fontWeight:600, textTransform:"uppercase",
-              letterSpacing:".6px", whiteSpace:"nowrap" }}>or try a demo</span>
-            <div style={{ flex:1, height:1, background:"var(--p200)" }}/>
+          <div className="flex items-center gap-4 my-7">
+            <div className="flex-1 h-px bg-slate-200 dark:bg-slate-800" />
+            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest whitespace-nowrap">or try a demo</span>
+            <div className="flex-1 h-px bg-slate-200 dark:bg-slate-800" />
           </div>
 
           {/* demo buttons */}
-          <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
+          <div className="flex flex-col gap-2.5">
             {[
-              { key:"student", label:"Student",      Icon:UserIcon,        color:"var(--p600)", bg:"var(--p50)", border:"var(--p200)" },
-              { key:"admin",   label:"Campus Admin",  Icon:ShieldCheckIcon, color:"#16A34A", bg:"#F0FDF4", border:"#86EFAC" },
-              { key:"master",  label:"Master Admin",  Icon:BuildingIcon,    color:"#EA580C", bg:"#FFF7ED", border:"#FED7AA" },
-            ].map(({key,label,Icon,color,bg,border})=>(
+              { key:"student", label:"Student",      Icon:UserIcon,        color:"text-primary-600 dark:text-primary-400", bg:"bg-primary-50 dark:bg-primary-900/20", border:"border-primary-200 dark:border-primary-800", iconBg:"bg-white dark:bg-slate-900" },
+              { key:"admin",   label:"Campus Admin",  Icon:ShieldCheckIcon, color:"text-green-600 dark:text-green-400", bg:"bg-green-50 dark:bg-green-900/20", border:"border-green-200 dark:border-green-800", iconBg:"bg-white dark:bg-slate-900" },
+              { key:"master",  label:"Master Admin",  Icon:BuildingIcon,    color:"text-orange-600 dark:text-orange-400", bg:"bg-orange-50 dark:bg-orange-900/20", border:"border-orange-200 dark:border-orange-800", iconBg:"bg-white dark:bg-slate-900" },
+            ].map(({key,label,Icon,color,bg,border,iconBg})=>(
               <button key={key} onClick={()=>demoLogin(key)}
-                style={{ display:"flex", alignItems:"center", gap:10, padding:"10px 14px",
-                  borderRadius:11, border:`1.5px solid ${border}`, background:bg,
-                  cursor:"pointer", fontFamily:"inherit", transition:"all .18s",
-                  textAlign:"left" }}
-                onMouseEnter={e=>{e.currentTarget.style.transform="translateY(-1px)";e.currentTarget.style.boxShadow=`0 4px 16px ${color}22`;}}
-                onMouseLeave={e=>{e.currentTarget.style.transform="";e.currentTarget.style.boxShadow="";}}>
-                <div style={{ width:30, height:30, borderRadius:9, background:"rgba(255,255,255,.8)",
-                  display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
-                  <Icon size={14} color={color}/>
+                className={`flex items-center gap-3 p-3 rounded-[14px] border-2 ${border} ${bg} cursor-pointer transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md text-left group`}>
+                <div className={`w-9 h-9 rounded-[10px] ${iconBg} flex items-center justify-center shrink-0 shadow-sm transition-transform group-hover:scale-110`}>
+                  <Icon size={16} className={color}/>
                 </div>
-                <span style={{ fontSize:13, fontWeight:600, color, flex:1 }}>Continue as {label}</span>
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke={color}
-                  strokeWidth="2.5" strokeLinecap="round" opacity=".5">
+                <span className={`text-[13.5px] font-bold ${color} flex-1`}>Continue as {label}</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" className={`${color} opacity-40 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all`}>
                   <polyline points="9 18 15 12 9 6"/>
                 </svg>
               </button>
             ))}
           </div>
 
-          <p style={{ textAlign:"center", fontSize:13.5, color:"var(--n500)", marginTop:22 }}>
+          <p className="text-center text-[13.5px] font-medium text-slate-500 mt-8">
             Don't have an account?{" "}
-            <button onClick={goRegister}
-              style={{ background:"none", border:"none", color:"var(--p600)", fontWeight:700,
-                fontSize:13.5, cursor:"pointer", padding:0, fontFamily:"inherit" }}>
-              Create one free →
+            <button onClick={goRegister} className="bg-transparent border-none text-primary-600 dark:text-primary-400 font-bold cursor-pointer p-0 hover:underline hover:text-primary-700">
+              Create one free &rarr;
             </button>
           </p>
         </div>
       </div>
-
-      <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
     </div>
   );
 }

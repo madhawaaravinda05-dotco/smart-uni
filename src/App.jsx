@@ -4,8 +4,8 @@ import { AuthProvider, useAuth } from "./context/AuthContext";
 import { ThemeProvider } from "./context/ThemeContext";
 import Layout from "./components/Layout";
 
-import Login from "./pages/Auth";
-import Register from "./pages/Auth";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import Boardings from "./pages/Boardings";
 import Food from "./pages/Food";

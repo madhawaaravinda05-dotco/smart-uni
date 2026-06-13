@@ -47,60 +47,70 @@ const YEARS=[{v:"",l:"Select year..."},{v:"1",l:"Year 1 — First Year"},{v:"2",
 
 // ─── Tiny primitives ──────────────────────────────────────────────────────────
 function FInput({ label, err, icon, suffix, ...p }) {
-  const [f,setF] = useState(false);
   return (
-    <div style={{display:"flex",flexDirection:"column",gap:4}}>
-      <span style={{fontSize:11,fontWeight:700,letterSpacing:".5px",textTransform:"uppercase",color:f?"var(--p600)":err?"var(--red)":"var(--n500)"}}>{label}</span>
-      <div style={{position:"relative"}}>
-        {icon&&<span style={{position:"absolute",left:11,top:"50%",transform:"translateY(-50%)",color:f?"var(--p600)":"var(--p300)",display:"flex",pointerEvents:"none"}}>{icon}</span>}
-        <input onFocus={()=>setF(true)} onBlur={()=>setF(false)}
-          style={{width:"100%",padding:`10px ${suffix?"38px":"12px"} 10px ${icon?"36px":"12px"}`,
-            border:`1.5px solid ${f?"var(--p600)":err?"var(--red-border)":"var(--p200)"}`,borderRadius:10,
-            fontSize:13,fontFamily:"inherit",background:err?"var(--red-bg)":f?"#fff":"var(--p50)",
-            color:"var(--p900)",outline:"none",transition:"all .15s",
-            boxShadow:f?"0 0 0 3px rgba(8,145,178,.1)":"none"}} {...p}/>
-        {suffix&&<span style={{position:"absolute",right:10,top:"50%",transform:"translateY(-50%)",display:"flex"}}>{suffix}</span>}
+    <div className="flex flex-col gap-1.5 w-full relative">
+      <span className={`text-[11px] font-bold tracking-[0.6px] uppercase transition-colors ${err ? 'text-red-500' : 'text-slate-500 focus-within:text-primary-600'}`}>{label}</span>
+      <div className="relative group">
+        {icon && <span className={`absolute left-3.5 top-1/2 -translate-y-1/2 flex pointer-events-none transition-colors ${err ? 'text-red-400' : 'text-slate-400 group-focus-within:text-primary-500'}`}>{icon}</span>}
+        <input 
+          className={`w-full rounded-xl text-[13.5px] font-medium outline-none transition-all duration-200 
+            ${icon ? 'pl-10' : 'pl-3.5'} 
+            ${suffix ? 'pr-11' : 'pr-3.5'} py-2.5
+            ${err 
+              ? 'bg-red-50/50 border-red-300 text-red-900 focus:border-red-500 focus:ring-4 focus:ring-red-500/20' 
+              : 'bg-slate-50/50 border-slate-200 text-slate-900 focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/20 hover:border-slate-300'
+            } border-2`}
+          {...p}
+        />
+        {suffix && <span className="absolute right-2 top-1/2 -translate-y-1/2 flex">{suffix}</span>}
       </div>
-      {err&&<span style={{fontSize:11,color:"var(--red)",fontWeight:500}}>{err}</span>}
+      {err && <span className="text-[11.5px] text-red-500 font-semibold">{err}</span>}
     </div>
   );
 }
+
 function FSel({ label, err, icon, opts=[], ...p }) {
-  const [f,setF] = useState(false);
   return (
-    <div style={{display:"flex",flexDirection:"column",gap:4}}>
-      <span style={{fontSize:11,fontWeight:700,letterSpacing:".5px",textTransform:"uppercase",color:f?"var(--p600)":err?"var(--red)":"var(--n500)"}}>{label}</span>
-      <div style={{position:"relative"}}>
-        {icon&&<span style={{position:"absolute",left:11,top:"50%",transform:"translateY(-50%)",color:f?"var(--p600)":"var(--p300)",display:"flex",pointerEvents:"none"}}>{icon}</span>}
-        <select onFocus={()=>setF(true)} onBlur={()=>setF(false)}
-          style={{width:"100%",padding:`10px 32px 10px ${icon?"36px":"12px"}`,
-            border:`1.5px solid ${f?"var(--p600)":err?"var(--red-border)":"var(--p200)"}`,borderRadius:10,
-            fontSize:13,fontFamily:"inherit",appearance:"none",
-            background:err?"var(--red-bg)":f?"#fff":"var(--p50)",
-            color:p.value?"var(--p900)":"var(--n400)",outline:"none",cursor:"pointer",
-            boxShadow:f?"0 0 0 3px rgba(8,145,178,.1)":"none",transition:"all .15s"}} {...p}>
+    <div className="flex flex-col gap-1.5 w-full relative">
+      <span className={`text-[11px] font-bold tracking-[0.6px] uppercase transition-colors ${err ? 'text-red-500' : 'text-slate-500 focus-within:text-primary-600'}`}>{label}</span>
+      <div className="relative group">
+        {icon && <span className={`absolute left-3.5 top-1/2 -translate-y-1/2 flex pointer-events-none transition-colors ${err ? 'text-red-400' : 'text-slate-400 group-focus-within:text-primary-500'}`}>{icon}</span>}
+        <select 
+          className={`w-full rounded-xl text-[13.5px] font-medium outline-none appearance-none cursor-pointer transition-all duration-200 
+            ${icon ? 'pl-10' : 'pl-3.5'} pr-10 py-2.5
+            ${err 
+              ? 'bg-red-50/50 border-red-300 text-red-900 focus:border-red-500 focus:ring-4 focus:ring-red-500/20' 
+              : 'bg-slate-50/50 border-slate-200 text-slate-900 focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/20 hover:border-slate-300'
+            } border-2 ${!p.value ? 'text-slate-500' : 'text-slate-900'}`}
+          {...p}
+        >
           {opts.map(({v,l})=><option key={v} value={v}>{l}</option>)}
         </select>
-        <span style={{position:"absolute",right:10,top:"50%",transform:"translateY(-50%)",pointerEvents:"none",color:"var(--p300)"}}>
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+        <span className="absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><polyline points="6 9 12 15 18 9"/></svg>
         </span>
       </div>
-      {err&&<span style={{fontSize:11,color:"var(--red)",fontWeight:500}}>{err}</span>}
+      {err && <span className="text-[11.5px] text-red-500 font-semibold">{err}</span>}
     </div>
   );
 }
-function PBtn({ children, loading, outline, full, type="button", onClick }) {
-  const [h,setH]=useState(false);
+
+function PBtn({ children, loading, outline, full, type="button", onClick, className="" }) {
   if (outline) return (
-    <button type={type} onClick={onClick} onMouseEnter={()=>setH(true)} onMouseLeave={()=>setH(false)}
-      style={{display:"inline-flex",alignItems:"center",justifyContent:"center",gap:6,padding:"10px 18px",borderRadius:10,border:"1.5px solid var(--p200)",background:h?"var(--p100)":"var(--p50)",color:"var(--p600)",fontFamily:"inherit",fontSize:13.5,fontWeight:600,cursor:"pointer",width:full?"100%":"auto",transition:"all .15s"}}>
+    <button type={type} onClick={onClick} className={`inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl border-2 border-slate-200 bg-slate-50 text-primary-600 font-bold text-[13.5px] transition-all hover:bg-primary-50 hover:border-primary-200 ${full ? 'w-full' : 'w-auto'} ${className}`}>
       {children}
     </button>
   );
   return (
-    <button type={type} onClick={onClick} onMouseEnter={()=>setH(true)} onMouseLeave={()=>setH(false)}
-      style={{display:"inline-flex",alignItems:"center",justifyContent:"center",gap:6,padding:"11px 18px",borderRadius:10,border:"none",background:`linear-gradient(135deg,${h?"var(--p700)":"var(--p600)"},${h?"var(--p600)":"var(--p400)"})`,color:"#fff",fontFamily:"inherit",fontSize:13.5,fontWeight:700,cursor:loading?"wait":"pointer",width:full?"100%":"auto",transition:"all .2s",boxShadow:h?"var(--shadow-cyan-md)":"var(--shadow-cyan-sm)"}}>
-      {loading?<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" style={{animation:"rSpin .7s linear infinite"}}><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>:children}
+    <button type={type} onClick={onClick} className={`relative inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl border-none bg-gradient-to-br from-primary-600 to-primary-500 hover:from-primary-700 hover:to-primary-600 text-white font-bold text-[13.5px] transition-all shadow-lg shadow-primary-500/30 hover:shadow-primary-500/40 hover:-translate-y-0.5 overflow-hidden group ${full ? 'w-full' : 'w-auto'} ${className}`}>
+      <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
+      {loading ? (
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" className="animate-spin relative z-10">
+          <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+        </svg>
+      ) : (
+        <span className="relative z-10 flex items-center justify-center gap-2 w-full">{children}</span>
+      )}
     </button>
   );
 }
@@ -108,62 +118,49 @@ function PBtn({ children, loading, outline, full, type="button", onClick }) {
 // ─── Left purple panel (same style as Login) ─────────────────────────────────
 function LeftPanel() {
   return (
-    <div style={{flex:"0 0 44%",height:"100vh",background:"linear-gradient(160deg,var(--p800) 0%,var(--p600) 45%,var(--p400) 100%)",display:"flex",flexDirection:"column",padding:"36px 44px",position:"relative",overflow:"hidden"}}>
-      <div style={{position:"absolute",top:"-80px",right:"-80px",width:300,height:300,borderRadius:"50%",background:"rgba(255,255,255,.06)",pointerEvents:"none"}}/>
-      <div style={{position:"absolute",bottom:"-60px",left:"-60px",width:250,height:250,borderRadius:"50%",background:"rgba(255,255,255,.04)",pointerEvents:"none"}}/>
+    <div className="hidden lg:flex flex-col relative overflow-hidden w-[45%] h-screen bg-slate-900 p-12">
+      {/* Background photo */}
+      <img
+        src="/auth-bg.jpg"
+        alt="Campus"
+        className="absolute inset-0 w-full h-full object-cover object-top"
+      />
+      
+      {/* Dark gradient overlay for text readability */}
+      <div 
+        className="absolute inset-0"
+        style={{
+          background: "linear-gradient(to bottom, rgba(30,0,60,.08) 0%, rgba(60,20,120,.12) 40%, rgba(60,20,100,.72) 70%, #2E0A5A 100%)"
+        }}
+      />
+
       {/* brand */}
-      <div style={{display:"flex",alignItems:"center",gap:11,zIndex:1,marginBottom:"auto"}}>
-        <div style={{width:40,height:40,borderRadius:12,background:"rgba(255,255,255,.2)",border:"1px solid rgba(255,255,255,.32)",display:"flex",alignItems:"center",justifyContent:"center"}}>
+      <div className="flex items-center gap-3 relative z-10 mb-auto">
+        <div className="w-10 h-10 rounded-xl bg-white/20 border border-white/30 flex items-center justify-center backdrop-blur-md">
           <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
             <path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5z"/>
             <path d="M5 3l.75 2.25L8 6l-2.25.75L5 9l-.75-2.25L2 6l2.25-.75z"/>
           </svg>
         </div>
         <div>
-          <div style={{fontSize:15,fontWeight:900,color:"#fff",letterSpacing:"-.2px"}}>Smart UniCompanion</div>
-          <div style={{fontSize:9.5,color:"rgba(255,255,255,.45)",letterSpacing:".8px",textTransform:"uppercase"}}>Campus Life Platform</div>
+          <div className="text-[15px] font-black text-white tracking-tight leading-none mb-1">Smart UniCompanion</div>
+          <div className="text-[9.5px] font-bold text-white/50 tracking-[0.8px] uppercase">Campus Life Platform</div>
         </div>
       </div>
-      {/* illustration */}
-      <svg viewBox="0 0 360 220" fill="none" xmlns="http://www.w3.org/2000/svg" style={{width:"100%",margin:"auto 0",filter:"drop-shadow(0 14px 28px rgba(0,0,0,.22))"}}>
-        <ellipse cx="180" cy="208" rx="145" ry="11" fill="rgba(255,255,255,.07)"/>
-        <rect x="80" y="88" width="200" height="116" rx="6" fill="rgba(255,255,255,.14)" stroke="rgba(255,255,255,.26)" strokeWidth="1.5"/>
-        <rect x="118" y="48" width="124" height="46" rx="5" fill="rgba(255,255,255,.11)" stroke="rgba(255,255,255,.2)" strokeWidth="1.5"/>
-        <rect x="158" y="152" width="44" height="52" rx="4" fill="rgba(255,255,255,.2)" stroke="rgba(255,255,255,.32)" strokeWidth="1.5"/>
-        <circle cx="197" cy="179" r="3" fill="rgba(255,255,255,.65)"/>
-        {[92,128,162,198,232].map((x,i)=><rect key={i} x={x} y="102" width="21" height="17" rx="3" fill="rgba(255,255,255,.11)" stroke="rgba(255,255,255,.2)" strokeWidth="1"/>)}
-        {[92,128,232].map((x,i)=><rect key={i} x={x} y="130" width="21" height="17" rx="3" fill="rgba(255,255,255,.09)" stroke="rgba(255,255,255,.18)" strokeWidth="1"/>)}
-        <line x1="180" y1="12" x2="180" y2="49" stroke="rgba(255,255,255,.45)" strokeWidth="2"/>
-        <path d="M180 12 L206 24 L180 36 Z" fill="rgba(255,255,255,.38)"/>
-        {/* check badge */}
-        <circle cx="234" cy="190" r="21" fill="#16A34A" opacity=".92"/>
-        <polyline points="224,190 232,199 246,180" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
-        {/* books */}
-        <rect x="28" y="168" width="13" height="25" rx="2" fill="var(--p300)" opacity=".85"/>
-        <rect x="43" y="164" width="13" height="29" rx="2" fill="var(--p400)"/>
-        <rect x="58" y="172" width="13" height="21" rx="2" fill="var(--p200)" opacity=".8"/>
-        {[[26,40],[336,56],[348,146],[20,166],[306,36]].map(([cx,cy],i)=>(
-          <g key={i} transform={`translate(${cx},${cy})`} opacity=".6">
-            <circle r="2.5" fill="rgba(255,255,255,.7)"/>
-            <line x1="-7" y1="0" x2="7" y2="0" stroke="rgba(255,255,255,.35)" strokeWidth="1.2"/>
-            <line x1="0" y1="-7" x2="0" y2="7" stroke="rgba(255,255,255,.35)" strokeWidth="1.2"/>
-          </g>
-        ))}
-      </svg>
       {/* copy */}
-      <div style={{zIndex:1}}>
-        <h1 style={{fontSize:24,fontWeight:900,color:"#fff",letterSpacing:"-.8px",lineHeight:1.15,marginBottom:8}}>
+      <div className="relative z-10 mt-auto">
+        <h1 className="text-2xl font-black text-white tracking-tight leading-[1.15] mb-2">
           Join thousands of<br/>
-          <span style={{background:"linear-gradient(90deg,var(--p100),var(--p300))",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>Sri Lankan students.</span>
+          <span className="bg-gradient-to-r from-cyan-100 to-cyan-300 bg-clip-text text-transparent">Sri Lankan students.</span>
         </h1>
-        <p style={{fontSize:13,color:"rgba(255,255,255,.6)",lineHeight:1.7,marginBottom:16,maxWidth:300}}>
+        <p className="text-[13px] text-white/70 leading-relaxed mb-4 max-w-[300px] font-medium">
           Personalised boardings, food and transport — for every Sri Lankan university.
         </p>
-        <div style={{display:"flex",gap:8}}>
+        <div className="flex gap-2">
           {[["39+","Universities"],["2.4k","Students"],["500+","Listings"]].map(([v,l])=>(
-            <div key={l} style={{flex:1,background:"rgba(255,255,255,.12)",border:"1px solid rgba(255,255,255,.2)",borderRadius:11,padding:"9px 6px",textAlign:"center"}}>
-              <div style={{fontSize:17,fontWeight:900,color:"#fff",lineHeight:1}}>{v}</div>
-              <div style={{fontSize:10,color:"rgba(255,255,255,.55)",marginTop:3}}>{l}</div>
+            <div key={l} className="flex-1 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl py-2 px-1.5 text-center">
+              <div className="text-lg font-black text-white leading-none mb-1">{v}</div>
+              <div className="text-[10px] font-bold text-white/60 tracking-wide">{l}</div>
             </div>
           ))}
         </div>
@@ -193,7 +190,8 @@ export default function Register() {
     const p=form.password; if(!p) return 0;
     return Math.min([p.length>=6,p.length>=10,/[A-Z]/.test(p),/[0-9]/.test(p),/[^A-Za-z0-9]/.test(p)].filter(Boolean).length,5);
   })();
-  const pwCol=["","#EF4444","#F97316","#EAB308","#22C55E","#16A34A"];
+  const pwCol=["","bg-red-500","bg-orange-500","bg-yellow-500","bg-green-500","bg-emerald-600"];
+  const pwText=["","text-red-500","text-orange-500","text-yellow-500","text-green-500","text-emerald-600"];
   const pwLbl=["","Too short","Weak","Fair","Good","Strong"];
 
   const v1=()=>{
@@ -233,95 +231,110 @@ export default function Register() {
 
   const towns=(TOWNS[form.university]||[]).map(t=>({v:t,l:t}));
 
-  const formAnim={
-    transition:"opacity .36s ease, transform .36s ease",
-    opacity:ready&&!leaving?1:0,
-    transform:leaving?"translateX(-40px)":ready?"translateX(0)":"translateX(-40px)",
-  };
-
   return (
-    <div style={{width:"100vw",height:"100vh",overflow:"hidden",display:"flex",background:"var(--p50)"}}>
+    <div className="flex w-screen h-screen overflow-hidden bg-slate-50 dark:bg-slate-900">
       <LeftPanel/>
 
       {/* right form area */}
-      <div style={{flex:1,height:"100vh",display:"flex",alignItems:"center",justifyContent:"center",padding:"24px 40px",background:"var(--p50)",...formAnim}}>
-        <div style={{width:"100%",maxWidth:420}}>
+      <div className={`flex-1 h-screen flex items-center justify-center p-6 md:p-10 transition-all duration-300 ease-out ${ready && !leaving ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}>
+        <div className="w-full max-w-[420px]">
 
           {/* step progress */}
           {step < 3 && (
-            <div style={{display:"flex",alignItems:"center",gap:6,marginBottom:22}}>
+            <div className="flex items-center gap-2 mb-6">
               {[1,2].map((n,i)=>(
-                <div key={n} style={{display:"flex",alignItems:"center",gap:6,flex:n===step?2:1}}>
-                  <div style={{width:28,height:28,borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center",fontSize:12,fontWeight:800,flexShrink:0,
-                    background:step>n?"var(--p600)":step===n?"linear-gradient(135deg,var(--p600),var(--p400))":"var(--p100)",
-                    color:step>=n?"#fff":"var(--p400)",
-                    boxShadow:step===n?"0 0 0 4px rgba(8,145,178,.15)":"none",
-                    transition:"all .3s"}}>
-                    {step>n
-                      ? <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-                      : n}
+                <div key={n} className={`flex items-center gap-2 transition-all duration-300 ${n === step ? 'flex-[2]' : 'flex-1'}`}>
+                  <div className={`w-7 h-7 rounded-full flex items-center justify-center text-[11px] font-bold shrink-0 transition-all duration-300 
+                    ${step > n ? 'bg-primary-600 text-white' : 
+                      step === n ? 'bg-gradient-to-br from-primary-600 to-primary-400 text-white shadow-[0_0_0_4px_rgba(8,145,178,0.15)]' : 
+                      'bg-slate-100 text-slate-400'}`}>
+                    {step > n ? (
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    ) : n}
                   </div>
-                  {step===n&&<span style={{fontSize:12,fontWeight:700,color:"var(--p600)",whiteSpace:"nowrap"}}>{n===1?"Account Details":"Campus Setup"}</span>}
-                  {i<1&&<div style={{flex:1,height:2,borderRadius:99,background:step>1?"var(--p600)":"var(--p200)",transition:"background .4s",minWidth:20}}/>}
+                  {step === n && <span className="text-[11px] font-bold text-primary-600 dark:text-primary-400 whitespace-nowrap">{n === 1 ? "Account Details" : "Campus Setup"}</span>}
+                  {i < 1 && <div className={`flex-1 h-0.5 rounded-full min-w-[20px] transition-colors duration-300 ${step > 1 ? 'bg-primary-600' : 'bg-slate-200 dark:bg-slate-700'}`} />}
                 </div>
               ))}
             </div>
           )}
 
-          {serverError&&(
-            <div style={{background:"#FEF2F2",border:"1.5px solid #FCA5A5",borderRadius:11,padding:"10px 14px",marginBottom:16,display:"flex",alignItems:"center",gap:9}}>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#DC2626" strokeWidth="2.2" strokeLinecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-              <span style={{fontSize:13,color:"#DC2626",fontWeight:500}}>{serverError}</span>
+          {serverError && (
+            <div className="bg-red-50/80 dark:bg-red-900/20 border-2 border-red-200 dark:border-red-800 rounded-xl p-3 mb-4 flex items-center gap-3">
+              <div className="w-6 h-6 rounded-full bg-red-100 dark:bg-red-800 flex items-center justify-center shrink-0">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#DC2626" strokeWidth="2.5" strokeLinecap="round" className="dark:stroke-red-400"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              </div>
+              <span className="text-[13px] text-red-700 dark:text-red-400 font-bold">{serverError}</span>
             </div>
           )}
 
           {/* ── STEP 1 ── */}
-          {step===1&&(
-            <div style={{animation:`${dir==="back"?"rSlideL":"rSlideR"} .28s ease both`}}>
-              <h2 style={{fontSize:26,fontWeight:900,color:"#1E1B4B",letterSpacing:"-.5px",marginBottom:4}}>Create account</h2>
-              <p style={{fontSize:13.5,color:"#6B7280",marginBottom:22}}>Start with your personal details.</p>
-              <div style={{display:"flex",flexDirection:"column",gap:14}}>
-                <FInput label="Full Name" placeholder="e.g. Kamal Perera" icon={<UserIcon size={14}/>} value={form.name} err={errors.name} onChange={e=>set("name",e.target.value)}/>
-                <FInput label="Email" type="email" placeholder="yourname@uni.ac.lk" icon={<MailIcon size={14}/>} value={form.email} err={errors.email} onChange={e=>set("email",e.target.value)}/>
+          {step === 1 && (
+            <div className={`animate-${dir === "back" ? "slideRight" : "slideLeft"}`}>
+              <h2 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight mb-1">Create account</h2>
+              <p className="text-[13.5px] text-slate-500 font-medium mb-6">Start with your personal details.</p>
+              
+              <div className="flex flex-col gap-4">
+                <FInput label="Full Name" placeholder="e.g. Kamal Perera" icon={<UserIcon size={16}/>} value={form.name} err={errors.name} onChange={e=>set("name",e.target.value)}/>
+                <FInput label="Email" type="email" placeholder="yourname@uni.ac.lk" icon={<MailIcon size={16}/>} value={form.email} err={errors.email} onChange={e=>set("email",e.target.value)}/>
+                
                 <div>
-                  <FInput label="Password" type={showPw?"text":"password"} placeholder="Min. 6 characters" icon={<LockIcon size={14}/>} value={form.password} err={errors.password} onChange={e=>set("password",e.target.value)}
-                    suffix={<button type="button" onClick={()=>setShowPw(p=>!p)} style={{background:"none",border:"none",color:"var(--p300)",cursor:"pointer",display:"flex",padding:3}}>{showPw?<EyeOffIcon size={14}/>:<EyeIcon size={14}/>}</button>}/>
-                  {form.password.length>0&&(
-                    <div style={{marginTop:6}}>
-                      <div style={{display:"flex",gap:2,marginBottom:3}}>
-                        {[1,2,3,4,5].map(i=><div key={i} style={{flex:1,height:3,borderRadius:99,background:i<=pwScore?pwCol[pwScore]:"#EDE9FE",transition:"background .3s"}}/>)}
+                  <FInput label="Password" type={showPw?"text":"password"} placeholder="Min. 6 characters" icon={<LockIcon size={16}/>} value={form.password} err={errors.password} onChange={e=>set("password",e.target.value)}
+                    suffix={
+                      <button type="button" onClick={()=>setShowPw(p=>!p)} className="p-1.5 text-slate-400 hover:text-primary-500 hover:bg-primary-50 rounded-lg transition-colors">
+                        {showPw ? <EyeOffIcon size={15}/> : <EyeIcon size={15}/>}
+                      </button>
+                    }/>
+                  {form.password.length > 0 && (
+                    <div className="mt-2 text-left">
+                      <div className="flex gap-1 mb-1.5">
+                        {[1,2,3,4,5].map(i=>(
+                          <div key={i} className={`flex-1 h-1 rounded-full transition-colors duration-300 ${i <= pwScore ? pwCol[pwScore] : "bg-slate-200 dark:bg-slate-700"}`} />
+                        ))}
                       </div>
-                      {pwScore>0&&<span style={{fontSize:11,fontWeight:700,color:pwCol[pwScore]}}>{pwLbl[pwScore]} password</span>}
+                      {pwScore > 0 && <span className={`text-[11px] font-bold ${pwText[pwScore]}`}>{pwLbl[pwScore]} password</span>}
                     </div>
                   )}
                 </div>
-                <FInput label="Confirm Password" type={showPw?"text":"password"} placeholder="Re-enter password" icon={<LockIcon size={14}/>} value={form.confirmPassword} err={errors.confirmPassword} onChange={e=>set("confirmPassword",e.target.value)}/>
-                <PBtn onClick={goNext} full style={{marginTop:4}}>
+                
+                <FInput label="Confirm Password" type={showPw?"text":"password"} placeholder="Re-enter password" icon={<LockIcon size={16}/>} value={form.confirmPassword} err={errors.confirmPassword} onChange={e=>set("confirmPassword",e.target.value)}/>
+                
+                <PBtn onClick={goNext} full className="mt-2">
                   Continue to Campus Setup
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><polyline points="9 18 15 12 9 6"/></svg>
                 </PBtn>
               </div>
-              <p style={{textAlign:"center",fontSize:13.5,color:"var(--n500)",marginTop:18}}>
+              
+              <p className="text-center text-[13.5px] font-medium text-slate-500 mt-6">
                 Already have an account?{" "}
-                <button onClick={goLogin} style={{background:"none",border:"none",color:"var(--p600)",fontWeight:700,fontSize:13.5,cursor:"pointer",padding:0,fontFamily:"inherit"}}>Sign in</button>
+                <button onClick={goLogin} className="bg-transparent border-none text-primary-600 dark:text-primary-400 font-bold cursor-pointer p-0 hover:underline hover:text-primary-700">Sign in</button>
               </p>
             </div>
           )}
 
           {/* ── STEP 2 ── */}
-          {step===2&&(
-            <form onSubmit={handleSubmit} noValidate style={{animation:`${dir==="back"?"rSlideL":"rSlideR"} .28s ease both`}}>
-              <h2 style={{fontSize:26,fontWeight:900,color:"#1E1B4B",letterSpacing:"-.5px",marginBottom:4}}>Campus setup</h2>
-              <p style={{fontSize:13.5,color:"#6B7280",marginBottom:20}}>This controls which listings you see.</p>
-              <div style={{display:"flex",flexDirection:"column",gap:13}}>
+          {step === 2 && (
+            <form onSubmit={handleSubmit} noValidate className={`animate-${dir === "back" ? "slideRight" : "slideLeft"}`}>
+              <h2 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight mb-1">Campus setup</h2>
+              <p className="text-[13.5px] text-slate-500 font-medium mb-6">This controls which listings you see.</p>
+              
+              <div className="flex flex-col gap-4">
                 {/* university grouped select */}
-                <div>
-                  <span style={{fontSize:11,fontWeight:700,letterSpacing:".5px",textTransform:"uppercase",color:errors.university?"#DC2626":"#6B7280",display:"flex",alignItems:"center",gap:4,marginBottom:5}}>
-                    <BuildingIcon size={11} color={errors.university?"#DC2626":"#6B7280"}/> University
+                <div className="flex flex-col gap-1.5 w-full relative">
+                  <span className={`text-[11px] font-bold tracking-[0.6px] uppercase transition-colors flex items-center gap-1.5 ${errors.university ? 'text-red-500' : 'text-slate-500'}`}>
+                    <BuildingIcon size={13} className={errors.university ? "text-red-500" : "text-slate-400"} /> University
                   </span>
-                  <div style={{position:"relative"}}>
-                    <select value={form.university} onChange={e=>{set("university",e.target.value);set("town","");}}
-                      style={{width:"100%",padding:"10px 32px 10px 12px",border:`1.5px solid ${errors.university?"var(--red-border)":"var(--p200)"}`,borderRadius:10,fontSize:13,fontFamily:"inherit",appearance:"none",background:errors.university?"var(--red-bg)":"var(--p50)",color:form.university?"var(--p900)":"var(--n400)",outline:"none",cursor:"pointer"}}>
+                  <div className="relative group">
+                    <select 
+                      value={form.university} 
+                      onChange={e=>{set("university",e.target.value);set("town","");}}
+                      className={`w-full rounded-xl text-[13.5px] font-medium outline-none appearance-none cursor-pointer transition-all duration-200 
+                        pl-3.5 pr-10 py-2.5
+                        ${errors.university 
+                          ? 'bg-red-50/50 border-red-300 text-red-900 focus:border-red-500 focus:ring-4 focus:ring-red-500/20' 
+                          : 'bg-slate-50/50 border-slate-200 text-slate-900 focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/20 hover:border-slate-300'
+                        } border-2 ${!form.university ? 'text-slate-500' : 'text-slate-900'}`}
+                    >
                       <option value="">Choose your university...</option>
                       <optgroup label="State Universities (UGC)">
                         {UNIS.filter(u=>u.type==="state").map(u=><option key={u.value} value={u.value}>{u.label}</option>)}
@@ -330,29 +343,33 @@ export default function Register() {
                         {UNIS.filter(u=>u.type==="private").map(u=><option key={u.value} value={u.value}>{u.label}</option>)}
                       </optgroup>
                     </select>
-                    <span style={{position:"absolute",right:10,top:"50%",transform:"translateY(-50%)",pointerEvents:"none",color:"var(--p300)"}}>
-                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+                    <span className="absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><polyline points="6 9 12 15 18 9"/></svg>
                     </span>
                   </div>
-                  {errors.university&&<span style={{fontSize:11,color:"#DC2626",fontWeight:500}}>{errors.university}</span>}
+                  {errors.university && <span className="text-[11.5px] text-red-500 font-semibold">{errors.university}</span>}
                 </div>
+                
                 {/* town */}
-                {form.university&&<FSel label="Town / Area near campus" icon={<MapPinIcon size={13}/>} value={form.town} err={errors.town} onChange={e=>set("town",e.target.value)} opts={[{v:"",l:"Select area..."},...towns]}/>}
+                {form.university && <FSel label="Town / Area near campus" icon={<MapPinIcon size={15}/>} value={form.town} err={errors.town} onChange={e=>set("town",e.target.value)} opts={[{v:"",l:"Select area..."},...towns]}/>}
+                
                 {/* year */}
                 <FSel label="Year of Study" value={form.yearOfStudy} err={errors.yearOfStudy} onChange={e=>set("yearOfStudy",e.target.value)} opts={YEARS}/>
+                
                 {/* preview */}
-                {form.university&&form.town&&(
-                  <div style={{background:"linear-gradient(135deg,var(--p50),var(--p100))",border:"1.5px solid var(--p200)",borderRadius:11,padding:"10px 13px",display:"flex",gap:9,alignItems:"center"}}>
-                    <MapPinIcon size={14} color="var(--p600)"/>
-                    <span style={{fontSize:12.5,color:"var(--p900)",fontWeight:500}}>
-                      Listings near <strong>{form.town}</strong> · {UNIS.find(u=>u.value===form.university)?.short}
-                      {form.yearOfStudy&&` · Year ${form.yearOfStudy}`}
+                {form.university && form.town && (
+                  <div className="bg-gradient-to-br from-primary-50 to-primary-100 dark:from-primary-900/30 dark:to-primary-900/20 border-2 border-primary-200 dark:border-primary-800 rounded-xl p-3 flex gap-3 items-center mt-1 shadow-sm">
+                    <MapPinIcon size={16} className="text-primary-600 dark:text-primary-400"/>
+                    <span className="text-[12.5px] text-primary-900 dark:text-primary-100 font-medium">
+                      Listings near <strong className="font-bold">{form.town}</strong> &middot; {UNIS.find(u=>u.value===form.university)?.short}
+                      {form.yearOfStudy && ` · Year ${form.yearOfStudy}`}
                     </span>
                   </div>
                 )}
-                <div style={{display:"flex",gap:9,marginTop:2}}>
+                
+                <div className="flex gap-3 mt-4">
                   <PBtn outline onClick={goBack}>
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--p600)" strokeWidth="2.5" strokeLinecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><polyline points="15 18 9 12 15 6"/></svg>
                     Back
                   </PBtn>
                   <PBtn type="submit" full loading={loading}>Create my account</PBtn>
@@ -362,31 +379,23 @@ export default function Register() {
           )}
 
           {/* ── STEP 3 success ── */}
-          {step===3&&(
-            <div style={{textAlign:"center",padding:"8px 0",animation:"rScale .4s ease both"}}>
-              <div style={{width:72,height:72,background:"#F0FDF4",border:"2px solid #86EFAC",borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center",margin:"0 auto 18px",animation:"rCheck .5s .1s ease both"}}>
-                <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#16A34A" strokeWidth="2.5" strokeLinecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+          {step === 3 && (
+            <div className="text-center py-4 animate-scaleUp">
+              <div className="w-20 h-20 bg-green-50 dark:bg-green-900/30 border-4 border-green-200 dark:border-green-800 rounded-full flex items-center justify-center mx-auto mb-5 animate-popIn">
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#16A34A" strokeWidth="3" strokeLinecap="round" className="dark:stroke-green-400"><polyline points="20 6 9 17 4 12"/></svg>
               </div>
-              <h2 style={{fontSize:24,fontWeight:900,color:"#1E1B4B",marginBottom:8}}>You're all set!</h2>
-              <p style={{fontSize:13.5,color:"#6B7280",lineHeight:1.75,marginBottom:24,maxWidth:300,margin:"0 auto 24px"}}>
-                Account created for <strong style={{color:"#1E1B4B"}}>{form.town||"your campus"}</strong>. Sign in to explore listings.
+              <h2 className="text-2xl font-black text-slate-900 dark:text-white mb-2">You're all set!</h2>
+              <p className="text-[13.5px] text-slate-500 font-medium leading-relaxed mb-8 max-w-[300px] mx-auto">
+                Account created for <strong className="text-slate-900 dark:text-white">{form.town||"your campus"}</strong>. Sign in to explore listings.
               </p>
               <PBtn full onClick={()=>navigate("/login",{state:{registered:true}})}>
                 Go to sign in
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><polyline points="9 18 15 12 9 6"/></svg>
               </PBtn>
             </div>
           )}
         </div>
       </div>
-
-      <style>{`
-        @keyframes rSpin{to{transform:rotate(360deg)}}
-        @keyframes rSlideR{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
-        @keyframes rSlideL{from{opacity:0;transform:translateX(-20px)}to{opacity:1;transform:translateX(0)}}
-        @keyframes rScale{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:scale(1)}}
-        @keyframes rCheck{0%{transform:scale(0) rotate(-12deg);opacity:0}65%{transform:scale(1.12) rotate(3deg)}100%{transform:scale(1) rotate(0);opacity:1}}
-      `}</style>
     </div>
   );
 }

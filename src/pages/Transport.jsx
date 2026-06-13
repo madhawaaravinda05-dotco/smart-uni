@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
-import { useTheme } from "../context/ThemeContext";
 import { getActivePosts, reportPost, deletePost } from "../api/api";
-import { Card, PageHeader, EmptyState, Button, LoadingScreen } from "../components/ui";
+import { PageHeader, EmptyState, LoadingScreen } from "../components/ui";
 import { BusIcon, ClockIcon, MapPinIcon, SearchIcon, XIcon, FlagIcon } from "../components/Icons";
+import { useToast } from "../components/Toast";
 
 export default function Transport() {
   const { user } = useAuth();
-  const { theme } = useTheme();
+  const { show, ToastEl } = useToast();
   const [search, setSearch] = useState("");
   const [typeFilter, setTypeFilter] = useState("");
   const [expanded, setExpanded] = useState(null);
@@ -17,19 +17,19 @@ export default function Transport() {
 
   const handleReport = async (id) => {
     const res = await reportPost(id);
-    if (res.success) alert("Thank you — this listing has been flagged for admin review.");
-    else alert(res.message);
+    if (res.success) show("Thank you — this listing has been flagged for admin review.", "success");
+    else show(res.message, "error");
   };
 
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to permanently delete this route?")) return;
     const res = await deletePost(id);
     if (res.success) {
-      alert("Route deleted successfully.");
+      show("Route deleted successfully.", "success");
       setRoutes((prev) => prev.filter(p => p.id !== id));
       setExpanded(null);
     } else {
-      alert(res.message);
+      show(res.message, "error");
     }
   };
 
@@ -66,74 +66,117 @@ export default function Transport() {
   });
 
   return (
-    <div>
+    <div className="max-w-5xl mx-auto">
+      {ToastEl}
       <PageHeader title="Transport Timetables" subtitle="Verified bus and train schedules connecting to your campus" />
 
-      <div style={{ display: "flex", gap: 10, marginBottom: 20, flexWrap: "wrap" }}>
-        <div style={{ flex: 1, minWidth: 240, display: "flex", alignItems: "center", gap: 8, background: theme.cardBg, border: `1.5px solid ${theme.inputBorder}`, borderRadius: 10, padding: "0 14px", boxShadow: theme.cardShadow }}>
-          <SearchIcon size={15} color={theme.textFaint} />
-          <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search by route or destination..."
-            style={{ flex: 1, border: "none", outline: "none", fontSize: 13, padding: "10px 0", background: "transparent", color: theme.textPrimary }} />
-          {search && <button onClick={() => setSearch("")} style={{ background: "none", border: "none", color: theme.textFaint, cursor: "pointer", display: "flex", alignItems: "center" }}><XIcon size={13} /></button>}
+      {/* ── Filters ── */}
+      <div className="flex flex-col sm:flex-row gap-3 mb-8">
+        <div className="flex-1 flex items-center gap-2 bg-card border border-border rounded-xl px-4 py-1 shadow-sm focus-within:border-emerald-500 focus-within:ring-2 focus-within:ring-emerald-500/20 transition-all">
+          <SearchIcon size={16} className="text-slate-400" />
+          <input 
+            value={search} 
+            onChange={(e) => setSearch(e.target.value)} 
+            placeholder="Search by route or destination..."
+            className="flex-1 bg-transparent border-none outline-none text-sm text-foreground py-2.5 w-full"
+          />
+          {search && (
+            <button onClick={() => setSearch("")} className="p-1 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors">
+              <XIcon size={14} />
+            </button>
+          )}
         </div>
-        {["Bus", "Train"].map((t) => (
-          <button key={t} onClick={() => setTypeFilter(typeFilter === t ? "" : t)}
-            style={{ padding: "8px 18px", borderRadius: 20, border: `1.5px solid ${typeFilter === t ? "var(--p600)" : theme.inputBorder}`, background: typeFilter === t ? "var(--p50)" : theme.cardBg, fontSize: 12, fontWeight: 600, color: typeFilter === t ? "var(--p600)" : theme.textMuted, cursor: "pointer", transition: "all .15s" }}>
-            {t}
-          </button>
-        ))}
+        
+        <div className="flex gap-2 w-full sm:w-auto">
+          {["Bus", "Train"].map((t) => (
+            <button 
+              key={t} 
+              onClick={() => setTypeFilter(typeFilter === t ? "" : t)}
+              className={`flex-1 sm:flex-none px-6 py-2.5 rounded-xl text-sm font-bold transition-all border ${
+                typeFilter === t 
+                  ? 'bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 border-emerald-500 shadow-sm' 
+                  : 'bg-card text-slate-500 border-border hover:border-emerald-300 hover:text-emerald-500'
+              }`}
+            >
+              {t}
+            </button>
+          ))}
+        </div>
       </div>
 
       {loading && <LoadingScreen message="Finding transport routes..." />}
 
       {!loading && filtered.length === 0 && (
-        <EmptyState icon={<BusIcon size={48} />} title="No routes found" description="Try a different search term or remove the type filter." action={<Button variant="secondary" onClick={() => { setSearch(""); setTypeFilter(""); }}>Clear filters</Button>} />
+        <EmptyState 
+          icon={<BusIcon size={48} />} 
+          title="No routes found" 
+          description="Try a different search term or remove the type filter." 
+          action={<button className="mt-4 bg-emerald-50 text-emerald-600 px-5 py-2 rounded-xl font-bold hover:bg-emerald-100 transition-colors" onClick={() => { setSearch(""); setTypeFilter(""); }}>Clear filters</button>} 
+        />
       )}
 
+      {/* ── Route List ── */}
       {!loading && (
-        <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-          {filtered.map((r) => (
-            <Card key={r.id} style={{ overflow: "hidden", background: theme.cardBg, border: `1.5px solid ${theme.cardBorder}`, boxShadow: theme.cardShadow }}>
+        <div className="flex flex-col gap-4">
+          {filtered.map((r, i) => (
+            <div 
+              key={r.id} 
+              className="glass-card rounded-[20px] overflow-hidden transition-all duration-300 hover:shadow-glass-hover animate-fadeInUp"
+              style={{ animationDelay: `${0.05 * i}s` }}
+            >
               <div
-                style={{ padding: "16px 20px", display: "flex", alignItems: "center", gap: 16, cursor: "pointer", transition: "background .15s" }}
-                onMouseEnter={e => e.currentTarget.style.background = theme.accentSoft}
-                onMouseLeave={e => e.currentTarget.style.background = "transparent"}
-                onClick={() => setExpanded(expanded === r.id ? null : r.id)}>
-                <div style={{ width: 44, height: 44, background: r.type === "Train" ? "var(--p50)" : "#FFF7ED", borderRadius: 12, display: "flex", alignItems: "center", justifyContent: "center", color: r.type === "Train" ? "var(--p600)" : "#EA580C", flexShrink: 0 }}>
-                  <BusIcon size={20} color={r.type === "Train" ? "var(--p600)" : "#EA580C"} />
+                className="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-5 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors"
+                onClick={() => setExpanded(expanded === r.id ? null : r.id)}
+              >
+                <div className={`w-14 h-14 rounded-2xl shrink-0 flex items-center justify-center ${r.type === "Train" ? "bg-primary-50 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400" : "bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400"}`}>
+                  <BusIcon size={24} />
                 </div>
-                <div style={{ flex: 1 }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
-                    <span style={{ fontSize: 14, fontWeight: 700, color: theme.textPrimary }}>{r.name}</span>
-                    <span style={{ fontSize: 10, fontWeight: 700, background: r.type === "Train" ? "var(--p50)" : "#FFF7ED", color: r.type === "Train" ? "var(--p800)" : "#9A3412", padding: "2px 8px", borderRadius: 20 }}>{r.type}</span>
+                
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 mb-1.5 flex-wrap">
+                    <span className="text-base font-extrabold text-foreground truncate">{r.name}</span>
+                    <span className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full ${r.type === "Train" ? "bg-primary-50 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400" : "bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400"}`}>
+                      {r.type}
+                    </span>
                   </div>
-                  <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, color: theme.textMuted }}>
-                    <MapPinIcon size={12} color={theme.textFaint} />
+                  <div className="flex items-center flex-wrap gap-2 text-[13px] text-slate-500 font-medium">
+                    <MapPinIcon size={14} className="text-slate-400" />
                     <span>{r.from}</span>
-                    <span style={{ color: theme.textFaint }}>→</span>
-                    <span style={{ fontWeight: 600, color: theme.textPrimary }}>{r.to}</span>
+                    <span className="text-slate-300 dark:text-slate-600">→</span>
+                    <span className="font-bold text-slate-700 dark:text-slate-200">{r.to}</span>
                   </div>
                 </div>
-                <div style={{ textAlign: "right" }}>
-                  <div style={{ fontSize: 12, color: theme.textMuted, display: "flex", alignItems: "center", gap: 4, justifyContent: "flex-end" }}>
-                    <ClockIcon size={12} color={theme.textFaint} /> {r.frequency}
+                
+                <div className="flex flex-row sm:flex-col justify-between sm:items-end border-t sm:border-t-0 border-slate-100 dark:border-slate-800 pt-3 sm:pt-0 mt-3 sm:mt-0">
+                  <div className="text-[13px] font-bold text-slate-500 flex items-center gap-1.5">
+                    <ClockIcon size={14} className="text-slate-400" /> {r.frequency}
                   </div>
-                  <div style={{ fontSize: 11, color: theme.textFaint, marginTop: 2 }}>Last bus: {r.lastBus}</div>
+                  <div className="text-[11px] text-slate-400 font-medium mt-1">Last bus: {r.lastBus}</div>
                 </div>
-                <div style={{ color: theme.textFaint, fontSize: 16 }}>{expanded === r.id ? "▲" : "▼"}</div>
+                
+                <div className="hidden sm:flex text-slate-300 dark:text-slate-600 shrink-0 ml-2">
+                  <svg 
+                    width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                    className={`transition-transform duration-300 ${expanded === r.id ? "rotate-180" : ""}`}
+                  >
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                </div>
               </div>
 
               {expanded === r.id && (
-                <div style={{ borderTop: `1px solid ${theme.divider}`, padding: "16px 20px 20px", background: theme.cardBg }}>
-                  <p style={{ fontSize: 13, color: theme.textMuted, lineHeight: 1.6, marginBottom: 16 }}>{r.description}</p>
+                <div className="border-t border-border bg-slate-50/50 dark:bg-slate-900/20 p-5 sm:p-6 animate-slideDown">
+                  <p className="text-[13px] text-slate-600 dark:text-slate-300 leading-relaxed mb-5">
+                    {r.description}
+                  </p>
                   
                   {/* Maps embed */}
-                  <div style={{ marginBottom: 16, borderRadius: 10, overflow: "hidden", border: `1px solid ${theme.inputBorder}` }}>
+                  <div className="mb-5 rounded-2xl overflow-hidden border border-border shadow-sm">
                     <iframe 
                       title="map"
                       width="100%" 
-                      height="160" 
-                      style={{ border: 0, display: "block" }} 
+                      height="180" 
+                      className="block"
                       loading="lazy" 
                       allowFullScreen 
                       referrerPolicy="no-referrer-when-downgrade" 
@@ -141,19 +184,19 @@ export default function Transport() {
                     />
                   </div>
 
-                  <div style={{ display: "flex", gap: 10, justifyContent: "flex-end" }}>
+                  <div className="flex gap-3 justify-end">
                     {user && (user.isAdmin || user.role === "ROLE_MASTER_ADMIN") && (
-                      <Button variant="danger" size="sm" onClick={() => handleDelete(r.id)}>
-                        <XIcon size={12} /> Delete
-                      </Button>
+                      <button onClick={() => handleDelete(r.id)} className="bg-red-50 hover:bg-red-100 dark:bg-red-900/20 dark:hover:bg-red-900/40 text-red-600 font-bold py-2.5 px-4 rounded-xl flex items-center gap-1.5 transition-colors text-sm">
+                        <XIcon size={14} /> Delete
+                      </button>
                     )}
-                    <Button variant="secondary" size="sm" onClick={() => handleReport(r.id)}>
-                      <FlagIcon size={12} /> Report
-                    </Button>
+                    <button onClick={() => handleReport(r.id)} className="bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 font-bold py-2.5 px-4 rounded-xl flex items-center gap-1.5 transition-colors text-sm">
+                      <FlagIcon size={14} /> Report
+                    </button>
                   </div>
                 </div>
               )}
-            </Card>
+            </div>
           ))}
         </div>
       )}
