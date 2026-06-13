@@ -128,7 +128,7 @@ function ListingCard({ item, gradient, type, theme }) {
           <span style={{
             position: "absolute", top: 8, left: 8,
             background: "rgba(255,255,255,.92)", backdropFilter: "blur(6px)",
-            fontSize: 9.5, fontWeight: 700, color: "#4C1D95",
+            fontSize: 9.5, fontWeight: 700, color: "var(--p800)",
             padding: "3px 9px", borderRadius: 99,
           }}>
             {item.genderType}
@@ -203,10 +203,10 @@ export default function Dashboard() {
   const displayFood      = totalFood.slice(0, 4);
 
   const bGrads = [
-    "linear-gradient(135deg,#C4B5FD,#A78BFA)",
-    "linear-gradient(135deg,#93C5FD,#60A5FA)",
-    "linear-gradient(135deg,#DDD6FE,#C4B5FD)",
-    "linear-gradient(135deg,#D1FAE5,#6EE7B7)",
+    "linear-gradient(135deg,var(--p200),var(--p300))",
+    "linear-gradient(135deg,#67E8F9,#22D3EE)",
+    "linear-gradient(135deg,#A5F3FC,#67E8F9)",
+    "linear-gradient(135deg,#CCFBF1,#5EEAD4)",
   ];
   const fGrads = [
     "linear-gradient(135deg,#BBF7D0,#6EE7B7)",
@@ -228,7 +228,7 @@ export default function Dashboard() {
         marginBottom: 28,
         display: "flex", alignItems: "center", justifyContent: "space-between",
         overflow: "hidden", position: "relative",
-        boxShadow: "0 10px 40px rgba(92,33,182,.35)",
+        boxShadow: "0 10px 40px rgba(8,145,178,.35)",
         minHeight: 160,
       }} className="anim-fadeInUp">
         {/* Animated background blobs */}
@@ -255,7 +255,7 @@ export default function Dashboard() {
           <div style={{ display: "flex", gap: 10 }}>
             <Link to="/boardings" style={{ textDecoration: "none" }}>
               <button style={{
-                background: "#fff", color: "#7C3AED",
+                background: "#fff", color: "var(--p600)",
                 border: "none", borderRadius: 12, padding: "11px 22px",
                 fontSize: 13.5, fontWeight: 800, cursor: "pointer",
                 boxShadow: "0 4px 18px rgba(0,0,0,.18)", transition: "all .22s cubic-bezier(0.34,1.56,0.64,1)",
@@ -325,7 +325,7 @@ export default function Dashboard() {
           </Link>
         </div>
         <div className="responsive-grid stagger" style={{ gap: 14 }}>
-          <CategoryCard to="/boardings" label="Boardings"    sub={`${totalBoardings.length} verified listings`} Icon={HouseIcon} accent="#7C3AED" bg="#F5F3FF" delay={0} />
+          <CategoryCard to="/boardings" label="Boardings"    sub={`${totalBoardings.length} verified listings`} Icon={HouseIcon} accent="var(--p600)" bg="var(--p50)" delay={0} />
           <CategoryCard to="/food"      label="Food & Dining" sub={`${totalFood.length} spots near campus`}    Icon={FoodIcon}  accent="#EA580C" bg="#FFF7ED" delay={.06} />
           <CategoryCard to="/transport" label="Transport"     sub={`${totalTransport.length} live routes`}     Icon={BusIcon}   accent="#16A34A" bg="#F0FDF4" delay={.12} />
         </div>
@@ -333,7 +333,7 @@ export default function Dashboard() {
 
       {/* ── Stat row ── */}
       <div className="responsive-grid stagger" style={{ gap: 14, marginBottom: 28 }}>
-        <StatCard label="Total Boardings" value={totalBoardings.length} sub="Available now" icon={HouseIcon} accent="#7C3AED" featured delay={0} />
+        <StatCard label="Total Boardings" value={totalBoardings.length} sub="Available now" icon={HouseIcon} accent="var(--p600)" featured delay={0} />
         <StatCard label="Food Spots"      value={totalFood.length}      sub="Near campus"   icon={FoodIcon}  accent="#EA580C" delay={.06} />
         <StatCard label="Transport"       value={totalTransport.length} sub="Active routes" icon={BusIcon}   accent="#16A34A" delay={.12} />
         <StatCard label="Total Listings"  value={posts.length}          sub="All categories"icon={MapPinIcon} accent="#2563EB" delay={.18} />
@@ -349,8 +349,8 @@ export default function Dashboard() {
           <div>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
               <h2 style={{ fontSize: 15.5, fontWeight: 800, color: theme.textPrimary, display: "flex", alignItems: "center", gap: 7 }}>
-                <span style={{ width: 28, height: 28, borderRadius: 9, background: "#F5F3FF", border: "1.5px solid #DDD6FE", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                  <TrendingUpIcon size={14} color="#7C3AED" />
+                <span style={{ width: 28, height: 28, borderRadius: 9, background: "var(--p50)", border: "1.5px solid var(--p200)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <TrendingUpIcon size={14} color="var(--p600)" />
                 </span>
                 Trending Boardings
               </h2>

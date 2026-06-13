@@ -50,18 +50,18 @@ function FInput({ label, err, icon, suffix, ...p }) {
   const [f,setF] = useState(false);
   return (
     <div style={{display:"flex",flexDirection:"column",gap:4}}>
-      <span style={{fontSize:11,fontWeight:700,letterSpacing:".5px",textTransform:"uppercase",color:f?"#7C3AED":err?"#DC2626":"#6B7280"}}>{label}</span>
+      <span style={{fontSize:11,fontWeight:700,letterSpacing:".5px",textTransform:"uppercase",color:f?"var(--p600)":err?"var(--red)":"var(--n500)"}}>{label}</span>
       <div style={{position:"relative"}}>
-        {icon&&<span style={{position:"absolute",left:11,top:"50%",transform:"translateY(-50%)",color:f?"#7C3AED":"#C4B5FD",display:"flex",pointerEvents:"none"}}>{icon}</span>}
+        {icon&&<span style={{position:"absolute",left:11,top:"50%",transform:"translateY(-50%)",color:f?"var(--p600)":"var(--p300)",display:"flex",pointerEvents:"none"}}>{icon}</span>}
         <input onFocus={()=>setF(true)} onBlur={()=>setF(false)}
           style={{width:"100%",padding:`10px ${suffix?"38px":"12px"} 10px ${icon?"36px":"12px"}`,
-            border:`1.5px solid ${f?"#7C3AED":err?"#FCA5A5":"#DDD6FE"}`,borderRadius:10,
-            fontSize:13,fontFamily:"inherit",background:err?"#FEF2F2":f?"#fff":"#F9F7FF",
-            color:"#1E1B4B",outline:"none",transition:"all .15s",
-            boxShadow:f?"0 0 0 3px rgba(124,58,237,.1)":"none"}} {...p}/>
+            border:`1.5px solid ${f?"var(--p600)":err?"var(--red-border)":"var(--p200)"}`,borderRadius:10,
+            fontSize:13,fontFamily:"inherit",background:err?"var(--red-bg)":f?"#fff":"var(--p50)",
+            color:"var(--p900)",outline:"none",transition:"all .15s",
+            boxShadow:f?"0 0 0 3px rgba(8,145,178,.1)":"none"}} {...p}/>
         {suffix&&<span style={{position:"absolute",right:10,top:"50%",transform:"translateY(-50%)",display:"flex"}}>{suffix}</span>}
       </div>
-      {err&&<span style={{fontSize:11,color:"#DC2626",fontWeight:500}}>{err}</span>}
+      {err&&<span style={{fontSize:11,color:"var(--red)",fontWeight:500}}>{err}</span>}
     </div>
   );
 }
@@ -69,23 +69,23 @@ function FSel({ label, err, icon, opts=[], ...p }) {
   const [f,setF] = useState(false);
   return (
     <div style={{display:"flex",flexDirection:"column",gap:4}}>
-      <span style={{fontSize:11,fontWeight:700,letterSpacing:".5px",textTransform:"uppercase",color:f?"#7C3AED":err?"#DC2626":"#6B7280"}}>{label}</span>
+      <span style={{fontSize:11,fontWeight:700,letterSpacing:".5px",textTransform:"uppercase",color:f?"var(--p600)":err?"var(--red)":"var(--n500)"}}>{label}</span>
       <div style={{position:"relative"}}>
-        {icon&&<span style={{position:"absolute",left:11,top:"50%",transform:"translateY(-50%)",color:f?"#7C3AED":"#C4B5FD",display:"flex",pointerEvents:"none"}}>{icon}</span>}
+        {icon&&<span style={{position:"absolute",left:11,top:"50%",transform:"translateY(-50%)",color:f?"var(--p600)":"var(--p300)",display:"flex",pointerEvents:"none"}}>{icon}</span>}
         <select onFocus={()=>setF(true)} onBlur={()=>setF(false)}
           style={{width:"100%",padding:`10px 32px 10px ${icon?"36px":"12px"}`,
-            border:`1.5px solid ${f?"#7C3AED":err?"#FCA5A5":"#DDD6FE"}`,borderRadius:10,
+            border:`1.5px solid ${f?"var(--p600)":err?"var(--red-border)":"var(--p200)"}`,borderRadius:10,
             fontSize:13,fontFamily:"inherit",appearance:"none",
-            background:err?"#FEF2F2":f?"#fff":"#F9F7FF",
-            color:p.value?"#1E1B4B":"#9CA3AF",outline:"none",cursor:"pointer",
-            boxShadow:f?"0 0 0 3px rgba(124,58,237,.1)":"none",transition:"all .15s"}} {...p}>
+            background:err?"var(--red-bg)":f?"#fff":"var(--p50)",
+            color:p.value?"var(--p900)":"var(--n400)",outline:"none",cursor:"pointer",
+            boxShadow:f?"0 0 0 3px rgba(8,145,178,.1)":"none",transition:"all .15s"}} {...p}>
           {opts.map(({v,l})=><option key={v} value={v}>{l}</option>)}
         </select>
-        <span style={{position:"absolute",right:10,top:"50%",transform:"translateY(-50%)",pointerEvents:"none",color:"#C4B5FD"}}>
+        <span style={{position:"absolute",right:10,top:"50%",transform:"translateY(-50%)",pointerEvents:"none",color:"var(--p300)"}}>
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><polyline points="6 9 12 15 18 9"/></svg>
         </span>
       </div>
-      {err&&<span style={{fontSize:11,color:"#DC2626",fontWeight:500}}>{err}</span>}
+      {err&&<span style={{fontSize:11,color:"var(--red)",fontWeight:500}}>{err}</span>}
     </div>
   );
 }
@@ -93,13 +93,13 @@ function PBtn({ children, loading, outline, full, type="button", onClick }) {
   const [h,setH]=useState(false);
   if (outline) return (
     <button type={type} onClick={onClick} onMouseEnter={()=>setH(true)} onMouseLeave={()=>setH(false)}
-      style={{display:"inline-flex",alignItems:"center",justifyContent:"center",gap:6,padding:"10px 18px",borderRadius:10,border:"1.5px solid #DDD6FE",background:h?"#EDE9FE":"#F5F3FF",color:"#7C3AED",fontFamily:"inherit",fontSize:13.5,fontWeight:600,cursor:"pointer",width:full?"100%":"auto",transition:"all .15s"}}>
+      style={{display:"inline-flex",alignItems:"center",justifyContent:"center",gap:6,padding:"10px 18px",borderRadius:10,border:"1.5px solid var(--p200)",background:h?"var(--p100)":"var(--p50)",color:"var(--p600)",fontFamily:"inherit",fontSize:13.5,fontWeight:600,cursor:"pointer",width:full?"100%":"auto",transition:"all .15s"}}>
       {children}
     </button>
   );
   return (
     <button type={type} onClick={onClick} onMouseEnter={()=>setH(true)} onMouseLeave={()=>setH(false)}
-      style={{display:"inline-flex",alignItems:"center",justifyContent:"center",gap:6,padding:"11px 18px",borderRadius:10,border:"none",background:`linear-gradient(135deg,${h?"#6D28D9":"#7C3AED"},${h?"#7C3AED":"#A855F7"})`,color:"#fff",fontFamily:"inherit",fontSize:13.5,fontWeight:700,cursor:loading?"wait":"pointer",width:full?"100%":"auto",transition:"all .2s",boxShadow:h?"0 8px 24px rgba(124,58,237,.4)":"0 4px 14px rgba(124,58,237,.25)"}}>
+      style={{display:"inline-flex",alignItems:"center",justifyContent:"center",gap:6,padding:"11px 18px",borderRadius:10,border:"none",background:`linear-gradient(135deg,${h?"var(--p700)":"var(--p600)"},${h?"var(--p600)":"var(--p400)"})`,color:"#fff",fontFamily:"inherit",fontSize:13.5,fontWeight:700,cursor:loading?"wait":"pointer",width:full?"100%":"auto",transition:"all .2s",boxShadow:h?"var(--shadow-cyan-md)":"var(--shadow-cyan-sm)"}}>
       {loading?<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" style={{animation:"rSpin .7s linear infinite"}}><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>:children}
     </button>
   );
@@ -108,7 +108,7 @@ function PBtn({ children, loading, outline, full, type="button", onClick }) {
 // ─── Left purple panel (same style as Login) ─────────────────────────────────
 function LeftPanel() {
   return (
-    <div style={{flex:"0 0 44%",height:"100vh",background:"linear-gradient(160deg,#4C1D95 0%,#7C3AED 45%,#9333EA 100%)",display:"flex",flexDirection:"column",padding:"36px 44px",position:"relative",overflow:"hidden"}}>
+    <div style={{flex:"0 0 44%",height:"100vh",background:"linear-gradient(160deg,var(--p800) 0%,var(--p600) 45%,var(--p400) 100%)",display:"flex",flexDirection:"column",padding:"36px 44px",position:"relative",overflow:"hidden"}}>
       <div style={{position:"absolute",top:"-80px",right:"-80px",width:300,height:300,borderRadius:"50%",background:"rgba(255,255,255,.06)",pointerEvents:"none"}}/>
       <div style={{position:"absolute",bottom:"-60px",left:"-60px",width:250,height:250,borderRadius:"50%",background:"rgba(255,255,255,.04)",pointerEvents:"none"}}/>
       {/* brand */}
@@ -139,9 +139,9 @@ function LeftPanel() {
         <circle cx="234" cy="190" r="21" fill="#16A34A" opacity=".92"/>
         <polyline points="224,190 232,199 246,180" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
         {/* books */}
-        <rect x="28" y="168" width="13" height="25" rx="2" fill="#C4B5FD" opacity=".85"/>
-        <rect x="43" y="164" width="13" height="29" rx="2" fill="#A78BFA"/>
-        <rect x="58" y="172" width="13" height="21" rx="2" fill="#DDD6FE" opacity=".8"/>
+        <rect x="28" y="168" width="13" height="25" rx="2" fill="var(--p300)" opacity=".85"/>
+        <rect x="43" y="164" width="13" height="29" rx="2" fill="var(--p400)"/>
+        <rect x="58" y="172" width="13" height="21" rx="2" fill="var(--p200)" opacity=".8"/>
         {[[26,40],[336,56],[348,146],[20,166],[306,36]].map(([cx,cy],i)=>(
           <g key={i} transform={`translate(${cx},${cy})`} opacity=".6">
             <circle r="2.5" fill="rgba(255,255,255,.7)"/>
@@ -154,7 +154,7 @@ function LeftPanel() {
       <div style={{zIndex:1}}>
         <h1 style={{fontSize:24,fontWeight:900,color:"#fff",letterSpacing:"-.8px",lineHeight:1.15,marginBottom:8}}>
           Join thousands of<br/>
-          <span style={{background:"linear-gradient(90deg,#E9D5FF,#C4B5FD)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>Sri Lankan students.</span>
+          <span style={{background:"linear-gradient(90deg,var(--p100),var(--p300))",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>Sri Lankan students.</span>
         </h1>
         <p style={{fontSize:13,color:"rgba(255,255,255,.6)",lineHeight:1.7,marginBottom:16,maxWidth:300}}>
           Personalised boardings, food and transport — for every Sri Lankan university.
@@ -240,11 +240,11 @@ export default function Register() {
   };
 
   return (
-    <div style={{width:"100vw",height:"100vh",overflow:"hidden",display:"flex",background:"#F4F0FF"}}>
+    <div style={{width:"100vw",height:"100vh",overflow:"hidden",display:"flex",background:"var(--p50)"}}>
       <LeftPanel/>
 
       {/* right form area */}
-      <div style={{flex:1,height:"100vh",display:"flex",alignItems:"center",justifyContent:"center",padding:"24px 40px",background:"#F4F0FF",...formAnim}}>
+      <div style={{flex:1,height:"100vh",display:"flex",alignItems:"center",justifyContent:"center",padding:"24px 40px",background:"var(--p50)",...formAnim}}>
         <div style={{width:"100%",maxWidth:420}}>
 
           {/* step progress */}
@@ -253,16 +253,16 @@ export default function Register() {
               {[1,2].map((n,i)=>(
                 <div key={n} style={{display:"flex",alignItems:"center",gap:6,flex:n===step?2:1}}>
                   <div style={{width:28,height:28,borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center",fontSize:12,fontWeight:800,flexShrink:0,
-                    background:step>n?"#7C3AED":step===n?"linear-gradient(135deg,#7C3AED,#A855F7)":"#EDE9FE",
-                    color:step>=n?"#fff":"#C4B5FD",
-                    boxShadow:step===n?"0 0 0 4px rgba(124,58,237,.15)":"none",
+                    background:step>n?"var(--p600)":step===n?"linear-gradient(135deg,var(--p600),var(--p400))":"var(--p100)",
+                    color:step>=n?"#fff":"var(--p400)",
+                    boxShadow:step===n?"0 0 0 4px rgba(8,145,178,.15)":"none",
                     transition:"all .3s"}}>
                     {step>n
                       ? <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round"><polyline points="20 6 9 17 4 12"/></svg>
                       : n}
                   </div>
-                  {step===n&&<span style={{fontSize:12,fontWeight:700,color:"#7C3AED",whiteSpace:"nowrap"}}>{n===1?"Account Details":"Campus Setup"}</span>}
-                  {i<1&&<div style={{flex:1,height:2,borderRadius:99,background:step>1?"#7C3AED":"#DDD6FE",transition:"background .4s",minWidth:20}}/>}
+                  {step===n&&<span style={{fontSize:12,fontWeight:700,color:"var(--p600)",whiteSpace:"nowrap"}}>{n===1?"Account Details":"Campus Setup"}</span>}
+                  {i<1&&<div style={{flex:1,height:2,borderRadius:99,background:step>1?"var(--p600)":"var(--p200)",transition:"background .4s",minWidth:20}}/>}
                 </div>
               ))}
             </div>
@@ -285,7 +285,7 @@ export default function Register() {
                 <FInput label="Email" type="email" placeholder="yourname@uni.ac.lk" icon={<MailIcon size={14}/>} value={form.email} err={errors.email} onChange={e=>set("email",e.target.value)}/>
                 <div>
                   <FInput label="Password" type={showPw?"text":"password"} placeholder="Min. 6 characters" icon={<LockIcon size={14}/>} value={form.password} err={errors.password} onChange={e=>set("password",e.target.value)}
-                    suffix={<button type="button" onClick={()=>setShowPw(p=>!p)} style={{background:"none",border:"none",color:"#C4B5FD",cursor:"pointer",display:"flex",padding:3}}>{showPw?<EyeOffIcon size={14}/>:<EyeIcon size={14}/>}</button>}/>
+                    suffix={<button type="button" onClick={()=>setShowPw(p=>!p)} style={{background:"none",border:"none",color:"var(--p300)",cursor:"pointer",display:"flex",padding:3}}>{showPw?<EyeOffIcon size={14}/>:<EyeIcon size={14}/>}</button>}/>
                   {form.password.length>0&&(
                     <div style={{marginTop:6}}>
                       <div style={{display:"flex",gap:2,marginBottom:3}}>
@@ -301,9 +301,9 @@ export default function Register() {
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round"><polyline points="9 18 15 12 9 6"/></svg>
                 </PBtn>
               </div>
-              <p style={{textAlign:"center",fontSize:13.5,color:"#6B7280",marginTop:18}}>
+              <p style={{textAlign:"center",fontSize:13.5,color:"var(--n500)",marginTop:18}}>
                 Already have an account?{" "}
-                <button onClick={goLogin} style={{background:"none",border:"none",color:"#7C3AED",fontWeight:700,fontSize:13.5,cursor:"pointer",padding:0,fontFamily:"inherit"}}>Sign in</button>
+                <button onClick={goLogin} style={{background:"none",border:"none",color:"var(--p600)",fontWeight:700,fontSize:13.5,cursor:"pointer",padding:0,fontFamily:"inherit"}}>Sign in</button>
               </p>
             </div>
           )}
@@ -321,7 +321,7 @@ export default function Register() {
                   </span>
                   <div style={{position:"relative"}}>
                     <select value={form.university} onChange={e=>{set("university",e.target.value);set("town","");}}
-                      style={{width:"100%",padding:"10px 32px 10px 12px",border:`1.5px solid ${errors.university?"#FCA5A5":"#DDD6FE"}`,borderRadius:10,fontSize:13,fontFamily:"inherit",appearance:"none",background:errors.university?"#FEF2F2":"#F9F7FF",color:form.university?"#1E1B4B":"#9CA3AF",outline:"none",cursor:"pointer"}}>
+                      style={{width:"100%",padding:"10px 32px 10px 12px",border:`1.5px solid ${errors.university?"var(--red-border)":"var(--p200)"}`,borderRadius:10,fontSize:13,fontFamily:"inherit",appearance:"none",background:errors.university?"var(--red-bg)":"var(--p50)",color:form.university?"var(--p900)":"var(--n400)",outline:"none",cursor:"pointer"}}>
                       <option value="">Choose your university...</option>
                       <optgroup label="State Universities (UGC)">
                         {UNIS.filter(u=>u.type==="state").map(u=><option key={u.value} value={u.value}>{u.label}</option>)}
@@ -330,7 +330,7 @@ export default function Register() {
                         {UNIS.filter(u=>u.type==="private").map(u=><option key={u.value} value={u.value}>{u.label}</option>)}
                       </optgroup>
                     </select>
-                    <span style={{position:"absolute",right:10,top:"50%",transform:"translateY(-50%)",pointerEvents:"none",color:"#C4B5FD"}}>
+                    <span style={{position:"absolute",right:10,top:"50%",transform:"translateY(-50%)",pointerEvents:"none",color:"var(--p300)"}}>
                       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><polyline points="6 9 12 15 18 9"/></svg>
                     </span>
                   </div>
@@ -342,9 +342,9 @@ export default function Register() {
                 <FSel label="Year of Study" value={form.yearOfStudy} err={errors.yearOfStudy} onChange={e=>set("yearOfStudy",e.target.value)} opts={YEARS}/>
                 {/* preview */}
                 {form.university&&form.town&&(
-                  <div style={{background:"linear-gradient(135deg,#F5F3FF,#F0FDF4)",border:"1.5px solid #DDD6FE",borderRadius:11,padding:"10px 13px",display:"flex",gap:9,alignItems:"center"}}>
-                    <MapPinIcon size={14} color="#7C3AED"/>
-                    <span style={{fontSize:12.5,color:"#1E1B4B",fontWeight:500}}>
+                  <div style={{background:"linear-gradient(135deg,var(--p50),var(--p100))",border:"1.5px solid var(--p200)",borderRadius:11,padding:"10px 13px",display:"flex",gap:9,alignItems:"center"}}>
+                    <MapPinIcon size={14} color="var(--p600)"/>
+                    <span style={{fontSize:12.5,color:"var(--p900)",fontWeight:500}}>
                       Listings near <strong>{form.town}</strong> · {UNIS.find(u=>u.value===form.university)?.short}
                       {form.yearOfStudy&&` · Year ${form.yearOfStudy}`}
                     </span>
@@ -352,7 +352,7 @@ export default function Register() {
                 )}
                 <div style={{display:"flex",gap:9,marginTop:2}}>
                   <PBtn outline onClick={goBack}>
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" strokeWidth="2.5" strokeLinecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--p600)" strokeWidth="2.5" strokeLinecap="round"><polyline points="15 18 9 12 15 6"/></svg>
                     Back
                   </PBtn>
                   <PBtn type="submit" full loading={loading}>Create my account</PBtn>

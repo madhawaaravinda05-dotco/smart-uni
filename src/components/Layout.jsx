@@ -43,7 +43,7 @@ const PAGE_TITLES = {
 
 const NOTIF_STYLE = {
   success: { color: "#16A34A", bg: "#F0FDF4", border: "#86EFAC", Icon: CheckIcon },
-  info:    { color: "#7C3AED", bg: "#F5F3FF", border: "#DDD6FE", Icon: InfoIcon  },
+  info:    { color: "var(--p600)", bg: "var(--p50)", border: "var(--p200)", Icon: InfoIcon  },
   warning: { color: "#D97706", bg: "#FFFBEB", border: "#FDE68A", Icon: AlertTriangleIcon },
   danger:  { color: "#DC2626", bg: "#FEF2F2", border: "#FCA5A5", Icon: AlertTriangleIcon },
 };
@@ -131,7 +131,7 @@ function NotifPanel({ notifications, unreadCount, markAllRead, markRead,
   // Derive icon background colour per notification type
   const NOTIF_COLORS = {
     success: { bg: "#F0FDF4", border: "#86EFAC", dot: "#16A34A", icon: "#16A34A" },
-    info:    { bg: "#F5F3FF", border: "#DDD6FE", dot: "#7C3AED", icon: "#7C3AED" },
+    info:    { bg: "var(--p50)", border: "var(--p200)", dot: "var(--p600)", icon: "var(--p600)" },
     warning: { bg: "#FFFBEB", border: "#FDE68A", dot: "#D97706", icon: "#D97706" },
     danger:  { bg: "#FEF2F2", border: "#FCA5A5", dot: "#DC2626", icon: "#DC2626" },
   };
@@ -153,7 +153,7 @@ function NotifPanel({ notifications, unreadCount, markAllRead, markRead,
         background: theme.cardBg,
         border: `1px solid ${theme.cardBorder}`,
         borderRadius: 22,
-        boxShadow: "0 24px 64px rgba(124,58,237,.22), 0 4px 16px rgba(0,0,0,.08)",
+        boxShadow: "0 24px 64px rgba(8,145,178,.22), 0 4px 16px rgba(0,0,0,.08)",
         zIndex: 1001, overflow: "hidden",
         animation: "slideDown 0.22s cubic-bezier(0.34,1.56,0.64,1) both",
       }}>
@@ -385,7 +385,7 @@ export default function Layout({ children }) {
         overflow: "hidden",
         position: "relative", zIndex: 20,
         borderRadius: "0 28px 28px 0",
-        boxShadow: "8px 0 40px rgba(92,33,182,.35)",
+        boxShadow: "8px 0 40px rgba(8,145,178,.35)",
       }}>
 
         {/* Decorative blobs inside sidebar */}
@@ -449,7 +449,7 @@ export default function Layout({ children }) {
                 background: "linear-gradient(135deg,rgba(255,255,255,.35),rgba(255,255,255,.15))",
                 border: "2px solid rgba(255,255,255,.4)",
                 display: "flex", alignItems: "center", justifyContent: "center",
-                fontWeight: 900, color: "#7C3AED", fontSize: 16, flexShrink: 0,
+                fontWeight: 900, color: "var(--p600)", fontSize: 16, flexShrink: 0,
                 boxShadow: "0 4px 12px rgba(0,0,0,.15)",
               }}>
                 {(user?.name || "U")[0].toUpperCase()}
@@ -470,7 +470,7 @@ export default function Layout({ children }) {
                 width: 38, height: 38, borderRadius: "50%",
                 background: "rgba(255,255,255,.22)", border: "2px solid rgba(255,255,255,.35)",
                 display: "flex", alignItems: "center", justifyContent: "center",
-                fontWeight: 900, color: "#7C3AED", fontSize: 15,
+                fontWeight: 900, color: "var(--p600)", fontSize: 15,
               }}>
                 {(user?.name || "U")[0].toUpperCase()}
               </div>

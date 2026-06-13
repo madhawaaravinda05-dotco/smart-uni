@@ -10,22 +10,22 @@ function PInput({ label, error, icon, suffix, ...p }) {
   return (
     <label style={{ display:"flex", flexDirection:"column", gap:4 }}>
       <span style={{ fontSize:11, fontWeight:700, letterSpacing:".6px", textTransform:"uppercase",
-        color: f ? "#7C3AED" : error ? "#DC2626" : "#6B7280", transition:"color .15s" }}>{label}</span>
+        color: f ? "var(--p600)" : error ? "var(--red)" : "var(--n500)", transition:"color .15s" }}>{label}</span>
       <div style={{ position:"relative" }}>
         {icon && <span style={{ position:"absolute", left:12, top:"50%", transform:"translateY(-50%)",
-          color: f ? "#7C3AED" : "#C4B5FD", display:"flex", pointerEvents:"none" }}>{icon}</span>}
+          color: f ? "var(--p600)" : "var(--p300)", display:"flex", pointerEvents:"none" }}>{icon}</span>}
         <input onFocus={()=>setF(true)} onBlur={()=>setF(false)}
           style={{ width:"100%",
             padding: `11px ${suffix?"40px":"13px"} 11px ${icon?"38px":"13px"}`,
-            border: `1.5px solid ${f?"#7C3AED":error?"#FCA5A5":"#DDD6FE"}`,
+            border: `1.5px solid ${f?"var(--p600)":error?"var(--red-border)":"var(--p200)"}`,
             borderRadius:10, fontSize:13.5, fontFamily:"inherit",
-            background: error?"#FEF2F2" : f?"#fff":"#F9F7FF",
-            color:"#1E1B4B", outline:"none", transition:"all .15s",
-            boxShadow: f ? "0 0 0 3px rgba(124,58,237,.12)" : "none" }} {...p}/>
+            background: error?"var(--red-bg)" : f?"#fff":"var(--p50)",
+            color:"var(--p900)", outline:"none", transition:"all .15s",
+            boxShadow: f ? "0 0 0 3px rgba(8,145,178,.12)" : "none" }} {...p}/>
         {suffix && <span style={{ position:"absolute", right:12, top:"50%",
           transform:"translateY(-50%)", display:"flex" }}>{suffix}</span>}
       </div>
-      {error && <span style={{ fontSize:11.5, color:"#DC2626", fontWeight:500 }}>{error}</span>}
+      {error && <span style={{ fontSize:11.5, color:"var(--red)", fontWeight:500 }}>{error}</span>}
     </label>
   );
 }
@@ -36,8 +36,8 @@ function PBtn({ children, loading, outline, full, type="button", onClick }) {
     <button type={type} onClick={onClick}
       onMouseEnter={()=>setHov(true)} onMouseLeave={()=>setHov(false)}
       style={{ display:"inline-flex", alignItems:"center", justifyContent:"center", gap:6,
-        padding:"10px 20px", borderRadius:10, border:"1.5px solid #DDD6FE",
-        background: hov?"#EDE9FE":"#F5F3FF", color:"#7C3AED",
+        padding:"10px 20px", borderRadius:10, border:"1.5px solid var(--p200)",
+        background: hov?"var(--p100)":"var(--p50)", color:"var(--p600)",
         fontFamily:"inherit", fontSize:13.5, fontWeight:600, cursor:"pointer",
         width:full?"100%":"auto", transition:"all .15s" }}>
       {children}
@@ -48,10 +48,10 @@ function PBtn({ children, loading, outline, full, type="button", onClick }) {
       onMouseEnter={()=>setHov(true)} onMouseLeave={()=>setHov(false)}
       style={{ display:"inline-flex", alignItems:"center", justifyContent:"center", gap:6,
         padding:"12px 20px", borderRadius:10, border:"none",
-        background: `linear-gradient(135deg,${hov?"#6D28D9":"#7C3AED"},${hov?"#7C3AED":"#A855F7"})`,
+        background: `linear-gradient(135deg,${hov?"var(--p700)":"var(--p600)"},${hov?"var(--p600)":"var(--p400)"})`,
         color:"#fff", fontFamily:"inherit", fontSize:13.5, fontWeight:700, cursor:"pointer",
         width:full?"100%":"auto", transition:"all .2s",
-        boxShadow: hov?"0 8px 24px rgba(124,58,237,.45)":"0 4px 14px rgba(124,58,237,.3)" }}>
+        boxShadow: hov?"var(--shadow-cyan-md)":"var(--shadow-cyan-sm)" }}>
       {loading
         ? <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5"
             strokeLinecap="round" style={{animation:"spin .7s linear infinite"}}>
@@ -65,7 +65,7 @@ function PBtn({ children, loading, outline, full, type="button", onClick }) {
 /* ─── decorative SVG panel ─────────────────────────────────────────────────── */
 function LeftPanel() {
   return (
-    <div className="hide-on-mobile" style={{ flex:"0 0 44%", height:"100vh", background:"linear-gradient(160deg,#4C1D95 0%,#7C3AED 45%,#9333EA 100%)",
+    <div className="hide-on-mobile" style={{ flex:"0 0 44%", height:"100vh", background:"linear-gradient(160deg,var(--p800) 0%,var(--p600) 45%,var(--p400) 100%)",
       flexDirection:"column", padding:"40px 44px", position:"relative", overflow:"hidden" }}>
 
       {/* decorative circles */}
@@ -117,9 +117,9 @@ function LeftPanel() {
         <line x1="190" y1="18" x2="190" y2="57" stroke="rgba(255,255,255,.5)" strokeWidth="2"/>
         <path d="M190 18 L218 28 L190 38 Z" fill="rgba(255,255,255,.4)"/>
         {/* books left */}
-        <rect x="32" y="196" width="16" height="28" rx="2" fill="#C4B5FD" opacity=".85"/>
-        <rect x="50" y="192" width="16" height="32" rx="2" fill="#A78BFA"/>
-        <rect x="68" y="200" width="16" height="24" rx="2" fill="#DDD6FE" opacity=".8"/>
+        <rect x="32" y="196" width="16" height="28" rx="2" fill="var(--p300)" opacity=".85"/>
+        <rect x="50" y="192" width="16" height="32" rx="2" fill="var(--p400)"/>
+        <rect x="68" y="200" width="16" height="24" rx="2" fill="var(--p200)" opacity=".8"/>
         {/* grad cap right */}
         <ellipse cx="314" cy="208" rx="24" ry="7" fill="rgba(255,255,255,.28)"/>
         <path d="M314 188 L338 208 H290 Z" fill="rgba(255,255,255,.22)"/>
@@ -140,7 +140,7 @@ function LeftPanel() {
         <h1 style={{ fontSize:26, fontWeight:900, color:"#fff", letterSpacing:"-0.8px",
           lineHeight:1.15, marginBottom:10 }}>
           Your campus life,<br/>
-          <span style={{ background:"linear-gradient(90deg,#E9D5FF,#C4B5FD)",
+          <span style={{ background:"linear-gradient(90deg,var(--p100),var(--p300))",
             WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent" }}>simplified.</span>
         </h1>
         <p style={{ fontSize:13, color:"rgba(255,255,255,.6)", lineHeight:1.7, marginBottom:20, maxWidth:320 }}>
@@ -215,7 +215,7 @@ export default function Login() {
   };
 
   return (
-    <div className="app-layout" style={{ width:"100vw", height:"100vh", overflow:"hidden", background:"#F4F0FF" }}>
+    <div className="app-layout" style={{ width:"100vw", height:"100vh", overflow:"hidden", background:"var(--p50)" }}>
 
       {/* left branding panel */}
       <LeftPanel />
@@ -231,17 +231,17 @@ export default function Login() {
           {/* heading */}
           <div style={{ marginBottom:28 }}>
             <div style={{ display:"inline-flex", alignItems:"center", gap:7,
-              background:"#EDE9FE", border:"1px solid #DDD6FE", borderRadius:99,
+              background:"var(--p100)", border:"1px solid var(--p200)", borderRadius:99,
               padding:"4px 13px", marginBottom:14 }}>
-              <div style={{ width:6, height:6, borderRadius:"50%", background:"#22C55E",
-                boxShadow:"0 0 6px #22C55E" }}/>
-              <span style={{ fontSize:11.5, color:"#6D28D9", fontWeight:700 }}>
+              <div style={{ width:6, height:6, borderRadius:"50%", background:"var(--green)",
+                boxShadow:"0 0 6px var(--green)" }}/>
+              <span style={{ fontSize:11.5, color:"var(--p700)", fontWeight:700 }}>
                 Available at 39+ universities
               </span>
             </div>
-            <h2 style={{ fontSize:28, fontWeight:900, color:"#1E1B4B", letterSpacing:"-.6px",
+            <h2 style={{ fontSize:28, fontWeight:900, color:"var(--p900)", letterSpacing:"-.6px",
               lineHeight:1.15, marginBottom:6 }}>Welcome back</h2>
-            <p style={{ fontSize:13.5, color:"#6B7280" }}>
+            <p style={{ fontSize:13.5, color:"var(--n500)" }}>
               Sign in to your UniCompanion account
             </p>
           </div>
@@ -279,7 +279,7 @@ export default function Login() {
               onChange={e=>setForm({...form,password:e.target.value})}
               suffix={
                 <button type="button" onClick={()=>setShowPw(p=>!p)}
-                  style={{ background:"none", border:"none", color:"#C4B5FD", cursor:"pointer",
+                  style={{ background:"none", border:"none", color:"var(--p400)", cursor:"pointer",
                     display:"flex", padding:3, borderRadius:6 }}>
                   {showPw ? <EyeOffIcon size={14}/> : <EyeIcon size={14}/>}
                 </button>
@@ -289,16 +289,16 @@ export default function Login() {
 
           {/* divider */}
           <div style={{ display:"flex", alignItems:"center", gap:12, margin:"20px 0" }}>
-            <div style={{ flex:1, height:1, background:"#DDD6FE" }}/>
-            <span style={{ fontSize:11, color:"#9CA3AF", fontWeight:600, textTransform:"uppercase",
+            <div style={{ flex:1, height:1, background:"var(--p200)" }}/>
+            <span style={{ fontSize:11, color:"var(--n400)", fontWeight:600, textTransform:"uppercase",
               letterSpacing:".6px", whiteSpace:"nowrap" }}>or try a demo</span>
-            <div style={{ flex:1, height:1, background:"#DDD6FE" }}/>
+            <div style={{ flex:1, height:1, background:"var(--p200)" }}/>
           </div>
 
           {/* demo buttons */}
           <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
             {[
-              { key:"student", label:"Student",      Icon:UserIcon,        color:"#7C3AED", bg:"#F5F3FF", border:"#DDD6FE" },
+              { key:"student", label:"Student",      Icon:UserIcon,        color:"var(--p600)", bg:"var(--p50)", border:"var(--p200)" },
               { key:"admin",   label:"Campus Admin",  Icon:ShieldCheckIcon, color:"#16A34A", bg:"#F0FDF4", border:"#86EFAC" },
               { key:"master",  label:"Master Admin",  Icon:BuildingIcon,    color:"#EA580C", bg:"#FFF7ED", border:"#FED7AA" },
             ].map(({key,label,Icon,color,bg,border})=>(
@@ -322,10 +322,10 @@ export default function Login() {
             ))}
           </div>
 
-          <p style={{ textAlign:"center", fontSize:13.5, color:"#6B7280", marginTop:22 }}>
+          <p style={{ textAlign:"center", fontSize:13.5, color:"var(--n500)", marginTop:22 }}>
             Don't have an account?{" "}
             <button onClick={goRegister}
-              style={{ background:"none", border:"none", color:"#7C3AED", fontWeight:700,
+              style={{ background:"none", border:"none", color:"var(--p600)", fontWeight:700,
                 fontSize:13.5, cursor:"pointer", padding:0, fontFamily:"inherit" }}>
               Create one free →
             </button>
