@@ -158,15 +158,7 @@ export default function Login() {
     navigate(role === "ROLE_MASTER_ADMIN" ? "/master" : role === "ROLE_ADMIN" ? "/admin" : "/dashboard");
   };
 
-  const demoLogin = (key) => {
-    const D = {
-      student: { user:{ name:"Kamal Perera", email:"kamal@mrt.ac.lk", role:"ROLE_STUDENT", university:"University of Moratuwa", area:"Katubedda", yearOfStudy:2 }, token:"demo-student" },
-      admin:   { user:{ name:"Admin Silva",  email:"admin@mrt.ac.lk",  role:"ROLE_ADMIN",  university:"University of Moratuwa", area:"Katubedda" }, token:"demo-admin" },
-      master:  { user:{ name:"Master Admin", email:"master@uni.lk",    role:"ROLE_MASTER_ADMIN", university:"All Universities", area:"National" }, token:"demo-master" },
-    };
-    const d = D[key]; login(d.user, d.token);
-    navigate(key === "master" ? "/master" : key === "admin" ? "/admin" : "/dashboard");
-  };
+
 
   return (
     <div className="flex w-screen h-screen overflow-hidden bg-slate-50 dark:bg-slate-900">
@@ -233,32 +225,7 @@ export default function Login() {
             </div>
           </form>
 
-          {/* divider */}
-          <div className="flex items-center gap-4 my-7">
-            <div className="flex-1 h-px bg-slate-200 dark:bg-slate-800" />
-            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest whitespace-nowrap">or try a demo</span>
-            <div className="flex-1 h-px bg-slate-200 dark:bg-slate-800" />
-          </div>
 
-          {/* demo buttons */}
-          <div className="flex flex-col gap-2.5">
-            {[
-              { key:"student", label:"Student",      Icon:UserIcon,        color:"text-primary-600 dark:text-primary-400", bg:"bg-primary-50 dark:bg-primary-900/20", border:"border-primary-200 dark:border-primary-800", iconBg:"bg-white dark:bg-slate-900" },
-              { key:"admin",   label:"Campus Admin",  Icon:ShieldCheckIcon, color:"text-green-600 dark:text-green-400", bg:"bg-green-50 dark:bg-green-900/20", border:"border-green-200 dark:border-green-800", iconBg:"bg-white dark:bg-slate-900" },
-              { key:"master",  label:"Master Admin",  Icon:BuildingIcon,    color:"text-orange-600 dark:text-orange-400", bg:"bg-orange-50 dark:bg-orange-900/20", border:"border-orange-200 dark:border-orange-800", iconBg:"bg-white dark:bg-slate-900" },
-            ].map(({key,label,Icon,color,bg,border,iconBg})=>(
-              <button key={key} onClick={()=>demoLogin(key)}
-                className={`flex items-center gap-3 p-3 rounded-[14px] border-2 ${border} ${bg} cursor-pointer transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md text-left group`}>
-                <div className={`w-9 h-9 rounded-[10px] ${iconBg} flex items-center justify-center shrink-0 shadow-sm transition-transform group-hover:scale-110`}>
-                  <Icon size={16} className={color}/>
-                </div>
-                <span className={`text-[13.5px] font-bold ${color} flex-1`}>Continue as {label}</span>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" className={`${color} opacity-40 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all`}>
-                  <polyline points="9 18 15 12 9 6"/>
-                </svg>
-              </button>
-            ))}
-          </div>
 
           <p className="text-center text-[13.5px] font-medium text-slate-500 mt-8">
             Don't have an account?{" "}
