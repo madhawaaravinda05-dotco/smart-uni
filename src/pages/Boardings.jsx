@@ -8,12 +8,10 @@ import { useToast } from "../components/Toast";
 import RatingModal from "../components/RatingModal";
 
 const gradients = [
-  "linear-gradient(135deg,#C4B5FD,#A78BFA)",
-  "linear-gradient(135deg,#BFDBFE,#93C5FD)",
-  "linear-gradient(135deg,#FEE2E2,#FECACA)",
-  "linear-gradient(135deg,#D1FAE5,#6EE7B7)",
-  "linear-gradient(135deg,#FDE68A,#FCD34D)",
-  "linear-gradient(135deg,#FBCFE8,#F9A8D4)",
+  "linear-gradient(135deg,var(--p200),var(--p300))",
+  "linear-gradient(135deg,#67E8F9,#22D3EE)",
+  "linear-gradient(135deg,#A5F3FC,#67E8F9)",
+  "linear-gradient(135deg,#CCFBF1,#5EEAD4)",
 ];
 
 export default function Boardings() {
@@ -185,7 +183,7 @@ export default function Boardings() {
                   )}
                   <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,0,0,0.1), transparent 40%, rgba(0,0,0,0.5))" }} />
                   
-                  <span style={{ position: "absolute", top: 10, left: 10, background: "rgba(255,255,255,.9)", backdropFilter: "blur(6px)", fontSize: 9.5, fontWeight: 700, color: "#4C1D95", padding: "3px 9px", borderRadius: 99 }}>
+                  <span style={{ position: "absolute", top: 10, left: 10, background: "rgba(255,255,255,.9)", backdropFilter: "blur(6px)", fontSize: 9.5, fontWeight: 700, color: "var(--p800)", padding: "3px 9px", borderRadius: 99 }}>
                     {b.genderType || "Mixed"}
                   </span>
                   {b.verified && (

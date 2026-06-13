@@ -8,12 +8,12 @@ import { useToast } from "../components/Toast";
 import RatingModal from "../components/RatingModal";
 
 const foodGradients = [
-  "linear-gradient(135deg,#BBF7D0,#6EE7B7)",
-  "linear-gradient(135deg,#FED7AA,#FDBA74)",
-  "linear-gradient(135deg,#FDE68A,#FCD34D)",
-  "linear-gradient(135deg,#FBCFE8,#F9A8D4)",
-  "linear-gradient(135deg,#BAE6FD,#7DD3FC)",
-  "linear-gradient(135deg,#E9D5FF,#C4B5FD)",
+  "linear-gradient(135deg,#A5F3FC,#67E8F9)",
+  "linear-gradient(135deg,#67E8F9,#22D3EE)",
+  "linear-gradient(135deg,#22D3EE,#06B6D4)",
+  "linear-gradient(135deg,#CCFBF1,#99F6E4)",
+  "linear-gradient(135deg,#99F6E4,#5EEAD4)",
+  "linear-gradient(135deg,#5EEAD4,#14B8A6)",
 ];
 
 export default function Food() {
@@ -316,10 +316,10 @@ export default function Food() {
                 <button onClick={() => { setRatingPost(selected); setSelected(null); }}
                   style={{
                     flex: 1, padding: "12px 0", borderRadius: 12, border: "none",
-                    background: "linear-gradient(135deg,#7C3AED,#9333EA)", color: "#fff",
+                    background: "linear-gradient(135deg,var(--p500),var(--p600))", color: "#fff",
                     fontSize: 14, fontWeight: 700, cursor: "pointer", display: "flex",
                     alignItems: "center", justifyContent: "center", gap: 6,
-                    boxShadow: "0 6px 20px rgba(124,58,237,.35)",
+                    boxShadow: "0 6px 20px rgba(8,145,178,.35)",
                   }}>
                   <svg width={14} height={14} viewBox="0 0 24 24" fill="#FFD700" stroke="#FFD700" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
                   Rate & Reviews
