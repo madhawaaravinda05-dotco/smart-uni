@@ -19,8 +19,10 @@ const studentNav = [
   { to: "/profile",   label: "My Profile",  Icon: UserIcon,        color: "text-pink-400" },
 ];
 const adminNav = [
-  { to: "/admin",   label: "Admin Desk",  Icon: ShieldCheckIcon, color: "text-emerald-400" },
-  { to: "/profile", label: "My Profile",  Icon: UserIcon,        color: "text-pink-400" },
+  { to: "/admin",         label: "Dashboard",   Icon: HomeIcon,        color: "text-blue-400" },
+  { to: "/admin/posts",   label: "Posts",       Icon: HouseIcon,       color: "text-emerald-400" },
+  { to: "/admin/reports", label: "Reports",     Icon: ShieldCheckIcon, color: "text-red-400" },
+  { to: "/profile",       label: "My Profile",  Icon: UserIcon,        color: "text-pink-400" },
 ];
 const masterNav = [
   { to: "/master",  label: "Master Panel",Icon: BuildingIcon,    color: "text-red-400" },
@@ -36,7 +38,9 @@ const PAGE_TITLES = {
   "/map":       "Map View",
   "/submit":    "Add Listing",
   "/profile":   "My Profile",
-  "/admin":     "Admin Desk",
+  "/admin":     "Dashboard",
+  "/admin/posts": "Manage Posts",
+  "/admin/reports": "User Reports",
   "/master":    "Master Panel",
   "/admin-management": "Manage Admins",
 };

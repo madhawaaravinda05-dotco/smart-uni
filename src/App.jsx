@@ -13,6 +13,8 @@ import MapView from "./pages/MapView";
 import Submit from "./pages/Submit";
 import Profile from "./pages/Profile";
 import AdminDesk from "./pages/AdminDesk";
+import AdminPosts from "./pages/AdminPosts";
+import AdminReports from "./pages/AdminReports";
 import MasterPanel from "./pages/MasterPanel";
 import AdminManagement from "./pages/AdminManagement";
 
@@ -75,7 +77,9 @@ function AppRoutes() {
       <Route path="/profile"   element={<PrivateRoute><Profile /></PrivateRoute>} />
 
       {/* Admin */}
-      <Route path="/admin" element={<AdminRoute><AdminDesk /></AdminRoute>} />
+      <Route path="/admin"         element={<AdminRoute><AdminDesk /></AdminRoute>} />
+      <Route path="/admin/posts"   element={<AdminRoute><AdminPosts /></AdminRoute>} />
+      <Route path="/admin/reports" element={<AdminRoute><AdminReports /></AdminRoute>} />
 
       {/* Master Admin */}
       <Route path="/master" element={<MasterRoute><MasterPanel /></MasterRoute>} />
