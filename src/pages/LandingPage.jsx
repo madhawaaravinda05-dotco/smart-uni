@@ -138,14 +138,20 @@ export default function LandingPage() {
       </motion.nav>
 
       {/* ── Hero Section ─────────────────────────────────────────────────────── */}
-      <section id="home" className="relative pt-32 pb-32 md:pt-40 md:pb-40 px-6 flex items-center min-h-[90vh] bg-gradient-to-br from-[#0bd3d3] via-[#7831f5] to-[#f83689] overflow-hidden">
+      <section id="home" className="relative pt-32 pb-32 md:pt-40 md:pb-40 px-6 flex items-center min-h-[90vh] bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 overflow-hidden">
         {/* Dotted / Mesh Overlay */}
-        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-20 mix-blend-overlay"></div>
+        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 mix-blend-overlay"></div>
         
-        {/* Floating CSS Elements */}
-        <motion.div animate={{ y: [0, -30, 0], x: [0, 15, 0] }} transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }} className="absolute top-1/4 left-10 w-24 h-24 rounded-full bg-gradient-to-tr from-pink-500 to-orange-400 blur-sm opacity-60 shadow-[0_0_40px_rgba(236,72,153,0.8)]"></motion.div>
-        <motion.div animate={{ y: [0, 40, 0], x: [0, -20, 0] }} transition={{ repeat: Infinity, duration: 10, ease: "easeInOut", delay: 1 }} className="absolute bottom-1/4 right-20 w-32 h-32 rounded-full bg-gradient-to-tr from-cyan-400 to-blue-500 blur-sm opacity-60 shadow-[0_0_50px_rgba(6,182,212,0.8)]"></motion.div>
-        <motion.div animate={{ y: [0, -20, 0], scale: [1, 1.1, 1] }} transition={{ repeat: Infinity, duration: 6, ease: "easeInOut", delay: 2 }} className="absolute top-1/3 right-1/3 w-16 h-16 rounded-full bg-gradient-to-tr from-purple-400 to-indigo-500 blur-sm opacity-50"></motion.div>
+        {/* Premium Floating Glass Elements */}
+        <motion.div animate={{ y: [0, -20, 0], x: [0, 10, 0], rotate: [0, 5, 0] }} transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }} className="absolute top-1/4 left-10 w-32 h-32 rounded-3xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-[0_0_30px_rgba(99,102,241,0.15)] flex items-center justify-center">
+          <ShieldCheckIcon size={40} className="text-primary-400 opacity-80" />
+        </motion.div>
+        <motion.div animate={{ y: [0, 30, 0], x: [0, -15, 0], rotate: [0, -5, 0] }} transition={{ repeat: Infinity, duration: 10, ease: "easeInOut", delay: 1 }} className="absolute bottom-1/4 right-20 w-40 h-40 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 shadow-[0_0_40px_rgba(99,102,241,0.2)] flex items-center justify-center">
+          <MapPinIcon size={48} className="text-indigo-400 opacity-80" />
+        </motion.div>
+        <motion.div animate={{ y: [0, -15, 0], scale: [1, 1.05, 1] }} transition={{ repeat: Infinity, duration: 6, ease: "easeInOut", delay: 2 }} className="absolute top-1/3 right-1/3 w-20 h-20 rounded-2xl bg-white/5 backdrop-blur-md border border-white/10 shadow-[0_0_20px_rgba(255,255,255,0.05)] flex items-center justify-center">
+          <BuildingIcon size={24} className="text-slate-300 opacity-70" />
+        </motion.div>
 
         <div className="max-w-7xl mx-auto w-full flex flex-col lg:flex-row items-center relative z-10 gap-16">
           {/* Left Text Content */}
@@ -154,19 +160,19 @@ export default function LandingPage() {
             className="flex-1 text-left"
             initial="hidden" animate="visible" variants={staggerContainer}
           >
-            <motion.p variants={fadeInUp} className="text-white/80 font-bold tracking-[0.2em] uppercase text-sm mb-4">
+            <motion.p variants={fadeInUp} className="text-slate-400 font-bold tracking-[0.2em] uppercase text-sm mb-4">
               Smart Campus Navigation
             </motion.p>
             
-            <motion.h1 variants={fadeInUp} className="text-6xl md:text-8xl font-black tracking-tighter mb-6 leading-[0.9] text-white uppercase drop-shadow-xl">
+            <motion.h1 variants={fadeInUp} className="text-6xl md:text-8xl font-black tracking-tighter mb-6 leading-[0.9] text-transparent bg-clip-text bg-gradient-to-br from-white to-slate-400 uppercase drop-shadow-sm">
               Unify <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-white/70">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-indigo-400">
                 Your Campus <br />
               </span>
               Life
             </motion.h1>
             
-            <motion.p variants={fadeInUp} className="text-lg md:text-xl text-white/90 mb-10 max-w-lg leading-relaxed font-medium">
+            <motion.p variants={fadeInUp} className="text-lg md:text-xl text-slate-400 mb-10 max-w-lg leading-relaxed font-medium">
               Discover boardings, food spots, and transport routes tailored to your university. A platform built by students, for students.
             </motion.p>
           </motion.div>
@@ -191,7 +197,7 @@ export default function LandingPage() {
             onClick={() => scrollToSection("about")}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
-            className="w-24 h-24 rounded-full bg-gradient-to-br from-green-400 to-green-600 text-white font-bold text-lg shadow-[0_0_30px_rgba(74,222,128,0.6)] border-4 border-white/20 flex items-center justify-center backdrop-blur-md transition-shadow hover:shadow-[0_0_50px_rgba(74,222,128,0.8)]"
+            className="w-24 h-24 rounded-full bg-primary-600 text-white font-bold text-lg shadow-[0_0_30px_rgba(79,70,229,0.4)] border border-primary-500/50 flex items-center justify-center transition-all hover:bg-primary-500 hover:shadow-[0_0_50px_rgba(79,70,229,0.6)]"
           >
             Start
           </motion.button>
