@@ -240,17 +240,22 @@ export default function MapView() {
 
       {/* Legend bar at the bottom */}
       {!loading && view === "map" && (
-        <div style={{ display: "flex", alignItems: "center", gap: 20, marginTop: 10, padding: "8px 0", borderTop: "1px solid #F1F5F9" }}>
-          <span style={{ fontSize: 11, color: "#94A3B8", fontWeight: 600 }}>MAP LEGEND</span>
-          {Object.entries(TYPE_COLORS).map(([type, color]) => (
-            <span key={type} style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 12, color: "#475569", fontWeight: 500 }}>
-              <span style={{ width: 10, height: 10, borderRadius: "50%", background: color, display: "inline-block" }} />
-              {TYPE_LABELS[type]}
-            </span>
-          ))}
-          <span style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: 5, fontSize: 11.5, color: "#94A3B8" }}>
-            <ShieldCheckIcon size={12} color="#16A34A" /> Verified listings
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: 10, padding: "8px 0", borderTop: "1px solid #F1F5F9" }}>
+          <span style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 12, color: "#64748B", fontWeight: 500 }}>
+            <ShieldCheckIcon size={14} color="#16A34A" /> Verified listings
           </span>
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <span style={{ fontSize: 11, color: "#94A3B8", fontWeight: 700, letterSpacing: "0.5px", marginRight: 4 }}>MAP LEGEND</span>
+            {Object.entries(TYPE_COLORS).map(([type, color]) => {
+              const Icon = TYPE_ICONS[type];
+              return (
+                <span key={type} style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 11.5, color: color, fontWeight: 600, background: color + "14", padding: "5px 12px", borderRadius: 20 }}>
+                  <Icon size={12} color={color} />
+                  {TYPE_LABELS[type]}
+                </span>
+              );
+            })}
+          </div>
         </div>
       )}
     </div>
