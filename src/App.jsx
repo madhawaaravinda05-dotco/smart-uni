@@ -18,6 +18,9 @@ import AdminReports from "./pages/AdminReports";
 import MasterPanel from "./pages/MasterPanel";
 import AdminManagement from "./pages/AdminManagement";
 import LandingPage from "./pages/LandingPage";
+import AboutPage from "./pages/AboutPage";
+import PricingPage from "./pages/PricingPage";
+import FeedbackPage from "./pages/FeedbackPage";
 
 // ─── Route Guards ─────────────────────────────────────────────────────────────
 
@@ -57,8 +60,11 @@ function AppRoutes() {
       <Route path="/login"    element={<Auth />} />
       <Route path="/register" element={<Auth />} />
 
-      {/* Landing Page */}
+      {/* Public / Landing Pages */}
       <Route path="/" element={<LandingPage />} />
+      <Route path="/about" element={<AboutPage />} />
+      <Route path="/pricing" element={<PricingPage />} />
+      <Route path="/feedback" element={<FeedbackPage />} />
 
       {/* Student */}
       <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
