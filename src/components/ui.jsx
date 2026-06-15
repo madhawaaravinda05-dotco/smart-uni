@@ -170,7 +170,7 @@ export function Select({ label, error, options = [], icon, className = "", value
 }
 
 // ─── Card ─────────────────────────────────────────────────────────────────────
-export function Card({ children, className = "", hover = false, onClick, glass = false }) {
+export function Card({ children, className = "", hover = false, onClick, glass = false, style, ...props }) {
   return (
     <div
       onClick={onClick}
@@ -181,6 +181,8 @@ export function Card({ children, className = "", hover = false, onClick, glass =
         ${onClick ? "cursor-pointer" : ""}
         ${className}
       `}
+      style={style}
+      {...props}
     >
       {children}
     </div>
