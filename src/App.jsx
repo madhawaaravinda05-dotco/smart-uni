@@ -17,6 +17,7 @@ import AdminPosts from "./pages/AdminPosts";
 import AdminReports from "./pages/AdminReports";
 import MasterPanel from "./pages/MasterPanel";
 import AdminManagement from "./pages/AdminManagement";
+import LandingPage from "./pages/LandingPage";
 
 // ─── Route Guards ─────────────────────────────────────────────────────────────
 
@@ -47,14 +48,6 @@ function MasterRoute({ children }) {
   return <Layout>{children}</Layout>;
 }
 
-function RootRedirect() {
-  const { user, isAdmin, isMasterAdmin } = useAuth();
-  if (!user) return <Navigate to="/login" replace />;
-  if (isMasterAdmin) return <Navigate to="/master" replace />;
-  if (isAdmin) return <Navigate to="/admin" replace />;
-  return <Navigate to="/dashboard" replace />;
-}
-
 // ─── App ──────────────────────────────────────────────────────────────────────
 
 function AppRoutes() {
@@ -64,8 +57,8 @@ function AppRoutes() {
       <Route path="/login"    element={<Auth />} />
       <Route path="/register" element={<Auth />} />
 
-      {/* Root redirect */}
-      <Route path="/" element={<RootRedirect />} />
+      {/* Landing Page */}
+      <Route path="/" element={<LandingPage />} />
 
       {/* Student */}
       <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
