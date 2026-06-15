@@ -149,10 +149,10 @@ export default function MapView() {
       {error && <ErrorBox message={error} />}
 
       {!loading && view === "map" && (
-        <div className="grid-map" style={{ gap: 14, flex: 1, minHeight: 0 }}>
+        <div style={{ display: "flex", flexDirection: "row", gap: 16, flex: 1, minHeight: 0 }}>
 
           {/* ── Real Map ── */}
-          <div style={{ minWidth: 0, borderRadius: 18, overflow: "hidden", boxShadow: "0 4px 24px rgba(0,0,0,0.1)", border: "1px solid #E2E8F0" }}>
+          <div style={{ flex: 1, minWidth: 0, borderRadius: 18, overflow: "hidden", boxShadow: "0 4px 24px rgba(0,0,0,0.1)", border: "1px solid #E2E8F0" }}>
             <MapPicker
               center={mapCenter}
               zoom={15}
@@ -163,8 +163,8 @@ export default function MapView() {
           </div>
 
           {/* ── Sidebar listing ── */}
-          <div style={{ display: "flex", flexDirection: "column", gap: 8, overflowY: "auto", maxHeight: "calc(100vh - 280px)" }}>
-            <div style={{ fontSize: 11, fontWeight: 700, color: "#94A3B8", letterSpacing: "0.6px", textTransform: "uppercase", marginBottom: 4, paddingLeft: 2 }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 10, overflowY: "auto", maxHeight: "calc(100vh - 280px)", width: "360px", flexShrink: 0, background: "#fff", padding: "18px", borderRadius: "18px", border: "1px solid #E2E8F0", boxShadow: "0 4px 24px rgba(0,0,0,0.06)" }}>
+            <div style={{ fontSize: 11.5, fontWeight: 800, color: "#475569", letterSpacing: "0.8px", textTransform: "uppercase", marginBottom: 4, paddingBottom: 10, borderBottom: "1.5px solid #F1F5F9" }}>
               {filtered.length} listing{filtered.length !== 1 ? "s" : ""} nearby
             </div>
             {filtered.length === 0 && (
