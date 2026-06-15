@@ -7,6 +7,7 @@ import {
   ShieldCheckIcon,
   MapPinIcon,
   GithubIcon,
+  LinkedinIcon,
   InstagramIcon,
   MailIcon,
   SucLogoIcon,
