@@ -56,8 +56,8 @@ export default function Transport() {
           to: p.toLocation || p.university || "Unknown",
           via: [], 
           departures: [], 
-          lastBus: "N/A",
-          frequency: "N/A",
+          lastBus: p.lastBus || "N/A",
+          frequency: p.frequency || "N/A",
           type: p.title?.toLowerCase().includes("train") ? "Train" : "Bus",
           description: p.description
         }));

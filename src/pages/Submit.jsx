@@ -46,7 +46,7 @@ export default function Submit() {
     title: "", description: "", price: "", area: "",
     genderType: "", hasKitchen: false,
     tags: [], contact: "",
-    routeNumber: "", from: "", to: "",
+    routeNumber: "", from: "", to: "", frequency: "", lastBus: "",
   });
   const [pickedLocation, setPickedLocation] = useState(null);
   const [showMap, setShowMap] = useState(false);
@@ -105,6 +105,8 @@ export default function Submit() {
       if (!form.routeNumber.trim()) e.routeNumber = "Please enter the route or bus number.";
       if (!form.from.trim()) e.from = "Please enter the starting point.";
       if (!form.to.trim()) e.to = "Please enter the destination.";
+      if (!form.frequency.trim()) e.frequency = "Please enter the frequency (e.g., Every 15 mins).";
+      if (!form.lastBus.trim()) e.lastBus = "Please enter the last bus time.";
     }
     return e;
   };
@@ -140,7 +142,7 @@ export default function Submit() {
       images: finalImageUrls,
       ...(category === "BOARDING" && { price: Number(form.price), genderType: form.genderType, hasKitchen: form.hasKitchen, contact: form.contact.trim() }),
       ...(category === "FOOD" && { priceRange: form.price, tags: form.tags }),
-      ...(category === "TRANSPORT" && { routeNumber: form.routeNumber.trim(), from: form.from.trim(), to: form.to.trim() }),
+      ...(category === "TRANSPORT" && { routeNumber: form.routeNumber.trim(), fromLocation: form.from.trim(), toLocation: form.to.trim(), frequency: form.frequency.trim(), lastBus: form.lastBus.trim() }),
     };
 
     const res = await createPost(payload);
@@ -163,7 +165,7 @@ export default function Submit() {
           </p>
         </div>
         <div style={{ display: "flex", gap: 10, marginTop: 8 }}>
-          <Button variant="secondary" onClick={() => { setSubmitted(false); setCategory(""); setForm({ title: "", description: "", price: "", area: "", genderType: "", hasKitchen: false, tags: [], contact: "", routeNumber: "", from: "", to: "" }); }}>
+          <Button variant="secondary" onClick={() => { setSubmitted(false); setCategory(""); setForm({ title: "", description: "", price: "", area: "", genderType: "", hasKitchen: false, tags: [], contact: "", routeNumber: "", from: "", to: "", frequency: "", lastBus: "" }); }}>
             Submit another
           </Button>
           <Button onClick={() => navigate("/dashboard")}>Back to Dashboard</Button>
@@ -455,6 +457,10 @@ export default function Submit() {
                   <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
                     <Input label="From (starting point)" placeholder="e.g. Katubedda" value={form.from} error={errors.from} onChange={(e) => set("from", e.target.value)} />
                     <Input label="To (destination)" placeholder="e.g. Colombo Fort" value={form.to} error={errors.to} onChange={(e) => set("to", e.target.value)} />
+                  </div>
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14, marginTop: 14 }}>
+                    <Input label="Frequency" placeholder="e.g. Every 15 mins" value={form.frequency} error={errors.frequency} onChange={(e) => set("frequency", e.target.value)} />
+                    <Input label="Last Bus / Train Time" placeholder="e.g. 9:30 PM" value={form.lastBus} error={errors.lastBus} onChange={(e) => set("lastBus", e.target.value)} />
                   </div>
                 </>
               )}
