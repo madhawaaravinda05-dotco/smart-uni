@@ -7,10 +7,12 @@ import {
   ShieldCheckIcon,
   MapPinIcon,
   GithubIcon,
-  LinkedinIcon,
   InstagramIcon,
   MailIcon,
-  SucLogoIcon
+  SucLogoIcon,
+  HouseIcon,
+  FoodIcon,
+  BusIcon
 } from "../components/Icons";
 import { useToast } from "../components/Toast";
 
@@ -211,20 +213,60 @@ export default function LandingPage() {
 
             <motion.div variants={fadeInUp} className="relative">
               {/* Decorative Image/Graphic container */}
-              <div className="aspect-square bg-gradient-to-tr from-primary-100 to-indigo-100 dark:from-primary-900/30 dark:to-indigo-900/30 rounded-3xl border border-white/50 dark:border-slate-700 shadow-2xl flex items-center justify-center relative overflow-hidden">
-                <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
-                <SucLogoIcon size={180} className="text-primary-600/20 dark:text-primary-400/20" />
+              <div className="aspect-square rounded-3xl border border-white/50 dark:border-slate-700 shadow-2xl flex items-center justify-center relative overflow-hidden group">
+                <img src="/campus_students.png" alt="University Students" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" />
+                
+                {/* Overlay gradient */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none"></div>
                 
                 {/* Floating elements */}
-                <motion.div animate={{ y: [0, -20, 0] }} transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }} className="absolute top-10 right-10 p-4 bg-white dark:bg-slate-800 rounded-2xl shadow-xl">
-                  <ShieldCheckIcon size={32} className="text-green-500" />
+                <motion.div animate={{ y: [0, -15, 0] }} transition={{ repeat: Infinity, duration: 5, ease: "easeInOut" }} className="absolute top-8 right-8 p-3 bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20">
+                  <ShieldCheckIcon size={28} className="text-green-500" />
                 </motion.div>
-                <motion.div animate={{ y: [0, 20, 0] }} transition={{ repeat: Infinity, duration: 5, ease: "easeInOut", delay: 1 }} className="absolute bottom-20 left-10 p-4 bg-white dark:bg-slate-800 rounded-2xl shadow-xl">
-                  <BuildingIcon size={32} className="text-indigo-500" />
+                <motion.div animate={{ y: [0, 15, 0] }} transition={{ repeat: Infinity, duration: 6, ease: "easeInOut", delay: 1 }} className="absolute bottom-8 left-8 p-3 bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20">
+                  <BuildingIcon size={28} className="text-indigo-500" />
                 </motion.div>
               </div>
             </motion.div>
           </motion.div>
+        </div>
+      </section>
+
+      {/* ── Features Section ─────────────────────────────────────────────────── */}
+      <section className="py-24 px-6 bg-slate-100 dark:bg-slate-900 relative z-10 border-y border-slate-200 dark:border-slate-800">
+        <div className="max-w-7xl mx-auto text-center">
+          <div className="mb-16">
+            <h2 className="text-4xl font-black mb-4">Everything You Need</h2>
+            <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+              Your comprehensive guide to university essentials, actively curated and verified by senior students for utmost reliability.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="bg-white dark:bg-slate-800 p-8 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-md hover:-translate-y-2 transition-transform duration-300">
+              <div className="w-14 h-14 bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 rounded-2xl flex items-center justify-center mb-6">
+                <HouseIcon size={28} />
+              </div>
+              <h3 className="text-2xl font-bold mb-3">Boardings</h3>
+              <p className="text-slate-600 dark:text-slate-400">Discover safe, affordable, and highly-rated accommodations near your campus. Filter by price, distance, and amenities.</p>
+            </motion.div>
+
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }} className="bg-white dark:bg-slate-800 p-8 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-md hover:-translate-y-2 transition-transform duration-300">
+              <div className="w-14 h-14 bg-orange-100 dark:bg-orange-900/40 text-orange-600 dark:text-orange-400 rounded-2xl flex items-center justify-center mb-6">
+                <FoodIcon size={28} />
+              </div>
+              <h3 className="text-2xl font-bold mb-3">Food & Dining</h3>
+              <p className="text-slate-600 dark:text-slate-400">Find the best local eateries, budget-friendly meal spots, and hidden culinary gems recommended by your seniors.</p>
+            </motion.div>
+
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }} className="bg-white dark:bg-slate-800 p-8 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-md hover:-translate-y-2 transition-transform duration-300">
+              <div className="w-14 h-14 bg-emerald-100 dark:bg-emerald-900/40 text-emerald-600 dark:text-emerald-400 rounded-2xl flex items-center justify-center mb-6">
+                <BusIcon size={28} />
+              </div>
+              <h3 className="text-2xl font-bold mb-3">Transport</h3>
+              <p className="text-slate-600 dark:text-slate-400">Never miss a bus or train. Access curated transport routes, schedules, and specific pathways right to the university gates.</p>
+            </motion.div>
+          </div>
         </div>
       </section>
 
