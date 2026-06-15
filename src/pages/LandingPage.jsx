@@ -94,17 +94,17 @@ export default function LandingPage() {
           {/* Logo & Links */}
           <div className="flex items-center gap-10">
             <div className="flex items-center gap-3 cursor-pointer" onClick={() => scrollToSection("home")}>
-              <SucLogoIcon size={32} className="text-primary-600 dark:text-primary-400" />
-              <span className="text-xl font-black tracking-tight text-slate-900 dark:text-white hidden sm:block">
+              <SucLogoIcon size={32} className={scrolled ? "text-primary-600 dark:text-primary-400" : "text-white"} />
+              <span className={`text-xl font-black tracking-tight hidden sm:block ${scrolled ? 'text-slate-900 dark:text-white' : 'text-white'}`}>
                 UniCompanion
               </span>
             </div>
 
             <div className="hidden md:flex items-center gap-6">
-              <button onClick={() => scrollToSection("home")} className="text-sm font-semibold text-slate-600 hover:text-primary-600 dark:text-slate-300 dark:hover:text-primary-400 transition-colors">Home</button>
-              <button onClick={() => scrollToSection("about")} className="text-sm font-semibold text-slate-600 hover:text-primary-600 dark:text-slate-300 dark:hover:text-primary-400 transition-colors">What is this?</button>
-              <button onClick={() => scrollToSection("team")} className="text-sm font-semibold text-slate-600 hover:text-primary-600 dark:text-slate-300 dark:hover:text-primary-400 transition-colors">About Us</button>
-              <button onClick={() => scrollToSection("feedback")} className="text-sm font-semibold text-slate-600 hover:text-primary-600 dark:text-slate-300 dark:hover:text-primary-400 transition-colors">Feedback</button>
+              <button onClick={() => scrollToSection("home")} className={`text-sm font-semibold transition-colors ${scrolled ? 'text-slate-600 hover:text-primary-600 dark:text-slate-300' : 'text-white/80 hover:text-white'}`}>Home</button>
+              <button onClick={() => scrollToSection("about")} className={`text-sm font-semibold transition-colors ${scrolled ? 'text-slate-600 hover:text-primary-600 dark:text-slate-300' : 'text-white/80 hover:text-white'}`}>What is this?</button>
+              <button onClick={() => scrollToSection("team")} className={`text-sm font-semibold transition-colors ${scrolled ? 'text-slate-600 hover:text-primary-600 dark:text-slate-300' : 'text-white/80 hover:text-white'}`}>About Us</button>
+              <button onClick={() => scrollToSection("feedback")} className={`text-sm font-semibold transition-colors ${scrolled ? 'text-slate-600 hover:text-primary-600 dark:text-slate-300' : 'text-white/80 hover:text-white'}`}>Feedback</button>
             </div>
           </div>
 
@@ -121,13 +121,13 @@ export default function LandingPage() {
               <>
                 <Link
                   to="/login"
-                  className="px-5 py-2.5 text-sm font-bold text-slate-700 dark:text-slate-200 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+                  className={`px-5 py-2.5 text-sm font-bold transition-colors ${scrolled ? 'text-slate-700 dark:text-slate-200 hover:text-primary-600' : 'text-white/90 hover:text-white'}`}
                 >
                   Log In
                 </Link>
                 <Link
                   to="/register"
-                  className="px-6 py-2.5 bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 dark:text-slate-900 text-white text-sm font-bold rounded-full transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0"
+                  className={`px-6 py-2.5 text-sm font-bold rounded-full transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 ${scrolled ? 'bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 dark:text-slate-900 text-white' : 'bg-white text-primary-600 hover:bg-slate-50'}`}
                 >
                   Register
                 </Link>
@@ -138,48 +138,64 @@ export default function LandingPage() {
       </motion.nav>
 
       {/* ── Hero Section ─────────────────────────────────────────────────────── */}
-      <section id="home" className="relative pt-32 pb-20 md:pt-48 md:pb-32 px-6 flex items-center min-h-[90vh]">
-        {/* Abstract Background Elements */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      <section id="home" className="relative pt-32 pb-32 md:pt-40 md:pb-40 px-6 flex items-center min-h-[90vh] bg-gradient-to-br from-[#0bd3d3] via-[#7831f5] to-[#f83689] overflow-hidden">
+        {/* Dotted / Mesh Overlay */}
+        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-20 mix-blend-overlay"></div>
+        
+        {/* Floating CSS Elements */}
+        <motion.div animate={{ y: [0, -30, 0], x: [0, 15, 0] }} transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }} className="absolute top-1/4 left-10 w-24 h-24 rounded-full bg-gradient-to-tr from-pink-500 to-orange-400 blur-sm opacity-60 shadow-[0_0_40px_rgba(236,72,153,0.8)]"></motion.div>
+        <motion.div animate={{ y: [0, 40, 0], x: [0, -20, 0] }} transition={{ repeat: Infinity, duration: 10, ease: "easeInOut", delay: 1 }} className="absolute bottom-1/4 right-20 w-32 h-32 rounded-full bg-gradient-to-tr from-cyan-400 to-blue-500 blur-sm opacity-60 shadow-[0_0_50px_rgba(6,182,212,0.8)]"></motion.div>
+        <motion.div animate={{ y: [0, -20, 0], scale: [1, 1.1, 1] }} transition={{ repeat: Infinity, duration: 6, ease: "easeInOut", delay: 2 }} className="absolute top-1/3 right-1/3 w-16 h-16 rounded-full bg-gradient-to-tr from-purple-400 to-indigo-500 blur-sm opacity-50"></motion.div>
+
+        <div className="max-w-7xl mx-auto w-full flex flex-col lg:flex-row items-center relative z-10 gap-16">
+          {/* Left Text Content */}
           <motion.div 
-            style={{ y: y1 }}
-            className="absolute -top-40 -right-40 w-96 h-96 bg-primary-400/20 dark:bg-primary-600/20 rounded-full blur-3xl" 
-          />
+            style={{ opacity: opacityHero, y: y1 }}
+            className="flex-1 text-left"
+            initial="hidden" animate="visible" variants={staggerContainer}
+          >
+            <motion.p variants={fadeInUp} className="text-white/80 font-bold tracking-[0.2em] uppercase text-sm mb-4">
+              Smart Campus Navigation
+            </motion.p>
+            
+            <motion.h1 variants={fadeInUp} className="text-6xl md:text-8xl font-black tracking-tighter mb-6 leading-[0.9] text-white uppercase drop-shadow-xl">
+              Unify <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-white/70">
+                Your Campus <br />
+              </span>
+              Life
+            </motion.h1>
+            
+            <motion.p variants={fadeInUp} className="text-lg md:text-xl text-white/90 mb-10 max-w-lg leading-relaxed font-medium">
+              Discover boardings, food spots, and transport routes tailored to your university. A platform built by students, for students.
+            </motion.p>
+          </motion.div>
+
+          {/* Right 3D Image Content */}
           <motion.div 
-            style={{ y: useTransform(scrollY, [0, 1000], [0, -200]) }}
-            className="absolute top-40 -left-20 w-72 h-72 bg-indigo-400/20 dark:bg-indigo-600/20 rounded-full blur-3xl" 
-          />
+            initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1, delay: 0.2 }}
+            className="flex-1 relative w-full max-w-2xl"
+          >
+            <motion.img 
+              animate={{ y: [0, -15, 0] }} transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
+              src="/hero_3d.png" 
+              alt="3D Campus Elements" 
+              className="w-full h-auto object-contain drop-shadow-2xl"
+            />
+          </motion.div>
         </div>
 
-        <motion.div 
-          style={{ opacity: opacityHero }}
-          className="max-w-4xl mx-auto text-center relative z-10"
-          initial="hidden" animate="visible" variants={staggerContainer}
-        >
-          <motion.div variants={fadeInUp} className="mb-6 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-50 dark:bg-primary-900/30 border border-primary-100 dark:border-primary-800 text-primary-700 dark:text-primary-400 font-semibold text-sm shadow-sm">
-            <ShieldCheckIcon size={16} /> <span>Smart Campus Navigation</span>
-          </motion.div>
-          
-          <motion.h1 variants={fadeInUp} className="text-5xl md:text-7xl font-black tracking-tight mb-8 leading-tight">
-            Connecting University Life, <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-600 to-indigo-600 dark:from-primary-400 dark:to-indigo-400">
-              One Campus at a Time.
-            </span>
-          </motion.h1>
-          
-          <motion.p variants={fadeInUp} className="text-lg md:text-xl text-slate-600 dark:text-slate-400 mb-10 max-w-2xl mx-auto leading-relaxed">
-            Discover boardings, food spots, and transport routes tailored to your university. A platform built by students, for students, to make campus living effortless.
-          </motion.p>
-          
-          <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link to={user ? getDashboardLink() : "/register"} className="w-full sm:w-auto px-8 py-4 bg-primary-600 hover:bg-primary-700 text-white text-lg font-bold rounded-full transition-all shadow-xl shadow-primary-500/30 hover:shadow-primary-500/50 hover:-translate-y-1">
-              Get Started Now
-            </Link>
-            <button onClick={() => scrollToSection("about")} className="w-full sm:w-auto px-8 py-4 bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 text-slate-800 dark:text-slate-200 text-lg font-bold rounded-full transition-all hover:-translate-y-1">
-              Learn More
-            </button>
-          </motion.div>
-        </motion.div>
+        {/* Circular Bottom Button */}
+        <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20">
+          <motion.button 
+            onClick={() => scrollToSection("about")}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            className="w-24 h-24 rounded-full bg-gradient-to-br from-green-400 to-green-600 text-white font-bold text-lg shadow-[0_0_30px_rgba(74,222,128,0.6)] border-4 border-white/20 flex items-center justify-center backdrop-blur-md transition-shadow hover:shadow-[0_0_50px_rgba(74,222,128,0.8)]"
+          >
+            Start
+          </motion.button>
+        </div>
       </section>
 
       {/* ── What is this / About Section ─────────────────────────────────────── */}
