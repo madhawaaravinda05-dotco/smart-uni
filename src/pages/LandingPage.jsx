@@ -12,6 +12,7 @@ import {
   MailIcon,
   SucLogoIcon
 } from "../components/Icons";
+import { useToast } from "../components/Toast";
 
 // ─── Animation Variants ────────────────────────────────────────────────────────
 const fadeInUp = {
@@ -42,6 +43,7 @@ const TEAM_MEMBERS = Array.from({ length: 9 }).map((_, i) => ({
 export default function LandingPage() {
   const { user, isMasterAdmin, isAdmin } = useAuth();
   const navigate = useNavigate();
+  const { show, ToastEl } = useToast();
   const [scrolled, setScrolled] = useState(false);
 
   // Parallax effect for hero
@@ -72,6 +74,7 @@ export default function LandingPage() {
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-50 font-sans overflow-hidden selection:bg-primary-500 selection:text-white">
+      {ToastEl}
       
       {/* ── Navigation ───────────────────────────────────────────────────────── */}
       <motion.nav
@@ -98,6 +101,7 @@ export default function LandingPage() {
               <button onClick={() => scrollToSection("home")} className="text-sm font-semibold text-slate-600 hover:text-primary-600 dark:text-slate-300 dark:hover:text-primary-400 transition-colors">Home</button>
               <button onClick={() => scrollToSection("about")} className="text-sm font-semibold text-slate-600 hover:text-primary-600 dark:text-slate-300 dark:hover:text-primary-400 transition-colors">What is this?</button>
               <button onClick={() => scrollToSection("team")} className="text-sm font-semibold text-slate-600 hover:text-primary-600 dark:text-slate-300 dark:hover:text-primary-400 transition-colors">About Us</button>
+              <button onClick={() => scrollToSection("feedback")} className="text-sm font-semibold text-slate-600 hover:text-primary-600 dark:text-slate-300 dark:hover:text-primary-400 transition-colors">Feedback</button>
             </div>
           </div>
 
@@ -272,6 +276,48 @@ export default function LandingPage() {
               </motion.div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ── Feedback Section ─────────────────────────────────────────────────── */}
+      <section id="feedback" className="py-24 bg-white dark:bg-slate-800/50 border-t border-slate-200 dark:border-slate-800 relative z-10">
+        <div className="max-w-3xl mx-auto px-6">
+          <div className="text-center mb-10">
+            <h2 className="text-4xl font-black mb-4">Send Us Feedback</h2>
+            <p className="text-lg text-slate-600 dark:text-slate-400">
+              We'd love to hear your thoughts, suggestions, or any issues you've faced.
+            </p>
+          </div>
+          
+          <motion.form 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            onSubmit={(e) => {
+              e.preventDefault();
+              show("Thank you for your feedback!", "success");
+              e.target.reset();
+            }}
+            className="bg-slate-50 dark:bg-slate-900 p-8 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-xl"
+          >
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
+              <div>
+                <label className="block text-sm font-bold mb-2 text-slate-700 dark:text-slate-300">Name</label>
+                <input required type="text" placeholder="John Doe" className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-primary-500 outline-none transition-all" />
+              </div>
+              <div>
+                <label className="block text-sm font-bold mb-2 text-slate-700 dark:text-slate-300">Email</label>
+                <input required type="email" placeholder="john@example.com" className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-primary-500 outline-none transition-all" />
+              </div>
+            </div>
+            <div className="mb-6">
+              <label className="block text-sm font-bold mb-2 text-slate-700 dark:text-slate-300">Message</label>
+              <textarea required rows={4} placeholder="Your message here..." className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-primary-500 outline-none transition-all resize-none"></textarea>
+            </div>
+            <button type="submit" className="w-full py-4 bg-primary-600 hover:bg-primary-700 text-white font-bold rounded-xl transition-colors shadow-lg shadow-primary-500/30">
+              Send Feedback
+            </button>
+          </motion.form>
         </div>
       </section>
 
