@@ -336,6 +336,7 @@ export default function Boardings() {
           onClose={() => setRatingPost(null)}
           onRated={(data) => { handleRated(ratingPost, data); setRatingPost(null); }}
         />
+      )}
       {/* ── Report Modal ── */}
       <ReportModal
         isOpen={!!reportPostData}
