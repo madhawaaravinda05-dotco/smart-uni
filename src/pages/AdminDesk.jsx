@@ -5,6 +5,8 @@ import {
   getActivePosts,
   updatePostStatus,
   deletePost,
+  getAdminReports,
+  resolveReport,
 } from "../api/api";
 import {
   Button,
@@ -52,6 +54,7 @@ export default function AdminDesk() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [selected, setSelected] = useState(null);
+  const [reports, setReports] = useState([]);
   const [actionLoading, setActionLoading] = useState("");
   const [filter, setFilter] = useState("ALL");
   const [confirmModal, setConfirmModal] = useState({ isOpen: false });
@@ -59,9 +62,10 @@ export default function AdminDesk() {
   const load = async () => {
     setLoading(true);
     setError("");
-    const [pendingRes, activeRes] = await Promise.all([
+    const [pendingRes, activeRes, reportsRes] = await Promise.all([
       getPendingPosts(user?.university),
       getActivePosts(user?.university),
+      getAdminReports(user?.university),
     ]);
     setLoading(false);
 
@@ -72,6 +76,9 @@ export default function AdminDesk() {
       allPosts = [...allPosts, ...activeRes.data];
 
     setPosts(allPosts);
+    if (reportsRes.success && reportsRes.data) {
+      setReports(reportsRes.data);
+    }
   };
 
   useEffect(() => {
@@ -95,6 +102,18 @@ export default function AdminDesk() {
         : "Listing rejected and hidden.",
       status === "APPROVED" ? "success" : "info",
     );
+  };
+
+  const handleResolveReport = async (id, status) => {
+    setActionLoading(id + status);
+    const res = await resolveReport(id, status);
+    setActionLoading("");
+    if (!res.success) {
+      show(res.message, "error");
+      return;
+    }
+    setReports((prev) => prev.filter((r) => r.id !== id && r._id !== id));
+    show("Report resolved successfully.", "success");
   };
 
   const handleDelete = (id) => {
@@ -129,6 +148,7 @@ export default function AdminDesk() {
     boardings: posts.filter((p) => p.category === "BOARDING").length,
     food: posts.filter((p) => p.category === "FOOD").length,
     transport: posts.filter((p) => p.category === "TRANSPORT").length,
+    reports: reports.length,
   };
 
   return (
@@ -173,6 +193,12 @@ export default function AdminDesk() {
             color: "#16A34A",
             bg: "#F0FDF4",
           },
+          {
+            label: "Reports",
+            value: stats.reports,
+            color: "#DC2626",
+            bg: "#FEF2F2",
+          },
         ].map(({ label, value, color, bg }) => (
           <Card key={label} style={{ padding: "18px 20px" }}>
             <div
@@ -201,7 +227,7 @@ export default function AdminDesk() {
 
       {/* Category filter */}
       <div style={{ display: "flex", gap: 8, marginBottom: 20 }}>
-        {["ALL", "BOARDING", "FOOD", "TRANSPORT"].map((f) => (
+        {["ALL", "BOARDING", "FOOD", "TRANSPORT", "REPORTS"].map((f) => (
           <button
             key={f}
             onClick={() => setFilter(f)}
@@ -225,7 +251,7 @@ export default function AdminDesk() {
       {loading && <LoadingScreen message="Loading pending submissions..." />}
       {error && <ErrorBox message={error} onRetry={load} />}
 
-      {!loading && filtered.length === 0 && (
+      {!loading && filter !== "REPORTS" && filtered.length === 0 && (
         <EmptyState
           icon={<ShieldCheckIcon size={48} color="#CBD5E1" />}
           title="No listings found"
@@ -233,7 +259,56 @@ export default function AdminDesk() {
         />
       )}
 
-      {!loading && filtered.length > 0 && (
+      {!loading && filter === "REPORTS" && reports.length === 0 && (
+        <EmptyState
+          icon={<FlagIcon size={48} color="#CBD5E1" />}
+          title="No pending reports"
+          description="There are no user reports for your university at the moment."
+        />
+      )}
+
+      {!loading && filter === "REPORTS" && reports.length > 0 && (
+        <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+          {reports.map((report) => (
+            <Card key={report.id || report._id} style={{ overflow: "hidden" }}>
+              <div style={{ padding: "16px 20px", display: "flex", flexDirection: "column", gap: 12 }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                    <div style={{ width: 40, height: 40, background: "#FEF2F2", borderRadius: 10, display: "flex", alignItems: "center", justifyContent: "center", color: "#DC2626", flexShrink: 0 }}>
+                      <FlagIcon size={18} />
+                    </div>
+                    <div>
+                      <div style={{ fontSize: 14, fontWeight: 700, color: "#0F172A", marginBottom: 2 }}>
+                        {report.post?.title || "Unknown Post"}
+                      </div>
+                      <div style={{ fontSize: 12, color: "#64748B", display: "flex", alignItems: "center", gap: 6 }}>
+                        Reported by: <span style={{ fontWeight: 600 }}>{report.reportedBy?.name || report.reportedBy?.email || "Unknown"}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div style={{ display: "flex", gap: 8 }}>
+                    <Button size="sm" variant="ghost" loading={actionLoading === (report.id || report._id) + "DISMISSED"} onClick={() => handleResolveReport(report.id || report._id, "DISMISSED")}>
+                      Dismiss Report
+                    </Button>
+                    <Button size="sm" variant="danger" loading={actionLoading === (report.post?.id || report.post?._id) + "DELETE"} onClick={() => {
+                        handleResolveReport(report.id || report._id, "RESOLVED");
+                        if(report.post) handleDelete(report.post.id || report.post._id);
+                    }}>
+                      <XIcon size={12} /> Delete Post
+                    </Button>
+                  </div>
+                </div>
+                <div style={{ background: "#FAFBFC", padding: "12px 16px", borderRadius: 12, border: "1px solid #F1F5F9" }}>
+                  <div style={{ fontSize: 12, fontWeight: 700, color: "#DC2626", marginBottom: 4 }}>Reason: {report.reason}</div>
+                  {report.message && <div style={{ fontSize: 13, color: "#334155" }}>{report.message}</div>}
+                </div>
+              </div>
+            </Card>
+          ))}
+        </div>
+      )}
+
+      {!loading && filter !== "REPORTS" && filtered.length > 0 && (
         <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
           {filtered.map((post) => {
             const meta = CATEGORY_META[post.category] || CATEGORY_META.BOARDING;

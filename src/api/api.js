@@ -108,9 +108,27 @@ export const updatePostStatus = async (id, status) => {
   }
 };
 
-export const reportPost = async (id) => {
+export const reportPost = async (id, data) => {
   try {
-    const res = await api.post(`/api/posts/${id}/report`);
+    const res = await api.post(`/api/reports/${id}`, data);
+    return { success: true, data: res.data };
+  } catch (err) {
+    return { success: false, message: humanizeError(err) };
+  }
+};
+
+export const getAdminReports = async (university) => {
+  try {
+    const res = await api.get(`/api/reports/university/${encodeURIComponent(university)}`);
+    return { success: true, data: res.data };
+  } catch (err) {
+    return { success: false, message: humanizeError(err) };
+  }
+};
+
+export const resolveReport = async (id, status) => {
+  try {
+    const res = await api.put(`/api/reports/${id}/status`, { status });
     return { success: true, data: res.data };
   } catch (err) {
     return { success: false, message: humanizeError(err) };

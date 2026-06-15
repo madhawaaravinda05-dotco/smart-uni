@@ -5,6 +5,7 @@ import { PageHeader, LoadingScreen, ErrorBox, EmptyState, StarRating, Dropdown }
 import { FoodIcon, MapPinIcon, SearchIcon, XIcon, FlagIcon } from "../components/Icons";
 import { useToast } from "../components/Toast";
 import RatingModal from "../components/RatingModal";
+import ReportModal from "../components/ReportModal";
 
 const foodGradients = [
   "bg-gradient-to-br from-cyan-300 to-cyan-500",
@@ -26,15 +27,23 @@ export default function Food() {
   const [sortBy,     setSortBy]     = useState("rating");
   const [selected,   setSelected]   = useState(null);
   const [ratingPost, setRatingPost] = useState(null);
+  const [reportPostData, setReportPostData] = useState(null);
+  const [isReporting, setIsReporting] = useState(false);
   const [ratingIdx,  setRatingIdx]  = useState(0);
 
   // Optimistic local ratings map
   const [localRatings, setLocalRatings] = useState({});
 
-  const handleReport = async (id) => {
-    const res = await reportPost(id);
-    if (res.success) show("Thank you — this listing has been flagged for admin review.", "success");
-    else show(res.message, "error");
+  const handleReport = async (data) => {
+    setIsReporting(true);
+    const res = await reportPost(reportPostData._id || reportPostData.id, data);
+    setIsReporting(false);
+    if (res.success) {
+      show("Thank you — this listing has been flagged for admin review.", "success");
+      setReportPostData(null);
+    } else {
+      show(res.message, "error");
+    }
   };
 
   const handleDelete = async (id) => {
@@ -309,7 +318,7 @@ export default function Food() {
                       <XIcon size={16} />
                     </button>
                   )}
-                  <button onClick={() => { handleReport(selected.id || selected._id); setSelected(null); }} className="bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 font-bold py-3 px-4 rounded-xl flex items-center justify-center transition-all">
+                  <button onClick={() => { setReportPostData(selected); setSelected(null); }} className="bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 font-bold py-3 px-4 rounded-xl flex items-center justify-center transition-all">
                     <FlagIcon size={16} />
                   </button>
                 </div>
@@ -327,7 +336,13 @@ export default function Food() {
           onClose={() => setRatingPost(null)}
           onRated={(data) => { handleRated(ratingPost, data); setRatingPost(null); }}
         />
-      )}
+      {/* ── Report Modal ── */}
+      <ReportModal
+        isOpen={!!reportPostData}
+        onClose={() => setReportPostData(null)}
+        onSubmit={handleReport}
+        isSubmitting={isReporting}
+      />
     </div>
   );
 }

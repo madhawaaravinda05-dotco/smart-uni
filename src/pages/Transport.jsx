@@ -4,6 +4,7 @@ import { getActivePosts, reportPost, deletePost } from "../api/api";
 import { PageHeader, EmptyState, LoadingScreen } from "../components/ui";
 import { BusIcon, ClockIcon, MapPinIcon, SearchIcon, XIcon, FlagIcon } from "../components/Icons";
 import { useToast } from "../components/Toast";
+import ReportModal from "../components/ReportModal";
 
 export default function Transport() {
   const { user } = useAuth();
@@ -12,13 +13,22 @@ export default function Transport() {
   const [typeFilter, setTypeFilter] = useState("");
   const [expanded, setExpanded] = useState(null);
   
+  const [reportPostData, setReportPostData] = useState(null);
+  const [isReporting, setIsReporting] = useState(false);
+  
   const [routes, setRoutes] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const handleReport = async (id) => {
-    const res = await reportPost(id);
-    if (res.success) show("Thank you — this listing has been flagged for admin review.", "success");
-    else show(res.message, "error");
+  const handleReport = async (data) => {
+    setIsReporting(true);
+    const res = await reportPost(reportPostData.id, data);
+    setIsReporting(false);
+    if (res.success) {
+      show("Thank you — this listing has been flagged for admin review.", "success");
+      setReportPostData(null);
+    } else {
+      show(res.message, "error");
+    }
   };
 
   const handleDelete = async (id) => {
@@ -190,7 +200,7 @@ export default function Transport() {
                         <XIcon size={14} /> Delete
                       </button>
                     )}
-                    <button onClick={() => handleReport(r.id)} className="bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 font-bold py-2.5 px-4 rounded-xl flex items-center gap-1.5 transition-colors text-sm">
+                    <button onClick={() => setReportPostData(r)} className="bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 font-bold py-2.5 px-4 rounded-xl flex items-center gap-1.5 transition-colors text-sm">
                       <FlagIcon size={14} /> Report
                     </button>
                   </div>
@@ -200,6 +210,14 @@ export default function Transport() {
           ))}
         </div>
       )}
+
+      {/* ── Report Modal ── */}
+      <ReportModal
+        isOpen={!!reportPostData}
+        onClose={() => setReportPostData(null)}
+        onSubmit={handleReport}
+        isSubmitting={isReporting}
+      />
     </div>
   );
 }

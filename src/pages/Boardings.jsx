@@ -5,6 +5,7 @@ import { PageHeader, LoadingScreen, ErrorBox, EmptyState, Input, Select } from "
 import { HouseIcon, MapPinIcon, ShieldCheckIcon, FilterIcon, SearchIcon, FlagIcon, XIcon } from "../components/Icons";
 import { useToast } from "../components/Toast";
 import RatingModal from "../components/RatingModal";
+import ReportModal from "../components/ReportModal";
 
 const gradients = [
   "bg-gradient-to-br from-primary-400 to-primary-600",
@@ -25,6 +26,8 @@ export default function Boardings() {
   const [showFilters, setShowFilters] = useState(false);
   const [selected,    setSelected]    = useState(null);  // detail modal
   const [ratingPost,  setRatingPost]  = useState(null);  // rating modal
+  const [reportPostData, setReportPostData] = useState(null); // report modal
+  const [isReporting, setIsReporting] = useState(false);
   const [ratingIdx,   setRatingIdx]   = useState(0);
 
   // Optimistic ratings map: postId → { rating, count }
@@ -55,10 +58,16 @@ export default function Boardings() {
       return (a.distance || 0) - (b.distance || 0);
     });
 
-  const handleReport = async (id) => {
-    const res = await reportPost(id);
-    if (res.success) show("Thank you — this listing has been flagged for admin review.", "success");
-    else show(res.message, "error");
+  const handleReport = async (data) => {
+    setIsReporting(true);
+    const res = await reportPost(reportPostData._id || reportPostData.id, data);
+    setIsReporting(false);
+    if (res.success) {
+      show("Thank you — this listing has been flagged for admin review.", "success");
+      setReportPostData(null);
+    } else {
+      show(res.message, "error");
+    }
   };
 
   const handleDelete = async (id) => {
@@ -309,7 +318,7 @@ export default function Boardings() {
                       <XIcon size={16} />
                     </button>
                   )}
-                  <button onClick={() => { handleReport(selected.id || selected._id); setSelected(null); }} className="bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 font-bold py-3 px-4 rounded-xl flex items-center justify-center transition-all">
+                  <button onClick={() => { setReportPostData(selected); setSelected(null); }} className="bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 font-bold py-3 px-4 rounded-xl flex items-center justify-center transition-all">
                     <FlagIcon size={16} />
                   </button>
                 </div>
@@ -327,7 +336,13 @@ export default function Boardings() {
           onClose={() => setRatingPost(null)}
           onRated={(data) => { handleRated(ratingPost, data); setRatingPost(null); }}
         />
-      )}
+      {/* ── Report Modal ── */}
+      <ReportModal
+        isOpen={!!reportPostData}
+        onClose={() => setReportPostData(null)}
+        onSubmit={handleReport}
+        isSubmitting={isReporting}
+      />
     </div>
   );
 }
