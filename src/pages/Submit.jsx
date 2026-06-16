@@ -80,6 +80,7 @@ export default function Submit() {
   const [serverError, setServerError] = useState("");
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [showPayment, setShowPayment] = useState(false);
 
   const set = (k, v) => { setForm((f) => ({ ...f, [k]: v })); setErrors((e) => ({ ...e, [k]: "" })); };
   const toggleTag = (tag) => set("tags", form.tags.includes(tag) ? form.tags.filter((t) => t !== tag) : [...form.tags, tag]);
@@ -111,8 +112,8 @@ export default function Submit() {
     return e;
   };
 
-  const handleSubmit = async (ev) => {
-    ev.preventDefault();
+  const handleSubmit = async (ev, isPremium = false) => {
+    if (ev) ev.preventDefault();
     setServerError("");
     const e = validate();
     if (Object.keys(e).length) { setErrors(e); return; }
@@ -143,11 +144,19 @@ export default function Submit() {
       ...(category === "BOARDING" && { price: Number(form.price), genderType: form.genderType, hasKitchen: form.hasKitchen, contact: form.contact.trim() }),
       ...(category === "FOOD" && { priceRange: form.price, tags: form.tags }),
       ...(category === "TRANSPORT" && { routeNumber: form.routeNumber.trim(), fromLocation: form.from.trim(), toLocation: form.to.trim(), frequency: form.frequency.trim(), lastBus: form.lastBus.trim() }),
+      premium: isPremium,
     };
 
     const res = await createPost(payload);
     setLoading(false);
-    if (!res.success) { setServerError(res.message); return; }
+    if (!res.success) { 
+      if (res.message === "PAYMENT_REQUIRED") {
+        setShowPayment(true);
+        return;
+      }
+      setServerError(res.message); 
+      return; 
+    }
     setSubmitted(true);
   };
 
@@ -180,6 +189,30 @@ export default function Submit() {
       <PageHeader title="Add a new listing" subtitle="Help fellow students by sharing verified, accurate information." />
 
       {serverError && <div style={{ marginBottom: 20 }}><ErrorBox message={serverError} /></div>}
+
+      {/* Payment Modal */}
+      {showPayment && (
+        <div style={{ position: "fixed", inset: 0, zIndex: 9999, display: "flex", alignItems: "center", justifyContent: "center", padding: 20 }}>
+          <div style={{ position: "absolute", inset: 0, background: "rgba(15, 23, 42, 0.6)", backdropFilter: "blur(4px)" }} onClick={() => setShowPayment(false)} />
+          <div style={{ position: "relative", width: "100%", maxWidth: 420, background: "#fff", borderRadius: 24, padding: 32, boxShadow: "0 20px 40px rgba(0,0,0,0.1)", textAlign: "center" }}>
+            <div style={{ width: 64, height: 64, background: "#EEF2FF", border: "2px solid #C7D2FE", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 20px" }}>
+               <span style={{ fontSize: 28 }}>💎</span>
+            </div>
+            <h3 style={{ fontSize: 22, fontWeight: 800, color: "#0F172A", marginBottom: 12, tracking: "-0.5px" }}>Limit Reached</h3>
+            <p style={{ fontSize: 14.5, color: "#475569", lineHeight: 1.6, marginBottom: 24 }}>
+              You have already posted your 2 free listings. To publish this new listing, please upgrade to a Premium Post for Rs. 990.
+            </p>
+            <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+              <Button onClick={() => { setShowPayment(false); handleSubmit(null, true); }} style={{ width: "100%", background: "linear-gradient(to right, #1E3A8A, #3B82F6)" }}>
+                Pay Rs. 990 & Publish
+              </Button>
+              <Button variant="secondary" onClick={() => setShowPayment(false)} style={{ width: "100%" }}>
+                Maybe Later
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <form onSubmit={handleSubmit} noValidate>
 

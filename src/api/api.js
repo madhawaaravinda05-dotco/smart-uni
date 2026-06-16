@@ -18,7 +18,7 @@ const humanizeError = (error) => {
   const knownMessages = {
     400: serverMsg || "Some of the information you entered doesn't look right. Please review and try again.",
     401: "Your session has expired or your login details are incorrect. Please sign in again.",
-    403: "You don't have permission to do that. If you think this is a mistake, contact support.",
+    403: serverMsg === "PAYMENT_REQUIRED" ? "PAYMENT_REQUIRED" : "You don't have permission to do that. If you think this is a mistake, contact support.",
     404: "We couldn't find what you were looking for. It may have been removed or the link is incorrect.",
     409: serverMsg || "This item already exists. Please check for duplicates before submitting.",
     422: serverMsg || "Some required fields are missing or have invalid values. Please review your input.",
