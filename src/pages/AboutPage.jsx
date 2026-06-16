@@ -56,7 +56,17 @@ const TEAM_MEMBERS = [
     instagram: "https://www.instagram.com/_primeyohan?igsh=bjVhc3pkODRxd2w5%2F", 
     email: "mailto:yohanwimalasooriya0001@gmail.com" 
   },
-  { id: 5, name: "Student Five", role: "DevOps", image: "https://i.pravatar.cc/150?img=15", github: "#", linkedin: "#", instagram: "#", email: "mailto:student5@example.com" },
+  { 
+    id: 5, 
+    name: "Vikum Madhushanka", 
+    role: "Backend Developer", 
+    description: "A focused backend developer specializing in system logic and architecture.",
+    image: "/Vikum.jpeg", 
+    github: "https://github.com/Vikum-Madhushanka", 
+    linkedin: "#", 
+    instagram: "#", 
+    email: "mailto:vikumworkml@gmail.com" 
+  },
   { id: 6, name: "Student Six", role: "Project Manager", image: "https://i.pravatar.cc/150?img=16", github: "#", linkedin: "#", instagram: "#", email: "mailto:student6@example.com" },
   { id: 7, name: "Student Seven", role: "Fullstack Dev", image: "https://i.pravatar.cc/150?img=17", github: "#", linkedin: "#", instagram: "#", email: "mailto:student7@example.com" },
   { id: 8, name: "Student Eight", role: "Marketing", image: "https://i.pravatar.cc/150?img=18", github: "#", linkedin: "#", instagram: "#", email: "mailto:student8@example.com" },
