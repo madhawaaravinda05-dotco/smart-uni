@@ -67,7 +67,17 @@ const TEAM_MEMBERS = [
     instagram: "#", 
     email: "mailto:vikumworkml@gmail.com" 
   },
-  { id: 6, name: "Student Six", role: "Project Manager", image: "https://i.pravatar.cc/150?img=16", github: "#", linkedin: "#", instagram: "#", email: "mailto:student6@example.com" },
+  { 
+    id: 6, 
+    name: "Vihangi Pabasara", 
+    role: "Frontend Team Leader", 
+    description: "A brilliant frontend developer who leads the team in creating engaging user interfaces.",
+    image: "/vihagi.jpeg", 
+    github: "https://github.com/vpb03", 
+    linkedin: "https://www.linkedin.com/in/vihangipabasara?utm_source=share_via&utm_content=profile&utm_medium=member_ios", 
+    instagram: "https://www.instagram.com/vihangi_pabasara?igsh=aGFja2c2NWtienYw&utm_source=qr", 
+    email: "mailto:vpbrahmana@students.nsbm.ac.lk" 
+  },
   { id: 7, name: "Student Seven", role: "Fullstack Dev", image: "https://i.pravatar.cc/150?img=17", github: "#", linkedin: "#", instagram: "#", email: "mailto:student7@example.com" },
   { id: 8, name: "Student Eight", role: "Marketing", image: "https://i.pravatar.cc/150?img=18", github: "#", linkedin: "#", instagram: "#", email: "mailto:student8@example.com" },
   { id: 9, name: "Student Nine", role: "Support Lead", image: "https://i.pravatar.cc/150?img=19", github: "#", linkedin: "#", instagram: "#", email: "mailto:student9@example.com" },
