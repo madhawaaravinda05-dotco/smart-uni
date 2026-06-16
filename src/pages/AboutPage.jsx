@@ -17,7 +17,7 @@ const TEAM_MEMBERS = [
     name: "Madhawa Aravinda", 
     role: "Creator & Lead Developer", 
     description: "The visionary who conceptualized the idea and played a major role in developing the core system.",
-    image: "/madhawa_aravinda.jpg", 
+    image: "/madhawa_aravinda.jpeg", 
     github: "https://github.com/madhawaaravinda05-dotco/", 
     linkedin: "https://www.linkedin.com/in/madhawa-aravinda-ab4bb8319/", 
     instagram: "https://www.instagram.com/aravinda_molagoda/", 
