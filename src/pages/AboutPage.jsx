@@ -34,7 +34,17 @@ const TEAM_MEMBERS = [
     instagram: "https://www.instagram.com/sacheera_nimesh/", 
     email: "mailto:sacheeranimesh0513@gmail.com" 
   },
-  { id: 3, name: "Student Three", role: "UI/UX Designer", image: "https://i.pravatar.cc/150?img=13", github: "#", linkedin: "#", instagram: "#", email: "mailto:student3@example.com" },
+  { 
+    id: 3, 
+    name: "Chamath Jayasekara", 
+    role: "Backend Developer", 
+    description: "A talented backend developer dedicated to building robust and scalable systems.",
+    image: "/chamath_jayasekara.jpeg", 
+    github: "https://github.com/chamathjayasekara/", 
+    linkedin: "https://www.linkedin.com/in/chamath-jayasekara-a5241a324/", 
+    instagram: "https://www.instagram.com/chamath_frenzzy/", 
+    email: "mailto:chamathgayanasara2002@gmail.com" 
+  },
   { id: 4, name: "Student Four", role: "QA Engineer", image: "https://i.pravatar.cc/150?img=14", github: "#", linkedin: "#", instagram: "#", email: "mailto:student4@example.com" },
   { id: 5, name: "Student Five", role: "DevOps", image: "https://i.pravatar.cc/150?img=15", github: "#", linkedin: "#", instagram: "#", email: "mailto:student5@example.com" },
   { id: 6, name: "Student Six", role: "Project Manager", image: "https://i.pravatar.cc/150?img=16", github: "#", linkedin: "#", instagram: "#", email: "mailto:student6@example.com" },
