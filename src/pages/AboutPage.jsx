@@ -15,7 +15,7 @@ const TEAM_MEMBERS = [
   { 
     id: 1, 
     name: "Madhawa Aravinda", 
-    role: "Creator & Lead Developer", 
+    role: "Creator, Lead Developer & Fullstack Dev", 
     description: "The visionary who conceptualized the idea and played a major role in developing the core system.",
     image: "/madhawa_aravinda.jpeg", 
     github: "https://github.com/madhawaaravinda05-dotco/", 
