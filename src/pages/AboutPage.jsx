@@ -12,7 +12,17 @@ import {
 } from "../components/Icons";
 
 const TEAM_MEMBERS = [
-  { id: 1, name: "Student One", role: "Frontend Dev", image: "https://i.pravatar.cc/150?img=11", github: "#", linkedin: "#", instagram: "#", email: "mailto:student1@example.com" },
+  { 
+    id: 1, 
+    name: "Madhawa Aravinda", 
+    role: "Creator & Lead Developer", 
+    description: "The visionary who conceptualized the idea and played a major role in developing the core system.",
+    image: "/madhawa_aravinda.jpg", 
+    github: "https://github.com/madhawaaravinda05-dotco/", 
+    linkedin: "https://www.linkedin.com/in/madhawa-aravinda-ab4bb8319/", 
+    instagram: "https://www.instagram.com/aravinda_molagoda/", 
+    email: "mailto:madhawaaravinda05@gmail.com" 
+  },
   { id: 2, name: "Student Two", role: "Backend Dev", image: "https://i.pravatar.cc/150?img=12", github: "#", linkedin: "#", instagram: "#", email: "mailto:student2@example.com" },
   { id: 3, name: "Student Three", role: "UI/UX Designer", image: "https://i.pravatar.cc/150?img=13", github: "#", linkedin: "#", instagram: "#", email: "mailto:student3@example.com" },
   { id: 4, name: "Student Four", role: "QA Engineer", image: "https://i.pravatar.cc/150?img=14", github: "#", linkedin: "#", instagram: "#", email: "mailto:student4@example.com" },
@@ -106,7 +116,11 @@ export default function AboutPage() {
                 </div>
                 
                 <h3 className="text-xl font-black mb-1 relative z-10 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">{member.name}</h3>
-                <p className="text-sm font-semibold text-slate-500 dark:text-slate-400 mb-6 relative z-10 uppercase tracking-wide">{member.role}</p>
+                <p className="text-sm font-semibold text-slate-500 dark:text-slate-400 mb-4 relative z-10 uppercase tracking-wide">{member.role}</p>
+
+                {member.description && (
+                  <p className="text-sm text-slate-600 dark:text-slate-400 mb-6 relative z-10 px-2 italic">"{member.description}"</p>
+                )}
 
                 <div className="flex items-center gap-3 relative z-10 mt-auto">
                   <a href={member.github} target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:bg-slate-900 hover:text-white dark:hover:bg-white dark:hover:text-slate-900 transition-colors">
