@@ -78,7 +78,17 @@ const TEAM_MEMBERS = [
     instagram: "https://www.instagram.com/vihangi_pabasara?igsh=aGFja2c2NWtienYw&utm_source=qr", 
     email: "mailto:vpbrahmana@students.nsbm.ac.lk" 
   },
-  { id: 7, name: "Student Seven", role: "Fullstack Dev", image: "https://i.pravatar.cc/150?img=17", github: "#", linkedin: "#", instagram: "#", email: "mailto:student7@example.com" },
+  { 
+    id: 7, 
+    name: "Mandira Kalupahana", 
+    role: "Frontend Developer", 
+    description: "A creative frontend developer focused on crafting beautiful user experiences.",
+    image: "/mandira.png", 
+    github: "https://github.com/magawani", 
+    linkedin: "https://www.linkedin.com/in/mandira-kalupahana-a8aa45353?utm_source=share_via&utm_content=profile&utm_medium=member_android", 
+    instagram: "https://www.instagram.com/ag_avani?igsh=MWJtMHN1NHgxZ3h6ZQ==", 
+    email: "#" 
+  },
   { id: 8, name: "Student Eight", role: "Marketing", image: "https://i.pravatar.cc/150?img=18", github: "#", linkedin: "#", instagram: "#", email: "mailto:student8@example.com" },
   { id: 9, name: "Student Nine", role: "Support Lead", image: "https://i.pravatar.cc/150?img=19", github: "#", linkedin: "#", instagram: "#", email: "mailto:student9@example.com" },
 ];
