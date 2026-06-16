@@ -45,7 +45,17 @@ const TEAM_MEMBERS = [
     instagram: "https://www.instagram.com/chamath_frenzzy/", 
     email: "mailto:chamathgayanasara2002@gmail.com" 
   },
-  { id: 4, name: "Student Four", role: "QA Engineer", image: "https://i.pravatar.cc/150?img=14", github: "#", linkedin: "#", instagram: "#", email: "mailto:student4@example.com" },
+  { 
+    id: 4, 
+    name: "Yohan Wimalasooriya", 
+    role: "Backend Developer", 
+    description: "A passionate backend developer ensuring smooth operations behind the scenes.",
+    image: "/Yohan.jpeg", 
+    github: "https://github.com/YohanWimalasooriya/", 
+    linkedin: "https://www.linkedin.com/in/yohan-wimalasooriya-692690390?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app", 
+    instagram: "https://www.instagram.com/_primeyohan?igsh=bjVhc3pkODRxd2w5%2F", 
+    email: "mailto:yohanwimalasooriya0001@gmail.com" 
+  },
   { id: 5, name: "Student Five", role: "DevOps", image: "https://i.pravatar.cc/150?img=15", github: "#", linkedin: "#", instagram: "#", email: "mailto:student5@example.com" },
   { id: 6, name: "Student Six", role: "Project Manager", image: "https://i.pravatar.cc/150?img=16", github: "#", linkedin: "#", instagram: "#", email: "mailto:student6@example.com" },
   { id: 7, name: "Student Seven", role: "Fullstack Dev", image: "https://i.pravatar.cc/150?img=17", github: "#", linkedin: "#", instagram: "#", email: "mailto:student7@example.com" },
