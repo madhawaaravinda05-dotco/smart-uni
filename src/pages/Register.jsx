@@ -235,6 +235,14 @@ export default function Register({ isChild }) {
   const content = (
     <div className="w-full max-w-[420px]">
 
+      {!isChild && (
+        <div className="mb-6">
+          <button type="button" onClick={() => { setLeaving(true); setTimeout(() => navigate("/"), 360); }} className="inline-flex items-center gap-2 text-[13px] font-bold text-slate-500 hover:text-primary-600 transition-colors">
+            &larr; Back to Home
+          </button>
+        </div>
+      )}
+
       {/* step progress */}
           {step < 3 && (
             <div className="flex items-center gap-2 mb-6">

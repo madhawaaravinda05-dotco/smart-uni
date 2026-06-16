@@ -162,6 +162,14 @@ export default function Login({ isChild }) {
   const content = (
     <div className="w-full max-w-[400px]">
 
+      {!isChild && (
+        <div className="mb-6">
+          <button type="button" onClick={() => { setLeaving(true); setTimeout(() => navigate("/"), 360); }} className="inline-flex items-center gap-2 text-[13px] font-bold text-slate-500 hover:text-primary-600 transition-colors">
+            &larr; Back to Home
+          </button>
+        </div>
+      )}
+
       {/* heading */}
       <div className="mb-8">
         <div className="inline-flex items-center gap-2 bg-primary-50 dark:bg-primary-900/30 border border-primary-200 dark:border-primary-800 rounded-full px-3.5 py-1.5 mb-5 shadow-sm">
