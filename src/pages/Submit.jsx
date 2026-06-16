@@ -80,7 +80,7 @@ export default function Submit() {
   const [serverError, setServerError] = useState("");
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [showPayment, setShowPayment] = useState(false);
+  const [paymentStep, setPaymentStep] = useState("NONE"); // NONE, LIMIT_REACHED, CHECKOUT, PROCESSING, SUCCESS
 
   const set = (k, v) => { setForm((f) => ({ ...f, [k]: v })); setErrors((e) => ({ ...e, [k]: "" })); };
   const toggleTag = (tag) => set("tags", form.tags.includes(tag) ? form.tags.filter((t) => t !== tag) : [...form.tags, tag]);
@@ -151,7 +151,7 @@ export default function Submit() {
     setLoading(false);
     if (!res.success) { 
       if (res.message === "PAYMENT_REQUIRED") {
-        setShowPayment(true);
+        setPaymentStep("LIMIT_REACHED");
         return;
       }
       setServerError(res.message); 
@@ -190,27 +190,88 @@ export default function Submit() {
 
       {serverError && <div style={{ marginBottom: 20 }}><ErrorBox message={serverError} /></div>}
 
-      {/* Payment Modal */}
-      {showPayment && (
+      {/* Payment Sandbox Flow */}
+      {paymentStep !== "NONE" && (
         <div style={{ position: "fixed", inset: 0, zIndex: 9999, display: "flex", alignItems: "center", justifyContent: "center", padding: 20 }}>
-          <div style={{ position: "absolute", inset: 0, background: "rgba(15, 23, 42, 0.6)", backdropFilter: "blur(4px)" }} onClick={() => setShowPayment(false)} />
-          <div style={{ position: "relative", width: "100%", maxWidth: 420, background: "#fff", borderRadius: 24, padding: 32, boxShadow: "0 20px 40px rgba(0,0,0,0.1)", textAlign: "center" }}>
-            <div style={{ width: 64, height: 64, background: "#EEF2FF", border: "2px solid #C7D2FE", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 20px" }}>
-               <span style={{ fontSize: 28 }}>💎</span>
+          <div style={{ position: "absolute", inset: 0, background: "rgba(15, 23, 42, 0.6)", backdropFilter: "blur(4px)" }} onClick={() => paymentStep !== 'PROCESSING' && setPaymentStep("NONE")} />
+          
+          {/* STEP 1: Limit Reached */}
+          {paymentStep === "LIMIT_REACHED" && (
+            <div style={{ position: "relative", width: "100%", maxWidth: 420, background: "#fff", borderRadius: 24, padding: 32, boxShadow: "0 20px 40px rgba(0,0,0,0.1)", textAlign: "center" }}>
+              <div style={{ width: 64, height: 64, background: "#EEF2FF", border: "2px solid #C7D2FE", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 20px" }}>
+                 <span style={{ fontSize: 28 }}>💎</span>
+              </div>
+              <h3 style={{ fontSize: 22, fontWeight: 800, color: "#0F172A", marginBottom: 12, tracking: "-0.5px" }}>Limit Reached</h3>
+              <p style={{ fontSize: 14.5, color: "#475569", lineHeight: 1.6, marginBottom: 24 }}>
+                You have already posted your 2 free lifetime listings. To publish this new listing, please upgrade to a Premium Post for Rs. 990.
+              </p>
+              <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                <Button onClick={() => setPaymentStep("CHECKOUT")} style={{ width: "100%", background: "linear-gradient(to right, #1E3A8A, #3B82F6)" }}>
+                  Pay Rs. 990 & Publish
+                </Button>
+                <Button variant="secondary" onClick={() => setPaymentStep("NONE")} style={{ width: "100%" }}>
+                  Maybe Later
+                </Button>
+              </div>
             </div>
-            <h3 style={{ fontSize: 22, fontWeight: 800, color: "#0F172A", marginBottom: 12, tracking: "-0.5px" }}>Limit Reached</h3>
-            <p style={{ fontSize: 14.5, color: "#475569", lineHeight: 1.6, marginBottom: 24 }}>
-              You have already posted your 2 free listings. To publish this new listing, please upgrade to a Premium Post for Rs. 990.
-            </p>
-            <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-              <Button onClick={() => { setShowPayment(false); handleSubmit(null, true); }} style={{ width: "100%", background: "linear-gradient(to right, #1E3A8A, #3B82F6)" }}>
-                Pay Rs. 990 & Publish
-              </Button>
-              <Button variant="secondary" onClick={() => setShowPayment(false)} style={{ width: "100%" }}>
-                Maybe Later
-              </Button>
+          )}
+
+          {/* STEP 2: Checkout Sandbox */}
+          {paymentStep === "CHECKOUT" && (
+            <div style={{ position: "relative", width: "100%", maxWidth: 400, background: "#fff", borderRadius: 20, padding: 28, boxShadow: "0 20px 40px rgba(0,0,0,0.15)" }}>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 20 }}>
+                <h3 style={{ fontSize: 18, fontWeight: 800, color: "#0F172A" }}>Payment Details</h3>
+                <span style={{ fontSize: 10, background: "#F1F5F9", color: "#64748B", padding: "4px 8px", borderRadius: 6, fontWeight: 700 }}>TEST SANDBOX</span>
+              </div>
+              <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+                <Input label="Name on Card" placeholder="e.g. John Doe" />
+                <Input label="Card Number" placeholder="0000 0000 0000 0000" maxLength={19} />
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
+                  <Input label="Expiry (MM/YY)" placeholder="MM/YY" maxLength={5} />
+                  <Input label="CVC" placeholder="123" type="password" maxLength={3} />
+                </div>
+              </div>
+              <div style={{ display: "flex", flexDirection: "column", gap: 12, marginTop: 24 }}>
+                <Button onClick={() => {
+                  setPaymentStep("PROCESSING");
+                  setTimeout(() => {
+                    setPaymentStep("SUCCESS");
+                    setTimeout(() => {
+                      setPaymentStep("NONE");
+                      handleSubmit(null, true);
+                    }, 1500);
+                  }, 2000);
+                }} style={{ width: "100%", background: "#16A34A" }}>
+                  Pay Rs. 990 Securely
+                </Button>
+                <Button variant="secondary" onClick={() => setPaymentStep("NONE")} style={{ width: "100%" }}>
+                  Cancel
+                </Button>
+              </div>
             </div>
-          </div>
+          )}
+
+          {/* STEP 3 & 4: Processing / Success */}
+          {(paymentStep === "PROCESSING" || paymentStep === "SUCCESS") && (
+            <div style={{ position: "relative", width: "100%", maxWidth: 320, background: "#fff", borderRadius: 20, padding: 32, textAlign: "center", boxShadow: "0 20px 40px rgba(0,0,0,0.15)" }}>
+              {paymentStep === "PROCESSING" ? (
+                <>
+                  <div style={{ width: 50, height: 50, border: "4px solid #E2E8F0", borderTopColor: "#3B82F6", borderRadius: "50%", margin: "0 auto 16px", animation: "spin 1s linear infinite" }} />
+                  <h3 style={{ fontSize: 16, fontWeight: 700, color: "#0F172A" }}>Processing Payment...</h3>
+                  <p style={{ fontSize: 13, color: "#64748B", marginTop: 8 }}>Please do not close this window.</p>
+                  <style>{`@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }`}</style>
+                </>
+              ) : (
+                <>
+                  <div style={{ width: 60, height: 60, background: "#DCFCE7", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px" }}>
+                    <CheckIcon size={30} color="#16A34A" strokeWidth={3} />
+                  </div>
+                  <h3 style={{ fontSize: 18, fontWeight: 800, color: "#16A34A" }}>Payment Successful!</h3>
+                  <p style={{ fontSize: 13, color: "#475569", marginTop: 8 }}>Publishing your premium listing...</p>
+                </>
+              )}
+            </div>
+          )}
         </div>
       )}
 
