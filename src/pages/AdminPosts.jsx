@@ -87,14 +87,14 @@ export default function AdminPosts() {
     }
 
     if (status === "APPROVED") {
-      const approvedPost = pendingPosts.find(p => p._id === id);
+      const approvedPost = pendingPosts.find(p => p.id === id);
       if(approvedPost) {
         approvedPost.status = "APPROVED";
-        setPendingPosts(prev => prev.filter(p => p._id !== id));
+        setPendingPosts(prev => prev.filter(p => p.id !== id));
         setActivePosts(prev => [approvedPost, ...prev]);
       }
     } else {
-       setPendingPosts(prev => prev.filter(p => p._id !== id));
+       setPendingPosts(prev => prev.filter(p => p.id !== id));
     }
     
     setSelected(null);
@@ -123,8 +123,8 @@ export default function AdminPosts() {
           return;
         }
         
-        setActivePosts((prev) => prev.filter((p) => p._id !== id));
-        setPendingPosts((prev) => prev.filter((p) => p._id !== id));
+        setActivePosts((prev) => prev.filter((p) => p.id !== id));
+        setPendingPosts((prev) => prev.filter((p) => p.id !== id));
         setSelected(null);
         show("Listing deleted successfully.", "success");
         setConfirmModal({ isOpen: false });
@@ -226,7 +226,7 @@ export default function AdminPosts() {
             });
 
             return (
-              <Card key={post._id} style={{ overflow: "hidden" }}>
+              <Card key={post.id} style={{ overflow: "hidden" }}>
                 <div
                   style={{
                     padding: "16px 20px",
@@ -384,7 +384,7 @@ export default function AdminPosts() {
                       size="sm"
                       variant="ghost"
                       onClick={() =>
-                        setSelected(selected?._id === post._id ? null : post)
+                        setSelected(selected?.id === post.id ? null : post)
                       }
                       style={{ color: "#64748B", fontSize: 12 }}
                     >
@@ -395,16 +395,16 @@ export default function AdminPosts() {
                         <Button
                           size="sm"
                           variant="danger"
-                          loading={actionLoading === post._id + "REJECTED"}
-                          onClick={() => handleAction(post._id, "REJECTED")}
+                          loading={actionLoading === post.id + "REJECTED"}
+                          onClick={() => handleAction(post.id, "REJECTED")}
                         >
                           <XIcon size={12} /> Reject
                         </Button>
                         <Button
                           size="sm"
                           variant="success"
-                          loading={actionLoading === post._id + "APPROVED"}
-                          onClick={() => handleAction(post._id, "APPROVED")}
+                          loading={actionLoading === post.id + "APPROVED"}
+                          onClick={() => handleAction(post.id, "APPROVED")}
                         >
                           <CheckIcon size={12} /> Approve
                         </Button>
@@ -413,8 +413,8 @@ export default function AdminPosts() {
                       <Button
                         size="sm"
                         variant="danger"
-                        loading={actionLoading === post._id + "DELETE"}
-                        onClick={() => handleDelete(post._id)}
+                        loading={actionLoading === post.id + "DELETE"}
+                        onClick={() => handleDelete(post.id)}
                       >
                         <XIcon size={12} /> Delete
                       </Button>
@@ -423,7 +423,7 @@ export default function AdminPosts() {
                 </div>
 
                 {/* Expanded detail */}
-                {selected?._id === post._id && (
+                {selected?.id === post.id && (
                   <div
                     style={{
                       borderTop: "1px solid #F1F5F9",
