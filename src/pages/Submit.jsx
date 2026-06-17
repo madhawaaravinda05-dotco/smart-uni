@@ -218,35 +218,53 @@ export default function Submit() {
 
           {/* STEP 2: Checkout Sandbox */}
           {paymentStep === "CHECKOUT" && (
-            <div style={{ position: "relative", width: "100%", maxWidth: 400, background: "#fff", borderRadius: 20, padding: 28, boxShadow: "0 20px 40px rgba(0,0,0,0.15)" }}>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 20 }}>
-                <h3 style={{ fontSize: 18, fontWeight: 800, color: "#0F172A" }}>Payment Details</h3>
-                <span style={{ fontSize: 10, background: "#F1F5F9", color: "#64748B", padding: "4px 8px", borderRadius: 6, fontWeight: 700 }}>TEST SANDBOX</span>
-              </div>
-              <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-                <Input label="Name on Card" placeholder="e.g. John Doe" />
-                <Input label="Card Number" placeholder="0000 0000 0000 0000" maxLength={19} />
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
-                  <Input label="Expiry (MM/YY)" placeholder="MM/YY" maxLength={5} />
-                  <Input label="CVC" placeholder="123" type="password" maxLength={3} />
+            <div style={{ position: "relative", width: "100%", maxWidth: 720, background: "#fff", borderRadius: 24, overflow: "hidden", display: "flex", flexWrap: "wrap", boxShadow: "0 25px 50px -12px rgba(0,0,0,0.25)" }}>
+              {/* Order Summary */}
+              <div style={{ flex: "1 1 250px", background: "linear-gradient(135deg, #1E3A8A, #3B82F6)", padding: "40px 32px", color: "white", display: "flex", flexDirection: "column", justifyContent: "space-between", textAlign: "left" }}>
+                <div>
+                  <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 20 }}>
+                    <div style={{ width: 32, height: 32, background: "rgba(255,255,255,0.2)", borderRadius: 8, display: "flex", alignItems: "center", justifyContent: "center" }}>💎</div>
+                    <span style={{ fontSize: 13, fontWeight: 700, letterSpacing: 1, textTransform: "uppercase", opacity: 0.9 }}>Premium Listing</span>
+                  </div>
+                  <h2 style={{ fontSize: 36, fontWeight: 800, marginBottom: 8, letterSpacing: "-1px" }}>Rs. 990</h2>
+                  <p style={{ fontSize: 14, opacity: 0.85, lineHeight: 1.6 }}>Unlock unlimited reach and bypass the free post limits to get your listing live immediately.</p>
+                </div>
+                <div style={{ marginTop: 40, display: "flex", alignItems: "center", gap: 8, opacity: 0.7, fontSize: 12.5, fontWeight: 500 }}>
+                  <ShieldCheckIcon size={16} /> 256-bit SSL Secure Checkout
                 </div>
               </div>
-              <div style={{ display: "flex", flexDirection: "column", gap: 12, marginTop: 24 }}>
-                <Button onClick={() => {
-                  setPaymentStep("PROCESSING");
-                  setTimeout(() => {
-                    setPaymentStep("SUCCESS");
+              
+              {/* Payment Details */}
+              <div style={{ flex: "2 1 350px", padding: "40px 32px", background: "#fff", textAlign: "left" }}>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 28 }}>
+                  <h3 style={{ fontSize: 20, fontWeight: 800, color: "#0F172A" }}>Payment Details</h3>
+                  <span style={{ fontSize: 11, background: "#F8FAFC", color: "#64748B", padding: "6px 10px", borderRadius: 8, fontWeight: 700, border: "1px solid #E2E8F0" }}>TEST SANDBOX</span>
+                </div>
+                
+                <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+                  <Input label="Name on Card" placeholder="e.g. John Doe" />
+                  <Input label="Card Number" placeholder="0000 0000 0000 0000" maxLength={19} />
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+                    <Input label="Expiry (MM/YY)" placeholder="MM/YY" maxLength={5} />
+                    <Input label="CVC" placeholder="123" type="password" maxLength={3} />
+                  </div>
+                </div>
+
+                <div style={{ display: "flex", gap: 12, marginTop: 32 }}>
+                  <Button variant="secondary" onClick={() => setPaymentStep("NONE")} style={{ flex: 1, padding: "14px 0", fontSize: 15, justifyContent: "center" }}>Cancel</Button>
+                  <Button onClick={() => {
+                    setPaymentStep("PROCESSING");
                     setTimeout(() => {
-                      setPaymentStep("NONE");
-                      handleSubmit(null, true);
-                    }, 1500);
-                  }, 2000);
-                }} style={{ width: "100%", background: "#16A34A" }}>
-                  Pay Rs. 990 Securely
-                </Button>
-                <Button variant="secondary" onClick={() => setPaymentStep("NONE")} style={{ width: "100%" }}>
-                  Cancel
-                </Button>
+                      setPaymentStep("SUCCESS");
+                      setTimeout(() => {
+                        setPaymentStep("NONE");
+                        handleSubmit(null, true);
+                      }, 1500);
+                    }, 2000);
+                  }} style={{ flex: 2, background: "#16A34A", padding: "14px 0", fontSize: 15, justifyContent: "center", boxShadow: "0 4px 14px rgba(22, 163, 74, 0.3)" }}>
+                    Pay Rs. 990 Securely
+                  </Button>
+                </div>
               </div>
             </div>
           )}
