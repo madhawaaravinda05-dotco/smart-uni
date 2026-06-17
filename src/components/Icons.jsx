@@ -61,79 +61,35 @@ export const InstagramIcon = (p) => <Icon {...p}><rect x="2" y="2" width="20" he
 export const ZapIcon = (p) => <Icon {...p}><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></Icon>;
 export const CoffeeIcon = (p) => <Icon {...p}><path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><line x1="6" y1="2" x2="6" y2="4"/><line x1="10" y1="2" x2="10" y2="4"/><line x1="14" y1="2" x2="14" y2="4"/></Icon>;
 
-export function SucLogoIcon({ size = 40, className = "" }) {
+export function UnifyLogoIcon({ size = 40, className = "" }) {
   return (
     <svg width={size} height={size} viewBox="0 0 120 120" fill="none" className={className} xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <linearGradient id="shield-bg" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#243b61" />
-          <stop offset="100%" stopColor="#121e33" />
+        <linearGradient id="unify-grad-1" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#8B5CF6" />
+          <stop offset="100%" stopColor="#3B82F6" />
         </linearGradient>
-        <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#FDE68A" />
-          <stop offset="20%" stopColor="#FCD34D" />
-          <stop offset="50%" stopColor="#B45309" />
-          <stop offset="80%" stopColor="#FCD34D" />
-          <stop offset="100%" stopColor="#92400E" />
+        <linearGradient id="unify-grad-2" x1="100%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stopColor="#EC4899" />
+          <stop offset="100%" stopColor="#8B5CF6" />
         </linearGradient>
-        <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
-          <feDropShadow dx="0" dy="4" stdDeviation="4" floodColor="#000000" floodOpacity="0.4" />
+        <filter id="unify-glow" x="-20%" y="-20%" width="140%" height="140%">
+          <feDropShadow dx="0" dy="4" stdDeviation="6" floodColor="#8B5CF6" floodOpacity="0.4" />
         </filter>
       </defs>
 
-      {/* Shield Shape */}
-      <path d="M 60 10 C 60 10 100 15 100 35 V 75 C 100 95 60 115 60 115 C 60 115 20 95 20 75 V 35 C 20 15 60 10 60 10 Z" fill="url(#shield-bg)" stroke="url(#gold)" strokeWidth="2.5" filter="url(#shadow)" />
-      
-      {/* Outer Ring */}
-      <circle cx="60" cy="60" r="28" fill="none" stroke="url(#gold)" strokeWidth="2" />
-      
-      {/* Inner Ring */}
-      <circle cx="60" cy="60" r="22" fill="none" stroke="url(#gold)" strokeWidth="1.5" />
-      
-      {/* Compass Points */}
-      <path d="M 60 15 L 64 38 L 60 35 L 56 38 Z" fill="url(#gold)" />
-      <path d="M 60 105 L 64 82 L 60 85 L 56 82 Z" fill="url(#gold)" />
-      <path d="M 105 60 L 82 56 L 85 60 L 82 64 Z" fill="url(#gold)" />
-      <path d="M 15 60 L 38 56 L 35 60 L 38 64 Z" fill="url(#gold)" />
-      
-      <path d="M 80 40 L 72 45 L 70 42 Z" fill="url(#gold)" />
-      <path d="M 40 40 L 48 45 L 50 42 Z" fill="url(#gold)" />
-      <path d="M 80 80 L 72 75 L 70 78 Z" fill="url(#gold)" />
-      <path d="M 40 80 L 48 75 L 50 78 Z" fill="url(#gold)" />
+      {/* Hexagon Base */}
+      <path d="M60 10 L105 32.5 L105 87.5 L60 110 L15 87.5 L15 32.5 Z" fill="url(#unify-grad-1)" filter="url(#unify-glow)" />
 
-      {/* UC Text */}
-      <text x="60" y="70" fontSize="30" fontWeight="900" fontFamily="Inter, system-ui, sans-serif" fill="url(#gold)" textAnchor="middle" letterSpacing="-1">UC</text>
-      
-      {/* Top Left: Book */}
-      <g stroke="url(#gold)" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" transform="translate(26, 26)">
-        <path d="M 0 3 C 2 1 5 1 7 3 V 11 C 5 9 2 9 0 11 Z" />
-        <path d="M 14 3 C 12 1 9 1 7 3 V 11 C 9 9 12 9 14 11 Z" />
-      </g>
+      {/* Inner Hexagon layer */}
+      <path d="M60 20 L95 40 L95 80 L60 100 L25 80 L25 40 Z" fill="#ffffff" opacity="0.1" />
 
-      {/* Top Right: Chart */}
-      <g stroke="url(#gold)" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" transform="translate(80, 26)">
-        <circle cx="2" cy="11" r="1" />
-        <circle cx="7" cy="6" r="1" />
-        <circle cx="12" cy="1" r="1" />
-        <path d="M 3 10 L 6 7" />
-        <path d="M 8 5 L 11 2" />
-      </g>
+      {/* Abstract 'U' Shape - intertwined arcs */}
+      <path d="M35 45 C35 85 85 85 85 45" stroke="url(#unify-grad-2)" strokeWidth="12" strokeLinecap="round" />
+      <path d="M50 40 C50 70 70 70 70 40" stroke="#ffffff" strokeWidth="8" strokeLinecap="round" opacity="0.9" />
 
-      {/* Bottom Left: Pillar */}
-      <g stroke="url(#gold)" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" transform="translate(27, 81)">
-        <path d="M 1 2 H 11" />
-        <path d="M 2 2 V 10" />
-        <path d="M 6 2 V 10" />
-        <path d="M 10 2 V 10" />
-        <path d="M 0 10 H 12" />
-      </g>
-
-      {/* Bottom Right: Field */}
-      <g stroke="url(#gold)" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" transform="translate(79, 83)">
-        <rect x="0" y="0" width="14" height="9" rx="1" />
-        <path d="M 7 0 V 9" />
-        <circle cx="7" cy="4.5" r="2" />
-      </g>
+      {/* Center dot/connection point */}
+      <circle cx="60" cy="72" r="6" fill="#ffffff" />
     </svg>
   );
 }

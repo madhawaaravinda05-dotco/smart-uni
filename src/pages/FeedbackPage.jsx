@@ -51,7 +51,7 @@ export default function FeedbackPage() {
 
       {/* Footer */}
       <footer className="bg-slate-900 text-slate-400 py-12 border-t border-slate-800 text-center">
-        <p>© 2026 UniCompanion. All rights reserved.</p>
+        <p>© 2026 Unify. All rights reserved.</p>
       </footer>
     </div>
   );

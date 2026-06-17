@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useAuth } from "../context/AuthContext";
-import { SucLogoIcon } from "./Icons";
+import { UnifyLogoIcon } from "./Icons";
 
 export default function PublicNavbar({ transparentOnTop = false }) {
   const { user, isMasterAdmin, isAdmin } = useAuth();
@@ -54,9 +54,9 @@ export default function PublicNavbar({ transparentOnTop = false }) {
         {/* Logo & Links */}
         <div className="flex items-center gap-10">
           <Link to="/" className="flex items-center gap-3">
-            <SucLogoIcon size={32} className={isDarkBg ? "text-white" : "text-primary-600 dark:text-primary-400"} />
+            <UnifyLogoIcon size={32} className={isDarkBg ? "text-white" : "text-primary-600 dark:text-primary-400"} />
             <span className={`text-xl font-black tracking-tight hidden sm:block ${isDarkBg ? 'text-white' : 'text-slate-900 dark:text-white'}`}>
-              UniCompanion
+              Unify
             </span>
           </Link>
 

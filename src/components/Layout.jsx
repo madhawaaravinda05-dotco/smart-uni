@@ -6,7 +6,7 @@ import {
   HomeIcon, MapIcon, UserIcon, LogOutIcon, BusIcon, FoodIcon,
   HouseIcon, PlusIcon, BuildingIcon, ShieldCheckIcon, MenuIcon,
   XIcon, BellIcon, MapPinIcon, CheckIcon, AlertTriangleIcon,
-  InfoIcon, SparkleIcon, SunIcon, MoonIcon, SucLogoIcon
+  InfoIcon, SparkleIcon, SunIcon, MoonIcon, UnifyLogoIcon
 } from "./Icons";
 
 const studentNav = [
@@ -181,7 +181,7 @@ export default function Layout({ children }) {
   const roleLabel = isMasterAdmin ? "Master Admin" : isAdmin ? "Campus Admin" : "Student";
   const uniLabel  = isMasterAdmin ? "All Universities" : (user?.university || "University");
   const areaLabel = isMasterAdmin ? "Global Platform"  : (user?.area       || "Campus");
-  const pageTitle = PAGE_TITLES[location.pathname] || "UniCompanion";
+  const pageTitle = PAGE_TITLES[location.pathname] || "Unify";
 
   const openNotif = useCallback(() => {
     if (bellRef.current) setBellRect(bellRef.current.getBoundingClientRect());
@@ -200,12 +200,12 @@ export default function Layout({ children }) {
 
         <div className={`flex items-center shrink-0 min-h-[70px] border-b border-white/10 relative z-10 transition-all duration-300 ${collapsed ? 'justify-center py-4 px-0' : 'justify-start py-5 px-4 gap-2.5'}`}>
           <div className="flex items-center justify-center shrink-0 text-primary-400">
-            <SucLogoIcon size={collapsed ? 36 : 40} />
+            <UnifyLogoIcon size={collapsed ? 36 : 40} />
           </div>
           {!collapsed && (
             <div className="flex-1 overflow-hidden ml-1">
-              <div className="text-base font-black text-white tracking-tight">UniCompanion</div>
-              <div className="text-[9px] text-white/50 tracking-[1.2px] uppercase mt-0.5">Smart Campus</div>
+              <div className="text-base font-black text-white tracking-tight">Unify</div>
+              <div className="text-[9px] text-white/50 tracking-[1.2px] uppercase mt-0.5">Platform</div>
             </div>
           )}
           <button onClick={() => setCollapsed(c => !c)} className={`w-7 h-7 rounded-lg shrink-0 bg-white/10 border border-white/20 flex items-center justify-center text-white/70 hover:text-white hover:bg-white/20 transition-all ${collapsed ? 'mt-2' : 'ml-auto'}`}>

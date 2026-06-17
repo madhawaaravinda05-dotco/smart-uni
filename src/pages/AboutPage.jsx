@@ -134,7 +134,7 @@ export default function AboutPage() {
                 Finding a good boarding place, knowing the best local food spots, and figuring out the quickest bus routes shouldn't be a hassle. 
               </p>
               <p className="text-lg text-slate-600 dark:text-slate-400 mb-8 leading-relaxed">
-                UniCompanion centralizes this information. We empower senior students to act as Campus Admins, verifying and maintaining a pristine directory of resources specific to their university, ensuring new students have a seamless transition into campus life.
+                Unify centralizes this information. We empower senior students to act as Campus Admins, verifying and maintaining a pristine directory of resources specific to their university, ensuring new students have a seamless transition into campus life.
               </p>
               
               <div className="grid grid-cols-2 gap-6">
@@ -174,7 +174,7 @@ export default function AboutPage() {
           <div className="text-center mb-16">
             <h2 className="text-4xl font-black mb-4">Meet Our Team</h2>
             <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
-              The passionate minds behind UniCompanion. We are a dedicated group of 9 students striving to make university life better for everyone.
+              The passionate minds behind Unify. We are a dedicated group of 9 students striving to make university life better for everyone.
             </p>
           </div>
 
@@ -224,7 +224,7 @@ export default function AboutPage() {
 
       {/* Footer */}
       <footer className="bg-slate-900 text-slate-400 py-12 border-t border-slate-800 text-center">
-        <p>© 2026 UniCompanion. All rights reserved.</p>
+        <p>© 2026 Unify. All rights reserved.</p>
       </footer>
     </div>
   );

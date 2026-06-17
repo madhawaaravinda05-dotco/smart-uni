@@ -78,7 +78,7 @@ export default function LandingPage() {
       <section className="py-16 bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 relative z-20">
         <div className="max-w-7xl mx-auto px-6 text-center">
           <p className="text-sm font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-8">
-            Campuses using UniCompanion
+            Campuses using Unify
           </p>
           <div className="flex flex-wrap justify-center items-center gap-10 md:gap-20 opacity-70 grayscale hover:grayscale-0 transition-all duration-500">
             <img src="/logo_uoc.png" alt="University of Colombo" className="h-16 md:h-20 object-contain drop-shadow-sm hover:scale-110 transition-transform" />
@@ -129,7 +129,7 @@ export default function LandingPage() {
 
       {/* Footer */}
       <footer className="bg-slate-900 text-slate-400 py-12 text-center">
-        <p>© 2026 UniCompanion. All rights reserved.</p>
+        <p>© 2026 Unify. All rights reserved.</p>
       </footer>
     </div>
   );

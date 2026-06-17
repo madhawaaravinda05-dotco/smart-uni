@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { loginUser } from "../api/api";
-import { MailIcon, LockIcon, EyeIcon, EyeOffIcon, UserIcon, ShieldCheckIcon, BuildingIcon } from "../components/Icons";
+import { MailIcon, LockIcon, EyeIcon, EyeOffIcon, UserIcon, ShieldCheckIcon, BuildingIcon, UnifyLogoIcon } from "../components/Icons";
 
 /* ─── shared tiny components ───────────────────────────────────────────────── */
 function PInput({ label, error, icon, suffix, ...p }) {
@@ -80,14 +80,10 @@ function LeftPanel() {
       {/* brand */}
       <div className="flex items-center gap-3 mt-0 mb-auto relative z-10">
         <div className="w-11 h-11 rounded-xl bg-white/20 border border-white/30 flex items-center justify-center backdrop-blur-md">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5z"/>
-            <path d="M5 3l.75 2.25L8 6l-2.25.75L5 9l-.75-2.25L2 6l2.25-.75z"/>
-            <path d="M19 13l.75 2.25L22 16l-2.25.75L19 19l-.75-2.25L16 16l2.25-.75z"/>
-          </svg>
+          <UnifyLogoIcon size={24} />
         </div>
         <div>
-          <div className="text-[17px] font-black text-white tracking-tight leading-none mb-1">Smart UniCompanion</div>
+          <div className="text-[17px] font-black text-white tracking-tight leading-none mb-1">Unify</div>
           <div className="text-[10px] font-bold text-white/50 tracking-[0.8px] uppercase">Campus Life Platform</div>
         </div>
       </div>
@@ -178,7 +174,7 @@ export default function Login({ isChild }) {
         </div>
             <h2 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight leading-tight mb-2">Welcome back</h2>
             <p className="text-[13.5px] text-slate-500 font-medium">
-              Sign in to your UniCompanion account
+              Sign in to your Unify account
             </p>
           </div>
 
