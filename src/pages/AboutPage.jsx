@@ -89,7 +89,17 @@ const TEAM_MEMBERS = [
     instagram: "https://www.instagram.com/ag_avani?igsh=MWJtMHN1NHgxZ3h6ZQ==", 
     email: "#" 
   },
-  { id: 8, name: "Student Eight", role: "Marketing", image: "https://i.pravatar.cc/150?img=18", github: "#", linkedin: "#", instagram: "#", email: "mailto:student8@example.com" },
+  { 
+    id: 8, 
+    name: "Shamila Sewmini", 
+    role: "Frontend Developer", 
+    description: "A talented frontend developer passionate about building interactive and user-friendly interfaces.",
+    image: "/shamil.jpeg", 
+    github: "https://github.com/ShamilaS2", 
+    linkedin: "https://www.linkedin.com/in/shamila-sewmini-3a868632a", 
+    instagram: "#", 
+    email: "mailto:shamilasewmini2004@gmail.com" 
+  },
   { id: 9, name: "Student Nine", role: "Support Lead", image: "https://i.pravatar.cc/150?img=19", github: "#", linkedin: "#", instagram: "#", email: "mailto:student9@example.com" },
 ];
 
