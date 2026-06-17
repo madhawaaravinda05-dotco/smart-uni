@@ -100,7 +100,17 @@ const TEAM_MEMBERS = [
     instagram: "#", 
     email: "mailto:shamilasewmini2004@gmail.com" 
   },
-  { id: 9, name: "Student Nine", role: "Support Lead", image: "https://i.pravatar.cc/150?img=19", github: "#", linkedin: "#", instagram: "#", email: "mailto:student9@example.com" },
+  { 
+    id: 9, 
+    name: "Sachira Kavindu", 
+    role: "Frontend Developer", 
+    description: "A skilled frontend developer who brings ideas to life with clean, modern code.",
+    image: "/sachirakavindu.jpeg", 
+    github: "https://github.com/SachiraK7", 
+    linkedin: "https://www.linkedin.com/in/sachira-kavindu-169a17387", 
+    instagram: "https://www.instagram.com/sachirakavindu/", 
+    email: "mailto:sachirakavindu7@gmail.com" 
+  }
 ];
 
 export default function AboutPage() {
