@@ -4,7 +4,7 @@ import { useAuth } from "../context/AuthContext";
 import { createPost, uploadPostImages } from "../api/api";
 import { Button, Input, Select, PageHeader, ErrorBox } from "../components/ui";
 import { useToast } from "../components/Toast";
-import { HouseIcon, FoodIcon, BusIcon, MapPinIcon, CheckIcon, XIcon, ImageIcon, UploadIcon, TrashIcon } from "../components/Icons";
+import { HouseIcon, FoodIcon, BusIcon, MapPinIcon, CheckIcon, XIcon, ImageIcon, UploadIcon, TrashIcon, ShieldCheckIcon } from "../components/Icons";
 import MapPicker from "../components/MapPicker";
 
 // University centre coordinates for the map default view
