@@ -1,6 +1,7 @@
 import { useLocation } from "react-router-dom";
 import Login from "./Login";
 import Register from "./Register";
+import { UnifyLogoIcon } from "../components/Icons";
 
 export default function Auth() {
   const location = useLocation();
@@ -29,13 +30,10 @@ export default function Auth() {
         {/* brand */}
         <div className="flex items-center gap-3 relative z-10 mb-auto">
           <div className="w-10 h-10 rounded-xl bg-white/20 border border-white/30 flex items-center justify-center backdrop-blur-md">
-            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5z"/>
-              <path d="M5 3l.75 2.25L8 6l-2.25.75L5 9l-.75-2.25L2 6l2.25-.75z"/>
-            </svg>
+            <UnifyLogoIcon size={20} />
           </div>
           <div>
-            <div className="text-[15px] font-black text-white tracking-tight leading-none mb-1">Smart UniCompanion</div>
+            <div className="text-[15px] font-black text-white tracking-tight leading-none mb-1">Unify</div>
             <div className="text-[9.5px] font-bold text-white/50 tracking-[0.8px] uppercase">Campus Life Platform</div>
           </div>
         </div>

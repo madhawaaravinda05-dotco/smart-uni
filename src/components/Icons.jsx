@@ -63,33 +63,11 @@ export const CoffeeIcon = (p) => <Icon {...p}><path d="M17 8h1a4 4 0 1 1 0 8h-1"
 
 export function UnifyLogoIcon({ size = 40, className = "" }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 120 120" fill="none" className={className} xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="unify-grad-1" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#8B5CF6" />
-          <stop offset="100%" stopColor="#3B82F6" />
-        </linearGradient>
-        <linearGradient id="unify-grad-2" x1="100%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stopColor="#EC4899" />
-          <stop offset="100%" stopColor="#8B5CF6" />
-        </linearGradient>
-        <filter id="unify-glow" x="-20%" y="-20%" width="140%" height="140%">
-          <feDropShadow dx="0" dy="4" stdDeviation="6" floodColor="#8B5CF6" floodOpacity="0.4" />
-        </filter>
-      </defs>
-
-      {/* Hexagon Base */}
-      <path d="M60 10 L105 32.5 L105 87.5 L60 110 L15 87.5 L15 32.5 Z" fill="url(#unify-grad-1)" filter="url(#unify-glow)" />
-
-      {/* Inner Hexagon layer */}
-      <path d="M60 20 L95 40 L95 80 L60 100 L25 80 L25 40 Z" fill="#ffffff" opacity="0.1" />
-
-      {/* Abstract 'U' Shape - intertwined arcs */}
-      <path d="M35 45 C35 85 85 85 85 45" stroke="url(#unify-grad-2)" strokeWidth="12" strokeLinecap="round" />
-      <path d="M50 40 C50 70 70 70 70 40" stroke="#ffffff" strokeWidth="8" strokeLinecap="round" opacity="0.9" />
-
-      {/* Center dot/connection point */}
-      <circle cx="60" cy="72" r="6" fill="#ffffff" />
-    </svg>
+    <img 
+      src="/app-logo.png" 
+      alt="Unify Logo" 
+      style={{ width: size, height: size, objectFit: "contain" }} 
+      className={className} 
+    />
   );
 }
